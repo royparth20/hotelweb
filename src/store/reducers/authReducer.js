@@ -5,6 +5,7 @@ const initialState = {
   token: "",
   profilePic: "",
   userType: "",
+  id: "",
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export

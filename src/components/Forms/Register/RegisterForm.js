@@ -12,13 +12,14 @@ import {
   FormLabelError,
   InputPass,
   InputDropdown,
+  InputFile,
   InputDropdownOption,
 } from "./RegisterForm.elements";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import toastr from 'toastr'
+import toastr from "toastr";
 
-import 'toastr/build/toastr.min.css'
-import '../../../css/style.css';
+import "toastr/build/toastr.min.css";
+import "../../../css/style.css";
 
 const RegisterForm = () => {
   let history = useHistory();
@@ -31,7 +32,7 @@ const RegisterForm = () => {
   const [contact, setContact] = useState();
   const [email, setEmail] = useState();
   const [address, setAddress] = useState();
-  const [hotelLicense, sethotelLicense] = useState(); 
+  const [hotelLicense, sethotelLicense] = useState();
   const [password, setPassword] = useState();
   const [conf_pass, setConfPass] = useState();
   const [error, setError] = useState({});
@@ -40,9 +41,8 @@ const RegisterForm = () => {
   const [city, setCity] = useState("Mumbai");
   const [grade, setGrade] = useState("1 star");
   const [hotelLogo, setHotelLogo] = useState();
-  
-  
-  console.log("country",district)
+
+  console.log("country", district);
   async function RegisterUser(credentials) {
     var data = JSON.stringify({
       hotelName: username,
@@ -50,17 +50,17 @@ const RegisterForm = () => {
       ownerPermanentAddress: ownerPerAdd,
       ownerCurrentAddress: ownerCurrAdd,
       ownerTelephoneNumber: ownerContNo,
-      hotelTelephoneNumber : contact,
+      hotelTelephoneNumber: contact,
       email: email,
-      hotelLogo:hotelLogo,
-      hotelLicense :hotelLicense,
+      hotelLogo: hotelLogo,
+      hotelLicense: hotelLicense,
       address: address,
       password: password,
       confirmPassword: conf_pass,
-      city:city,
-      country:country,
-      district:district,
-      hotelGrade : grade
+      city: city,
+      country: country,
+      district: district,
+      hotelGrade: grade,
     });
 
     var config = {
@@ -71,21 +71,21 @@ const RegisterForm = () => {
     };
     return await API(config)
       .then(function (response) {
-           toastr.success(response.data.message)
-//
+        toastr.success(response.data.message);
+        //
         history.push("/login");
         //setToken(data.token)
       })
       .catch(function (error) {
         console.log("hi test");
         if (error.response) {
-             toastr.error(error.response.data.message)
-//
+          toastr.error(error.response.data.message);
+          //
           //setError({ name: error.response.data.message });
         }
       });
   }
-  
+
   function valid() {
     let errors = {};
     let re =
@@ -125,11 +125,12 @@ const RegisterForm = () => {
     if (!valid()) {
       return false;
     }
-    if(hotelLogo!==undefined){
-    const token = await RegisterUser({
-      username,
-      password,
-    });}
+    if (hotelLogo !== undefined) {
+      const token = await RegisterUser({
+        username,
+        password,
+      });
+    }
     // setToken(token);
     /*
      const [username, setUserName] = useState();
@@ -142,14 +143,14 @@ const RegisterForm = () => {
   const [conf_pass, setConfPass] = useState();
   */
   };
-  
+
   const handleLogoChange = async (event) => {
     var touristImagedata = new FormData();
-    touristImagedata.append('file', event.target.files[0]);
+    touristImagedata.append("file", event.target.files[0]);
     var touristImageconfig = {
-      method: 'post',
-      url: 'files',
-      data : touristImagedata
+      method: "post",
+      url: "files",
+      data: touristImagedata,
     };
     var config = {
       method: "post",
@@ -159,46 +160,41 @@ const RegisterForm = () => {
     };
     return await API(config)
       .then(function (response) {
-        console.log("response",response)
-        setHotelLogo(response.data.data)
-          //   toastr.success(response.data.message)
-
+        console.log("response", response);
+        setHotelLogo(response.data.data);
+        //   toastr.success(response.data.message)
       })
       .catch(function (error) {
         console.log("hi test");
         if (error.response) {
-                
-         // setError({ name: error.response.data.message });
+          // setError({ name: error.response.data.message });
         }
       });
+  };
+  const handleInputChange = async (event) => {
+    var touristImagedata = new FormData();
+    touristImagedata.append("file", event.target.files[0]);
+    var touristImageconfig = {
+      method: "post",
+      url: "files",
+      data: touristImagedata,
+    };
 
-}
-    const handleInputChange = async (event) => {
-    
-      var touristImagedata = new FormData();
-      touristImagedata.append('file', event.target.files[0]);
-      var touristImageconfig = {
-        method: 'post',
-        url: 'files',
-        data : touristImagedata
-      };
-    
-      return await API(touristImageconfig)
-        .then(function (response) {
-          sethotelLicense(response.data.data)
-          console.log("response",response)
-        })
-        .catch(function (error) {
-          console.log("hi test");
-          if (error.response) {
-            setError({ name: error.response.data.message });
-          }
-        });
-
-  }
+    return await API(touristImageconfig)
+      .then(function (response) {
+        sethotelLicense(response.data.data);
+        console.log("response", response);
+      })
+      .catch(function (error) {
+        console.log("hi test");
+        if (error.response) {
+          setError({ name: error.response.data.message });
+        }
+      });
+  };
   return (
     <>
-      <FormContainer>
+      <FormContainer className="scrollbar-morpheus-den">
         <form onSubmit={handleSubmit}>
           <FormGroup>
             <FormLabel>Name</FormLabel>
@@ -213,11 +209,16 @@ const RegisterForm = () => {
 
           <FormGroup>
             <FormLabel>Hotel Logo </FormLabel>
-					<input type="file" placeholder="Upload the Logo of the hotel"
-						onChange={(e)=>{handleLogoChange(e)}}
-						// ref={input => this.fileInput = input}
-						className="form-control" />
-        </FormGroup>
+            <InputFile
+              // type="file"
+              placeholder="Upload the Logo of the hotel"
+              onChange={(e) => {
+                handleLogoChange(e);
+              }}
+              // ref={input => this.fileInput = input}
+              className="form-control"
+            />
+          </FormGroup>
 
           {/* <FormGroup>
           <FormLabel>Owner</FormLabel>
@@ -260,13 +261,13 @@ const RegisterForm = () => {
             <FormLabelError>{error["address"]}</FormLabelError>
           </FormGroup>
 
-           {/* Country */}
-           <FormGroup>
+          {/* Country */}
+          <FormGroup>
             <FormLabel>Country</FormLabel>
             <FormInput>
               <InputDropdown
                 placeholder="Enter Country"
-                onChange={(e) => setCountry(e.target.value||"India")}
+                onChange={(e) => setCountry(e.target.value || "India")}
               >
                 <InputDropdownOption>India</InputDropdownOption>
                 <InputDropdownOption>US</InputDropdownOption>
@@ -280,7 +281,7 @@ const RegisterForm = () => {
             <FormInput>
               <InputDropdown
                 placeholder="Enter District"
-                onChange={(e) => setDistrict(e.target.value||"District1")}
+                onChange={(e) => setDistrict(e.target.value || "District1")}
               >
                 <InputDropdownOption>District1</InputDropdownOption>
                 <InputDropdownOption>District2</InputDropdownOption>
@@ -293,14 +294,13 @@ const RegisterForm = () => {
             <FormInput>
               <InputDropdown
                 placeholder="Enter City"
-                onChange={(e) => setCity(e.target.value||"Mumbai")}
+                onChange={(e) => setCity(e.target.value || "Mumbai")}
               >
                 <InputDropdownOption>Mumbai</InputDropdownOption>
                 <InputDropdownOption>Delhi</InputDropdownOption>
               </InputDropdown>
             </FormInput>
           </FormGroup>
-         
 
           <FormGroup>
             <FormLabel>Telephone</FormLabel>
@@ -360,13 +360,17 @@ const RegisterForm = () => {
           {/* Licence Upload */}
           <FormGroup>
             <FormLabel>Upload Licence </FormLabel>
-					<input type="file"
-						onChange={(e)=>{handleInputChange(e)}}
-						// ref={input => this.fileInput = input}
-						className="form-control" />
-        </FormGroup>
+            <input
+              type="file"
+              onChange={(e) => {
+                handleInputChange(e);
+              }}
+              // ref={input => this.fileInput = input}
+              className="form-control"
+            />
+          </FormGroup>
           {/* MAP */}
-          
+
           {/* Grade */}
           <FormGroup>
             <FormLabel>Grade</FormLabel>
@@ -381,7 +385,7 @@ const RegisterForm = () => {
             </FormInput>
           </FormGroup>
 
-           <FormGroup>
+          <FormGroup>
             <FormLabel>Email</FormLabel>
             <FormInput>
               <Input

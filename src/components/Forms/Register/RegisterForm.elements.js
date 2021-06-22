@@ -39,7 +39,21 @@ export const Input = styled.input.attrs(props => ({
   line-height: 19px;
   color: black;
 `;
-
+export const InputFile = styled.input.attrs(props => ({
+  type: "file",
+}))`
+  width: 100%;
+  height: 55px;
+  border: 1px solid #CACACA;
+  box-sizing: border-box;
+  padding-left:10px;
+  border-radius: 8px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 19px;
+  color: black;
+`;
 export const InputPass = styled.input.attrs(props => ({
   type: "password",
 }))`

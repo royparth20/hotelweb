@@ -10,16 +10,14 @@ const methods = {
   login: (payload) => {
     if (store.isAvailable()) {
       store.setItem(LOCAL_STORE_KEYS.authenticated, true);
-      store.setItem(LOCAL_STORE_KEYS.userType, payload.userType);
       store.setItem(LOCAL_STORE_KEYS.token, payload.token);
-      store.setItem(LOCAL_STORE_KEYS.profilePic, payload.profilePic);
+      store.setItem(LOCAL_STORE_KEYS.id, payload.id);
     }
 
     return {
       authenticated: true,
       token: payload.token,
-      profilePic: payload.profilePic,
-      userType: payload.userType,
+      id: payload.id,
     };
   },
 
