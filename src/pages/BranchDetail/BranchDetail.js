@@ -10,6 +10,8 @@ import {
   SaveButton,
   FormLabelError,
 } from "./BranchDetail.elements.js";
+
+import { useSelector } from "react-redux";
 import BDPictureForm from "../../components/Forms/BranchDetail/BDPictureForm";
 import BDDetailForm from "../../components/Forms/BranchDetail/BDDetailForm";
 import BDContactForm from "../../components/Forms/BranchDetail/BDContactForm";
@@ -17,6 +19,7 @@ import { Container, Row, Col } from "styled-bootstrap-grid";
 import API from "../../api_test";
 import Loader from "react-loader-spinner";
 const BranchDetail = () => {
+  const user = useSelector((state) => state.user);
   const [loader, setLoader] = useState(false);
   const [pname, setPName] = useState();
   const [bmname, setBMName] = useState();
@@ -36,8 +39,22 @@ const BranchDetail = () => {
   ///////////////////////////////////
   async function CreateProfileAjax(image) {
     setLoader(true);
+    user.token = undefined;
     var t = {
+      // ...user,
       ownerName: pname,
+      ownerTelephoneNumber: user.ownerTelephoneNumber,
+      hotelTelephoneNumber: user.hotelTelephoneNumber,
+      hotelGrade: "3 star",
+      hotelLicense: user.hotelLicense,
+      ownerCurrentAddress: user.ownerCurrentAddress,
+      ownerPermanentAddress: user.ownerPermanentAddress,
+      ownerName: user.ownerName,
+      country: user.country,
+      city: user.city,
+      hotelLogo: user.hotelLogo,
+      district: user.district,
+      hotelName: user.hotelName,
       mobile: bnumber,
       email: bemail,
       address: address,
@@ -46,12 +63,12 @@ const BranchDetail = () => {
     if (image) {
       t["hotelImages"] = [image];
     }
+    // var data = JSON.stringify(t);
+   
     var data = JSON.stringify(t);
-
     var config = {
       method: "post",
       url: "hotel/create-branch",
-
       data: data,
     };
     await API(config)

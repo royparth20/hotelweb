@@ -30,12 +30,13 @@ const HotelDetail = () => {
   useEffect(() => {
     fetchData()
       .then((element) => {
-        console.log("fetchData Hotels ==> ", element);
+        // console.log("fetchData Hotels ==> ", element.data.data[0]);
         dispatch({
           type: userActions.actions.USER_DETAILS,
           payload: { ...element.data.data },
         });
-        setHotels(element.data.data);
+        setHotels(element.data.data[0]);
+        // console.log("hotels ==> ", hotels);
       })
       .catch(function (error) {
         console.log("sdfsdf", error);
@@ -45,13 +46,13 @@ const HotelDetail = () => {
     if (store.isAvailable()) {
       var config = {
         method: "get",
-        url: `hotel/?branchId=${store.getItem(LOCAL_STORE_KEYS.id)}`,
+        url: `hotel/`,
       };
       return API(config);
     } else {
       var config = {
         method: "get",
-        url: `hotel/?branchId=${auth.token}`,
+        url: `hotel/`,
       };
       // console.log("auth.token", config);
 
@@ -59,7 +60,10 @@ const HotelDetail = () => {
     }
   };
 
-  // console.log("hotels", hotels);
+  const onImageError = (e) => {
+    e.target.src = "https://via.placeholder.com/360x200";
+  };
+  // console.log("hotels == > ", hotels);
   return (
     <>
       <Main>
@@ -104,22 +108,27 @@ const HotelDetail = () => {
           </Row>
 
           <Row>
-            {hotels[0]?.branches.map((br) => (
-              <Col sm={12} lg={4}>
-                <CardWrapper>
-                  {br.hotelImages ? (
-                    <CardImage src={br.hotelImages[0]} />
-                  ) : (
-                    <CardImage src="https://via.placeholder.com/360x200" />
-                  )}
+            {hotels?.branches &&
+              hotels.branches.map((br) => (
+                <Col sm={12} lg={4}>
+                  {/* {console.log(br)} */}
+                  <CardWrapper>
+                    {br.hotelImages.length > 0 ? (
+                      <CardImage
+                        src={br.hotelImages && br.hotelImages[0]}
+                        onError={onImageError}
+                      />
+                    ) : (
+                      <CardImage src="https://via.placeholder.com/360x200" />
+                    )}
 
-                  <CardInfo>
-                    <CardName>{br.address}</CardName>
-                    <CardButton>Alert</CardButton>
-                  </CardInfo>
-                </CardWrapper>
-              </Col>
-            ))}
+                    <CardInfo>
+                      <CardName>{br.address}</CardName>
+                      <CardButton>Alert</CardButton>
+                    </CardInfo>
+                  </CardWrapper>
+                </Col>
+              ))}
           </Row>
         </Container>
       </Main>
