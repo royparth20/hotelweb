@@ -36,113 +36,113 @@ function App() {
       <GlobalStyle />
       <Switch>
         {/* front pages */}
-        <Route path="/" exact component={Home2}>
+        <Route path="/" exact>
           <Header />
           <Home2 />
           <Footer />
         </Route>
-        <Route path="/register" exact component={Home}>
+        <Route path="/register" exact>
           <Header />
           <Home />
           {/* <Footer/> */}
         </Route>
-        <Route path="/about" exact component={About}>
+        <Route path="/about" exact>
           <Header />
           <About />
           <Footer />
         </Route>
-        <Route path="/service" exact component={Service}>
+        <Route path="/service" exact>
           <Header />
           <Service />
           <Footer />
         </Route>
-        <Route path="/blog" exact component={Blog}>
+        <Route path="/blog" exact>
           <Header />
           <Blog />
           <Footer />
         </Route>
-        <Route path="/contact" exact component={Contact}>
+        <Route path="/contact" exact>
           <Header />
           <Contact />
           <Footer />
 
-          <Route path="/hotel" exact component={Hotel}>
+          <Route path="/hotel" exact>
             <HeaderLoggedin />
             <Hotel />
             <Footer />
           </Route>
         </Route>
-        <Route path="/login" exact component={Login}>
+        <Route path="/login" exact>
           <Header />
           <Login />
         </Route>
-        <Route path="/register" exact component={Register}>
+        <Route path="/register" exact>
           <Header />
           <Register />
         </Route>
-        <Route path="/forgotPassword" exact component={ForgotPassword}>
+        <Route path="/forgotPassword" exact>
           <Header />
           <ForgotPassword />
         </Route>
-        <Route path="/changePassword" exact component={ChangePassword}>
+        <Route path="/changePassword" exact>
           <Header />
           <ChangePassword />
         </Route>
         {/* dashboard pages */}
         {isLoggedIn && isLoggedIn !== "undefined" ? (
           <>
-            <Route path="/hotel" exact component={Hotel}>
+            <Route path="/hotel" exact>
               <HeaderLoggedin />
               <Hotel />
               <Footer />
             </Route>
-            <Route path="/home" exact component={HotelDetail}>
+            <Route path="/home" exact>
               <HeaderLoggedin />
               <HotelDetail />
               <Footer />
             </Route>
-            <Route path="/hotelDetails" exact component={HotelDetail}>
+            <Route path="/hotelDetails" exact>
               <HeaderLoggedin />
               <HotelDetail />
               <Footer />
             </Route>
-            <Route path="/tourist" exact component={Tourist}>
+            <Route path="/tourist" exact>
               <HeaderLoggedin />
               <Tourist />
               <Footer />
             </Route>
-            <Route path="/touristDetails" exact component={TouristDetail}>
+            <Route path="/touristDetails" exact>
               <HeaderLoggedin />
               <TouristDetail />
               <Footer />
             </Route>
-            <Route path="/blacklist" exact component={Blacklist}>
+            <Route path="/blacklist" exact>
               <HeaderLoggedin />
               <Blacklist />
               <Footer />
             </Route>
-            <Route path="/branchDetails" exact component={BranchDetail}>
+            <Route path="/branchDetails" exact>
               <HeaderLoggedin />
               <BranchDetail />
               <Footer />
             </Route>
-            <Route path="/createStaff" exact component={CreateStaff}>
+            <Route path="/createStaff" exact>
               <HeaderLoggedin />
               <CreateStaff />
               <Footer />
             </Route>
-            <Route path="/createProfile" exact component={CreateProfile}>
+            <Route path="/createProfile" exact>
               <HeaderLoggedin />
               <CreateProfile />
               <Footer />
             </Route>
-            <Route path="/touristReports" exact component={TouristReport}>
+            <Route path="/touristReports" exact>
               <HeaderLoggedin />
               <TouristReport />
               <Footer />
             </Route>
 
-            <Route path="/reports" exact component={Reports}>
+            <Route path="/reports" exact>
               <HeaderLoggedin />
               <Reports />
               <Footer />

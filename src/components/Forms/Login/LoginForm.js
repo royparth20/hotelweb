@@ -42,23 +42,24 @@ export default function LoginForm() {
 
       data: data,
     };
-    return await API(config)
+    API(config)
       .then(function (response) {
         var data = JSON.stringify(response.data);
 
-        console.log("LOGIN ==> ", response.data);
-        const token = localStorage.setItem("token", response.data.token);
+        // console.log("LOGIN ==> ", response.data);
+        // const token = localStorage.setItem("token", response.data.token);
         const hotel_id = localStorage.setItem("hotel_id", response.data.id);
         toastr.success(response.data.message);
 
         dispatch({
           type: authActions.actions.LOGIN,
-          payload: { ...response.data },
+          payload: response.data,
         });
         // setLoading(fal,se); coz history.push will unmount the comp...
         //const hotel_token = localStorage.setItem('hotel_token',response.data.token);
-        // history.push("/home");
-        window.location.replace("/home");
+        // history.replace("/home");
+        history.replace("/home");
+        // window.location.replace("/home");
         //setToken(data.token)
       })
       .catch(function (error) {

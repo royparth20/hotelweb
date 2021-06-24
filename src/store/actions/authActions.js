@@ -14,6 +14,7 @@ const methods = {
       store.setItem(LOCAL_STORE_KEYS.id, payload.id);
     }
 
+    // console.log("LOGIN ACTION ==> ", payload);
     return {
       authenticated: true,
       token: payload.token,

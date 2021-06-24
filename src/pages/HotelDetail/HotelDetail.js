@@ -3,6 +3,7 @@ import { map } from "rxjs/operators";
 import store from "../../utils/localStorage";
 import LOCAL_STORE_KEYS from "../../utils/LOCAL_STORAGE_KEYS";
 import API from "../../api_test";
+import api from "../../axios";
 import { useSelector } from "react-redux";
 import {
   Main,
@@ -23,46 +24,31 @@ import {
 import userActions from "../../store/actions/userAction";
 import { Container, Row, Col } from "styled-bootstrap-grid";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 const HotelDetail = () => {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const history = useHistory();
   const [hotels, setHotels] = useState([]);
-  useEffect(() => {
-    fetchData()
-      .then((element) => {
-        // console.log("fetchData Hotels ==> ", element.data.data[0]);
-        dispatch({
-          type: userActions.actions.USER_DETAILS,
-          payload: { ...element.data.data },
-        });
-        setHotels(element.data.data[0]);
-        // console.log("hotels ==> ", hotels);
-      })
-      .catch(function (error) {
-        console.log("sdfsdf", error);
-      });
-  }, []);
-  const fetchData = async () => {
-    if (store.isAvailable()) {
-      var config = {
-        method: "get",
-        url: `hotel/`,
-      };
-      return API(config);
-    } else {
-      var config = {
-        method: "get",
-        url: `hotel/`,
-      };
-      // console.log("auth.token", config);
-
-      return API(config);
-    }
-  };
 
   const onImageError = (e) => {
     e.target.src = "https://via.placeholder.com/360x200";
   };
+  useEffect(() => {
+    setTimeout(async () => {
+      try {
+        const element = await api.getHotel();
+        console.log("fetchData Hotels ==> ", element.data.data[0]);
+        dispatch({
+          type: userActions.actions.USER_DETAILS,
+          payload: { ...element.data.data[0] },
+        });
+        setHotels(element.data.data[0]);
+      } catch (err) {
+        console.log("sdfsdf", err);
+      }
+    }, 0);
+  }, []);
   // console.log("hotels == > ", hotels);
   return (
     <>
