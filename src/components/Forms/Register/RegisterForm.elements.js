@@ -2,8 +2,7 @@ import styled from "styled-components"
 
 
 export const FormContainer = styled.div`
-  padding:60px;
-  max-height: 950px;
+  padding:10px;
   overflow-y: scroll;
 `;
 
@@ -33,8 +32,8 @@ export const Input = styled.input.attrs(props => ({
   box-sizing: border-box;
   padding-left:10px;
   border-radius: 8px;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   font-size: 16px;
   line-height: 19px;
   color: black;
@@ -48,8 +47,8 @@ export const InputFile = styled.input.attrs(props => ({
   box-sizing: border-box;
   padding-left:10px;
   border-radius: 8px;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   font-size: 16px;
   line-height: 19px;
   color: black;
@@ -63,8 +62,8 @@ export const InputPass = styled.input.attrs(props => ({
   box-sizing: border-box;
   padding-left:10px;
   border-radius: 8px;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   font-size: 16px;
   line-height: 19px;
   color: black;
@@ -95,8 +94,8 @@ border: 1px solid #CACACA;
 box-sizing: border-box;
 padding-left:10px;
 border-radius: 8px;
-margin-top: 15px;
-margin-bottom: 15px;
+margin-top: 10px;
+margin-bottom: 10px;
 font-size: 16px;
 line-height: 19px;
 color: black;

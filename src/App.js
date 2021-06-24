@@ -5,7 +5,12 @@ import Header from "./components/Header/Header";
 import HeaderLoggedin from "./components/HeaderLoggedin/HeaderLoggedin";
 import Footer from "./components/Footer/Footer";
 import GlobalStyle from "./globalStyles";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  withRouter,
+} from "react-router-dom";
 import Home from "./pages/HomePage/Home";
 import Home2 from "./pages/Home2/Home2";
 import Tourist from "./pages/Tourist/Tourist";
@@ -24,15 +29,24 @@ import BranchDetail from "./pages/BranchDetail/BranchDetail";
 import CreateProfile from "./pages/CreateProfile/CreateProfile";
 import CreateStaff from "./pages/CreateStaff/CreateStaff";
 import Reports from "./pages/Reports/Reports";
-
+import withClearCache from "./ClearCache";
 import Service from "./pages/Service/Service";
 import TouristReport from "./pages/Reports/TouristReport";
 
+const ClearCacheComponent = withClearCache(withRouter(App));
+
+function MainApp() {
+  return (
+    <Router>
+      <ClearCacheComponent></ClearCacheComponent>
+    </Router>
+  );
+}
 function App() {
   const isLoggedIn = localStorage.getItem("token");
   console.log("token", isLoggedIn);
   return (
-    <Router>
+    <>
       <GlobalStyle />
       <Switch>
         {/* front pages */}
@@ -153,8 +167,8 @@ function App() {
         )}
         ):
       </Switch>
-    </Router>
+    </>
   );
 }
 
-export default App;
+export default MainApp;

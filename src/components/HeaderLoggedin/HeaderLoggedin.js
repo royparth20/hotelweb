@@ -16,6 +16,7 @@ import {
   ProfileContextItemMobile,
   ProfileContextItemMobileLink,
   MobileIcon,
+  LogoutButton,
   NavMenu,
   NavItem,
   NavLinks,
@@ -35,11 +36,12 @@ const HeaderLoggedin = () => {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  const logout = () => {
+  const logout = (e) => {
+    e.preventDefault();
     // localStorage.clear();
     console.log(111);
     dispatch({ type: authActions.actions.LOGOUT });
-    // history.push("/login");
+    history.push("/login");
   };
   //mobile menu click
   const [click, setClick] = useState(false);
@@ -93,12 +95,12 @@ const HeaderLoggedin = () => {
                             </ProfileContextItemLink>
                           </ProfileContextItem>
                           <ProfileContextItemMobile>
-                            <ProfileContextItemMobileLink
-                              to="/login"
-                              onClick={() => logout}
+                            <LogoutButton
+                              className="text-left p-0  btn btn-link"
+                              onClick={(e) => logout(e)}
                             >
                               Log Out
-                            </ProfileContextItemMobileLink>
+                            </LogoutButton>
                           </ProfileContextItemMobile>
                         </ProfileContextMobile>
                       </NavItemProfileMobile>
@@ -151,12 +153,12 @@ const HeaderLoggedin = () => {
                             </ProfileContextItemLink>
                           </ProfileContextItem>
                           <ProfileContextItem>
-                            <ProfileContextItemLink
+                            <LogoutButton
+                              className="text-left p-0  btn btn-link"
                               onClick={logout}
-                              to="/login"
                             >
                               Log Out
-                            </ProfileContextItemLink>
+                            </LogoutButton>
                           </ProfileContextItem>
                         </ProfileContext>
                       </NavItemProfile>

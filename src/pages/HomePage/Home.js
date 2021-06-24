@@ -1,22 +1,24 @@
-import React from 'react'
-import {Main,
+import React from "react";
+import {
+  Main,
   ContentWrapper,
   BackgroundImage,
-  ImageOverlay, 
-  ImageHeading, 
+  ImageOverlay,
+  ImageHeading,
   ImageContent,
   SocialLoginGroup,
   SocialLogin,
   SocialLoginIcon,
   FormSection,
   TabsContainer,
-  TabButton
-} from './Home.elements.js'
-import RegisterForm from '../../components/Forms/Register/RegisterForm'
-import SocialLoginForm from '../../components/Forms/SocialLogin/SocialLoginForm'
-import { Container, Row, Col } from 'styled-bootstrap-grid';
-
+  TabButton,
+} from "./Home.elements.js";
+import RegisterForm from "../../components/Forms/Register/TempRegisterForm";
+import SocialLoginForm from "../../components/Forms/SocialLogin/SocialLoginForm";
+import { Container, Row, Col } from "styled-bootstrap-grid";
+import { useHistory } from "react-router-dom";
 const Home = () => {
+  const history = useHistory();
   return (
     <>
       <Main>
@@ -28,13 +30,16 @@ const Home = () => {
                   <ImageOverlay>
                     <ImageHeading>Get Start</ImageHeading>
                     <ImageContent>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </ImageContent>
-                    <SocialLoginGroup>
+                    {/* <SocialLoginGroup>
                      
                        <SocialLoginForm />
                     
-                    </SocialLoginGroup>
+                    </SocialLoginGroup> */}
                   </ImageOverlay>
                 </BackgroundImage>
               </Col>
@@ -42,9 +47,11 @@ const Home = () => {
                 <FormSection>
                   <TabsContainer>
                     <TabButton className="active">Register</TabButton>
-                    <TabButton onClick={event =>  window.location.href='/login'}>Login</TabButton>
+                    <TabButton onClick={(event) => history.push("/login")}>
+                      Login
+                    </TabButton>
                   </TabsContainer>
-                  <RegisterForm/>
+                  <RegisterForm />
                 </FormSection>
               </Col>
             </Row>
@@ -52,7 +59,7 @@ const Home = () => {
         </Container>
       </Main>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

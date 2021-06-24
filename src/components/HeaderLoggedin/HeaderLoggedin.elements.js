@@ -219,6 +219,16 @@ export const ProfileContextItemLink = styled(Link)`
   }
 `
 
+export const LogoutButton = styled.button`
+  text-decoration:none;
+  min-width: 150px;
+  display: block;
+  color:#6B6B6B;
+  &:hover{
+    color:#096DAB;
+    text-decoration: none;
+  }
+`
 
 
 

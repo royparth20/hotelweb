@@ -1,23 +1,22 @@
-
-import React, { useState } from 'react';
-import {Main,
+import React, { useState } from "react";
+import {
+  Main,
   ContentWrapper,
   BackgroundImage,
-  ImageOverlay, 
-  ImageHeading, 
+  ImageOverlay,
+  ImageHeading,
   ImageContent,
   SocialLoginGroup,
   SocialLogin,
   SocialLoginIcon,
   FormSection,
   TabsContainer,
-  TabButton
-} from './Login.elements.js'
-import LoginForm from '../../components/Forms/Login/LoginForm'
-import SocialLoginForm from '../../components/Forms/SocialLogin/SocialLoginForm'
-
-import { Container, Row, Col } from 'styled-bootstrap-grid';
-
+  TabButton,
+} from "./Login.elements.js";
+import LoginForm from "../../components/Forms/Login/LoginForm";
+import SocialLoginForm from "../../components/Forms/SocialLogin/SocialLoginForm";
+import { useHistory } from "react-router-dom";
+import { Container, Row, Col } from "styled-bootstrap-grid";
 
 // window.fbAsyncInit = function() {
 //   let = FB.init({
@@ -26,9 +25,9 @@ import { Container, Row, Col } from 'styled-bootstrap-grid';
 //       xfbml      : true,
 //       version    : 'v11.0'
 //     });
-      
-//     FB.AppEvents.logPageView();   
-      
+
+//     FB.AppEvents.logPageView();
+
 //   };
 
 //   (function(d, s, id){
@@ -39,30 +38,29 @@ import { Container, Row, Col } from 'styled-bootstrap-grid';
 //      fjs.parentNode.insertBefore(js, fjs);
 //   }(document, 'script', 'facebook-jssdk'));
 
-  
 // //   function fbLogout() {
 //     //   window.FB.logout(function (response) {
 //     //         console.log(response)
-//     //       //Do what ever you want here when logged out like reloading the page 
+//     //       //Do what ever you want here when logged out like reloading the page
 //     //       //window.location.reload();
 //     //   });
 //      window.FB.logout(function(response) {
 //           window.FB.Auth.setAuthResponse(null, 'unknown');
 //         //  ...
 //         });
-//  // } 
+//  // }
 //   };
 
 //   let  googleResponse = (e) => {
 //       console.log(e)
 //   };
-  
+
 //   let  onFailure = (error) => {
 //       console.log(error)
 //     };
 
 const Login = () => {
- 
+  const history = useHistory();
   return (
     <>
       <Main>
@@ -74,7 +72,10 @@ const Login = () => {
                   <ImageOverlay>
                     <ImageHeading>Get Start</ImageHeading>
                     <ImageContent>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     </ImageContent>
                     {/* <SocialLoginGroup>
                     
@@ -87,8 +88,9 @@ const Login = () => {
               <Col xs={12} sm={12} md={12} lg={6} xl={6} className="p-0 m-0">
                 <FormSection>
                   <TabsContainer>
-                    
-                    <TabButton onClick={event =>  window.location.href='/register'}>Register</TabButton>
+                    <TabButton onClick={(event) => history.push("/register")}>
+                      Register
+                    </TabButton>
                     <TabButton className="active">Login</TabButton>
                   </TabsContainer>
                   <LoginForm />
@@ -99,7 +101,7 @@ const Login = () => {
         </Container>
       </Main>
     </>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

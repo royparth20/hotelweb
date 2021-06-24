@@ -6,6 +6,8 @@ export default {
 
   getHotel: () => api.get("/hotel"),
   getHotelDetails: () => api.get("/hotel/getHotelDetails"),
+  createBranch: (payload) => api.post("hotel/create-branch", payload),
+  // hotel/create-branch
   socialLogin: (payload) => api.post("/users/social", payload),
   getBannerData: () => api.get("/users/get-banner"),
   getUserInfo: () => api.get("/users"),

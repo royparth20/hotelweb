@@ -16,6 +16,7 @@ import BDPictureForm from "../../components/Forms/BranchDetail/BDPictureForm";
 import BDDetailForm from "../../components/Forms/BranchDetail/BDDetailForm";
 import BDContactForm from "../../components/Forms/BranchDetail/BDContactForm";
 import { Container, Row, Col } from "styled-bootstrap-grid";
+import api from "../../axios";
 import API from "../../api_test";
 import Loader from "react-loader-spinner";
 const BranchDetail = () => {
@@ -39,6 +40,9 @@ const BranchDetail = () => {
   ///////////////////////////////////
   async function CreateProfileAjax(image) {
     setLoader(true);
+    setError({
+      name: "",
+    });
     user.token = undefined;
     var t = {
       // ...user,
@@ -64,14 +68,11 @@ const BranchDetail = () => {
       t["hotelImages"] = [image];
     }
     // var data = JSON.stringify(t);
-   
+
     var data = JSON.stringify(t);
-    var config = {
-      method: "post",
-      url: "hotel/create-branch",
-      data: data,
-    };
-    await API(config)
+
+    api
+      .createBranch(t)
       .then(function (response) {
         setLoader(false);
         // var data = JSON.stringify(response.data);
