@@ -15,6 +15,7 @@ import CPDetailForm from "../../components/Forms/CreateProfile/CPDetailForm";
 import CPContactForm from "../../components/Forms/CreateProfile/CPContactForm";
 import { Container, Row, Col } from "styled-bootstrap-grid";
 import API from "../../api_test";
+import api from "../../axios";
 import Loader from "react-loader-spinner";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
@@ -33,9 +34,14 @@ const CreateProfile = () => {
   const [error, setError] = useState({});
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
+  const [imagePreview, setImagePreview] = useState("");
   ///////////////////////////////////
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
+
+    if (event.target.files.length !== 0) {
+      setImagePreview(window.URL.createObjectURL(event.target.files[0]));
+    }
 
     //setIsSelected(true);
   };
@@ -61,7 +67,7 @@ const CreateProfile = () => {
             setHName(f.hotelName);
 
             setName(f.ownerName);
-            setNumber(f.hotelTelephoneNumber);
+            setNumber(f.ownerTelephoneNumber);
             setAddress(f.address);
             if (f.hotelImages) setImageUrl(f.hotelImages);
           })
@@ -85,20 +91,16 @@ const CreateProfile = () => {
     }
 
     t["mobile"] = num;
-    var dt = JSON.stringify(t);
-    console.log("final", dt);
-    var config = {
-      method: "PUT",
-      url: "hotel/edit-profile",
+    console.log("final", t);
 
-      data: dt,
-    };
-    await API(config)
+    await api
+      .editProfile(t)
       .then(function (response) {
         setLoader(false);
         toastr.success(response.data.message);
         //   window.location.href = "/home"
         //setToken(data.token)
+        console.log("CREATE PROFILE ==> ", response);
       })
       .catch(function (error) {
         setLoader(false);
@@ -170,7 +172,11 @@ const CreateProfile = () => {
             <ContentWrapper className="p- m-0">
               <Row className="p-0 m-0">
                 <Col lg={3} className="p-2 m-0">
-                  <CPPictureForm ch={changeHandler} pro={profile} />
+                  <CPPictureForm
+                    ch={changeHandler}
+                    pro={profile}
+                    imagePreview={imagePreview}
+                  />
                 </Col>
 
                 <Col lg={5} className="p-2 m-0">
@@ -201,8 +207,8 @@ const CreateProfile = () => {
               <Row className="p-0 m-0">
                 <Col lg={12} className="p-0 m-0 d-flex">
                   <ButtonContainer>
-                    <CancelButton>Cancel</CancelButton>
-                    <SaveButton>Save</SaveButton>
+                    <CancelButton type="reset`">Cancel</CancelButton>
+                    <SaveButton type="submit">Save</SaveButton>
                     <Col lg={2} className="p-0 m-0 d-flex">
                       {loader ? (
                         <Loader

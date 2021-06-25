@@ -17,6 +17,7 @@ import {
   HotelInfoValue,
   CardWrapper,
   CardImage,
+  Image,
   CardInfo,
   CardName,
   CardButton,
@@ -100,12 +101,16 @@ const HotelDetail = () => {
                   {/* {console.log(br)} */}
                   <CardWrapper>
                     {br.hotelImages.length > 0 ? (
-                      <CardImage
-                        src={br.hotelImages && br.hotelImages[0]}
-                        onError={onImageError}
-                      />
+                      <CardImage>
+                        <Image
+                          src={br.hotelImages && br.hotelImages[0]}
+                          onError={onImageError}
+                        />
+                      </CardImage>
                     ) : (
-                      <CardImage src="https://via.placeholder.com/360x200" />
+                      <CardImage>
+                        <Image src="https://via.placeholder.com/360x250" />
+                      </CardImage>
                     )}
 
                     <CardInfo>

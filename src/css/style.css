@@ -65,3 +65,17 @@
   cursor: pointer;
   color: #3c0ac4 !important;
 }
+
+.send-btn {
+  padding: 9px 22px;
+  display: inline-block;
+  background: #fff;
+  border: 1px solid #fff;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 100.5%;
+  text-transform: capitalize;
+  color: #043565;
+}

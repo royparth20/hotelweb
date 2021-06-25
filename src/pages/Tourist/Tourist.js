@@ -9,6 +9,7 @@ import {
   CardWrapper,
   CardImage,
   CardInfo,
+  Image,
   CardReportButton,
   CardName,
   CardButton,
@@ -83,9 +84,13 @@ const Tourist = () => {
               <Col sm={12} lg={4}>
                 <CardWrapper>
                   {element.touristImage ? (
-                    <CardImage src={element.touristImage} />
+                    <CardImage>
+                      <Image src={element.touristImage} />
+                    </CardImage>
                   ) : (
-                    <CardImage src="https://via.placeholder.com/360x200" />
+                    <CardImage>
+                      <Image src="https://via.placeholder.com/360x250" />
+                    </CardImage>
                   )}
                   <CardInfo>
                     <CardName>{element.touristName}</CardName>

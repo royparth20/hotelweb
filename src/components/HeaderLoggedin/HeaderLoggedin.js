@@ -33,7 +33,7 @@ const HeaderLoggedin = () => {
   //     console.log(111)
   //     window.location.href = '/login';
   // }
-
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const history = useHistory();
   const logout = (e) => {
@@ -63,7 +63,11 @@ const HeaderLoggedin = () => {
                     <TopBar>
                       <NavItemProfileMobile>
                         <ProfilePictureMobile
-                          src="https://via.placeholder.com/50x50"
+                          src={
+                            user && user.hotelLogo
+                              ? user.hotelLogo
+                              : "https://via.placeholder.com/50x50"
+                          }
                           onClick={toggleProfileContext}
                         />
                         <ProfileContextMobile
@@ -121,11 +125,17 @@ const HeaderLoggedin = () => {
                       </NavItem>
                       <NavItemProfile>
                         <ProfilePicture
-                          src="https://via.placeholder.com/46x46"
+                          src={
+                            user && user.hotelLogo
+                              ? user.hotelLogo
+                              : "https://via.placeholder.com/50x50"
+                          }
                           onClick={toggleProfileContext}
                         />
                         <ProfileContext
-                          className={profileContext ? "hide" : "show"}
+                          className={`border ${
+                            profileContext ? "hide" : "show"
+                          } `}
                         >
                           <ProfileContextItemMobile>
                             <ProfileContextItemMobileLink to="/hotelDetails">

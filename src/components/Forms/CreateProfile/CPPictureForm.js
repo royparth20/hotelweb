@@ -1,26 +1,29 @@
-import React from 'react'
-import { FormContainer, 
-         ProfileImage,
-         UploadButton,
-         RemoveButton,
-         FileB
-       } from './CPPictureForm.elements'
+import React from "react";
+import {
+  FormContainer,
+  ProfileImage,
+  UploadButton,
+  RemoveButton,
+  FileB,
+} from "./CPPictureForm.elements";
 
 const CPPictureForm = (props) => {
-  const {ch} = props;
+  const { ch, pro, imagePreview } = props;
+  console.log(pro);
   return (
     <>
       <FormContainer>
-        {props.pro.hotelImages? 
-        <ProfileImage src={props.pro.hotelImages[0]}/>
-        :
-        <ProfileImage src="https://via.placeholder.com/240x200"/>
-}
-<FileB onChange={ch}></FileB>
-      
+        {(pro.hotelImages && pro?.hotelImages.length > 0) || imagePreview ? (
+          <ProfileImage
+            src={imagePreview ? imagePreview : pro.hotelImages[0]}
+          />
+        ) : (
+          <ProfileImage src="https://via.placeholder.com/240x200" />
+        )}
+        <FileB onChange={ch}></FileB>
       </FormContainer>
     </>
-  )
-}
+  );
+};
 
-export default CPPictureForm
+export default CPPictureForm;

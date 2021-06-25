@@ -35,9 +35,15 @@ export const CardWrapper = styled.div`
   margin: 10px;
 `;
 
-export const CardImage = styled.img`
+export const CardImage = styled.div`
   width: 100%;
-  min-height: 200px;
+  height: 250px;
+  text-align: center;
+`;
+
+export const Image = styled.img`
+  max-width: 100%;
+  height: 100%;
 `;
 
 export const CardInfo = styled.div`

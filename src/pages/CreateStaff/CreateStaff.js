@@ -19,14 +19,17 @@ import {
 import Loader from "react-loader-spinner";
 import API from "../../api_test";
 import api from "../../axios";
+import { useHistory } from "react-router-dom";
 const CreateStaff = () => {
+  const history = useHistory();
+  const id = useSelector((state) => state.auth.id);
   const branchesState = useSelector((state) => state.user.branches);
   const [loader, setLoader] = useState(false);
   const [sname, setSName] = useState();
   const [snumber, setSNumber] = useState();
   const [semail, setSEmail] = useState();
   const [saddress, setSAddress] = useState();
-  const [pass, setPass] = useState();
+  const [pass, setPass] = useState("12345");
   const [branches, setBranches] = useState();
   const [curbranch, setCBranch] = useState();
   const [error, setError] = useState({});
@@ -34,24 +37,26 @@ const CreateStaff = () => {
   async function CreateProfileAjax() {
     setLoader(true);
 
-    var data = JSON.stringify({
+    console.log(curbranch);
+    var data = {
       staffName: sname,
       staffContact: snumber,
       staffEmail: semail,
       staffAddress: saddress,
       staffPassword: pass,
-    });
+      assignHotel: [curbranch],
+    };
     var config = {
       method: "post",
-      url: "hotel/create-staff?assignHotel=" + curbranch,
-
+      url: "hotel/create-staff?assignHotel=" + id,
       data: data,
     };
+    console.log(data);
     return await API(config)
       .then(function (response) {
         setLoader(false);
-        window.location.href = "/home";
-        //history.push("/home")
+        // window.location.href = "/home";
+        history.push("/home");
         //setToken(data.token)
       })
       .catch(function (error) {
@@ -121,6 +126,7 @@ const CreateStaff = () => {
                     updateSEmail={setSEmail}
                     updateAddress={setSAddress}
                     updatePass={setPass}
+                    pass={pass}
                   />
                 </Col>
                 <Col lg={3} className="p-2 m-0">

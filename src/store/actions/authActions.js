@@ -4,21 +4,39 @@ import LOCAL_STORE_KEYS from "../../utils/LOCAL_STORAGE_KEYS";
 const actions = {
   LOGIN: "LOGIN_USER",
   LOGOUT: "LOGOUT_USER",
+  LOADEXIST: "LOADEXIST",
 };
 
 const methods = {
-  login: (payload) => {
+  loadFromStore: () => {
     if (store.isAvailable()) {
-      store.setItem(LOCAL_STORE_KEYS.authenticated, true);
-      store.setItem(LOCAL_STORE_KEYS.token, payload.token);
-      store.setItem(LOCAL_STORE_KEYS.id, payload.id);
+      return {
+        authenticated: store.getItem(LOCAL_STORE_KEYS.authenticated),
+        token: store.getItem(LOCAL_STORE_KEYS.token),
+        id: store.getItem(LOCAL_STORE_KEYS.id),
+      };
+    } else {
+      return {
+        authenticated: false,
+        token: "",
+        profilePic: "",
+        userType: "",
+      };
     }
+  },
+  login: (payload) => {
+    // if (store.isAvailable()) {
+    //   store.setItem(LOCAL_STORE_KEYS.authenticated, true);
+    //   store.setItem(LOCAL_STORE_KEYS.token, payload.token);
+    //   store.setItem(LOCAL_STORE_KEYS.id, payload.id);
+    // }
 
     // console.log("LOGIN ACTION ==> ", payload);
     return {
       authenticated: true,
       token: payload.token,
       id: payload.id,
+      userType: payload.userType,
     };
   },
 

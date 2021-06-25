@@ -1,5 +1,5 @@
 import axios from "axios";
-import store from "../store";
+import {store} from "../store";
 import storage from "../utils/localStorage";
 import LOCAL_STORE_KEYS from "../utils/LOCAL_STORAGE_KEYS";
 

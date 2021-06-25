@@ -15,7 +15,8 @@ export default (state = initialState, { type, payload }) => {
       return authActions.methods.login(payload);
     case authActions.actions.LOGOUT:
       return authActions.methods.logout();
-
+    case authActions.actions.LOADEXIST:
+      return authActions.methods.loadFromStore();
     default:
       return state;
   }

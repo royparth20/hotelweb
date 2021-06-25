@@ -1,48 +1,48 @@
-import styled from "styled-components"
-import { media } from 'styled-bootstrap-grid';
-import { Link } from 'react-router-dom'
+import styled from "styled-components";
+import { media } from "styled-bootstrap-grid";
+import { Link } from "react-router-dom";
 
 export const Nav = styled.nav`
-  width:100%;
+  width: 100%;
   height: 100px;
-  background-color: #FBFDFF;
+  background-color: #fbfdff;
   display: flex;
   justify-content: center;
-  align-items:center;
+  align-items: center;
   position: sticky;
-  top:0;
-  z-index:9999;
-  margin-bottom:0px;
-`
+  top: 0;
+  z-index: 9999;
+  margin-bottom: 0px;
+`;
 
 export const NavbarContainer = styled.div`
   display: flex;
-  font-size:1.2rem;
+  font-size: 1.2rem;
   justify-content: space-between;
   height: 100px;
   width: 80%;
-  color:#096DAB;
-  margin-bottom:0px;
-`
+  color: #096dab;
+  margin-bottom: 0px;
+`;
 
 export const Navlogo = styled(Link)`
-  color: #096DAB;
-  font-weight:600;
+  color: #096dab;
+  font-weight: 600;
   justify-self: flex-start;
   cursor: pointer;
   text-decoration: none;
   font-size: 2rem;
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   font-size: 20px;
-  &:hover{
+  &:hover {
     text-decoration: none;
-    color:#096DAB;
+    color: #096dab;
   }
   ${media.lg`
     font-size: 25px;
   `}
-`
+`;
 
 export const TopBar = styled.div`
   display: flex;
@@ -52,58 +52,60 @@ export const TopBar = styled.div`
   ${media.lg`
     position: absolute;
   `}
-`
+`;
 
 export const NavItemProfileMobile = styled.div`
-  position:relative;
+  position: relative;
   ${media.lg`
     display: none;
   `}
-`
+`;
 
 export const ProfilePictureMobile = styled.img`
-  margin-right:10px;
+  margin-right: 10px;
   border-radius: 50%;
-`
+  width: 50px;
+  height: 50px;
+`;
 
 export const ProfileContextMobile = styled.div`
   position: absolute;
-  background:white;
-  padding:10px 20px;
+  background: white;
+  padding: 10px 20px;
   text-align: start;
-  margin-top:10px;
-  right:0px;
-  &.show{
-    display:none;
+  margin-top: 10px;
+  right: 0px;
+  &.show {
+    display: none;
   }
   ${media.lg`
     display: none;  
   `}
-`
+`;
 
 export const ProfileContextItemMobile = styled.div`
-  height:35px;
-`
+  height: 35px;
+`;
 
 export const ProfileContextItemMobileLink = styled(Link)`
-  text-decoration:none;
+  text-decoration: none;
   min-width: 100px;
-  font-size:16px;
+  font-size: 16px;
   display: block;
-  color:#6B6B6B;
-  &:hover{
-    color:#096DAB;
+  color: #6b6b6b;
+  &:hover {
+    color: #096dab;
     text-decoration: none;
   }
-`
+`;
 
 export const MobileIcon = styled.div`
   display: block;
-  cursor:pointer;
+  cursor: pointer;
   ${media.lg`
     display:none;
   `}
-`
+`;
 
 export const NavMenu = styled.ul`
   display: flex;
@@ -112,10 +114,10 @@ export const NavMenu = styled.ul`
   height: 90vh;
   position: absolute;
   top: 100px;
-  left: ${({click}) => (click ? 0 : '-100%')};
+  left: ${({ click }) => (click ? 0 : "-100%")};
   opacity: 1;
   transition: all 0.5s ease;
-  background: #FBFDFF;
+  background: #fbfdff;
 
   ${media.lg`
     height: 100px;
@@ -137,17 +139,17 @@ export const NavItem = styled.li`
   ${media.lg`
     height: 100px;
   `}
-`
+`;
 
 export const NavLinks = styled(Link)`
-  color:#096DAB;
+  color: #096dab;
   padding: 1.4rem;
   display: block;
   &:hover {
-    color: #FBFDFF;
+    color: #fbfdff;
     transition: all 0.3s ease;
     text-decoration: none;
-    background-color: #096DAB;
+    background-color: #096dab;
   }
 
   ${media.lg`
@@ -186,6 +188,9 @@ export const NavItemProfile = styled.div`
 
 export const ProfilePicture = styled.img`
   border-radius: 50%;
+  max-width: 50px;
+  max-height: 50px;
+  cursor: pointer;
 `;
 
 export const ProfileContext = styled.div`
@@ -205,32 +210,27 @@ export const ProfileContext = styled.div`
 `;
 
 export const ProfileContextItem = styled.div`
-  height:35px;
+  height: 35px;
 `;
 
 export const ProfileContextItemLink = styled(Link)`
-  text-decoration:none;
+  text-decoration: none;
   min-width: 150px;
   display: block;
-  color:#6B6B6B;
-  &:hover{
-    color:#096DAB;
+  color: #6b6b6b;
+  &:hover {
+    color: #096dab;
     text-decoration: none;
   }
-`
+`;
 
 export const LogoutButton = styled.button`
-  text-decoration:none;
+  text-decoration: none;
   min-width: 150px;
   display: block;
-  color:#6B6B6B;
-  &:hover{
-    color:#096DAB;
+  color: #6b6b6b;
+  &:hover {
+    color: #096dab;
     text-decoration: none;
   }
-`
-
-
-
-
-
+`;

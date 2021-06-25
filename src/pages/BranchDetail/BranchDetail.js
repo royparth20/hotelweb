@@ -31,10 +31,13 @@ const BranchDetail = () => {
   const [error, setError] = useState({});
   const [selectedFile, setSelectedFile] = useState();
   const [isFilePicked, setIsFilePicked] = useState(false);
+  const [imagePreview, setImagePreview] = useState("");
   ///////////////////////////////////
   const changeHandler = (event) => {
     setSelectedFile(event.target.files[0]);
-
+    if (event.target.files.length !== 0) {
+      setImagePreview(window.URL.createObjectURL(event.target.files[0]));
+    }
     //setIsSelected(true);
   };
   ///////////////////////////////////
@@ -155,7 +158,7 @@ const BranchDetail = () => {
             <ContentWrapper className="p- m-0">
               <Row className="p-0 m-0">
                 <Col lg={3} className="p-2 m-0">
-                  <BDPictureForm ch={changeHandler} />
+                  <BDPictureForm ch={changeHandler}  imagePreview={imagePreview}/>
                 </Col>
                 <Col lg={5} className="p-2 m-0">
                   <BDDetailForm

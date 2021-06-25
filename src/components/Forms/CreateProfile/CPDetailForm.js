@@ -25,6 +25,7 @@ const CPDetailForm = (props) => {
             <Input
               placeholder="Enter Guests Name"
               readOnly="readonly"
+              disabled
               value={props.hName}
               onChange={(e) => updateHName(e.target.value)}
             ></Input>

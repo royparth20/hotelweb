@@ -1,11 +1,11 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const Main = styled.main`
-  display:flex;
+  display: flex;
   justify-content: center;
-  align-items:center;
-  padding-bottom:100px;
-  background:#FBFDFF;
+  align-items: center;
+  padding-bottom: 100px;
+  background: #fbfdff;
 `;
 
 export const PageTitleContainer = styled.div`
@@ -15,7 +15,6 @@ export const PageTitleContainer = styled.div`
   padding: 40px;
 `;
 
-
 export const PageTitle = styled.div`
   font-style: normal;
   font-weight: 600;
@@ -24,28 +23,24 @@ export const PageTitle = styled.div`
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #061422;
-  margin-left:15px;
+  margin-left: 15px;
 `;
 
-export const PageTitleLine = styled.img`
-  
+export const PageTitleLine = styled.img``;
+
+export const HotelName = styled.h1`
+  font-family: "Montserrat", sans-serif;
+  padding-top: 50px;
 `;
 
-export const HotelName = styled.h1` 
-  font-family: 'Montserrat', sans-serif;
-  padding-top:50px;
-`;
-
-export const HotelBasicInformation = styled.div`
-
-`
+export const HotelBasicInformation = styled.div``;
 
 export const HotelInfo = styled.div`
   display: flex;
-`
+`;
 
 export const HotelInfoLabel = styled.div`
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 15px;
@@ -53,11 +48,11 @@ export const HotelInfoLabel = styled.div`
   letter-spacing: 0.04em;
   text-transform: capitalize;
   color: #061422;
-  padding:10px 40px 10px 0px;
-`
+  padding: 10px 40px 10px 0px;
+`;
 
 export const HotelInfoValue = styled.div`
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 15px;
@@ -65,21 +60,30 @@ export const HotelInfoValue = styled.div`
   letter-spacing: 0.04em;
   text-transform: capitalize;
   color: #061422;
-  padding:10px 40px 10px 0px;
-`
+  padding: 10px 40px 10px 0px;
+`;
 
 export const CardWrapper = styled.div`
   min-height: 320px;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.11);
-  margin:10px;
+  margin: 10px;
 `;
 
-export const CardImage = styled.img`
+// export const CardImage = styled.img`
+//   width: 100%;
+//   min-height: 200px;
+// `;
+
+export const CardImage = styled.div`
   width: 100%;
-  min-height: 200px;
+  height: 250px;
+  text-align: center;
 `;
-
+export const Image = styled.img`
+  max-width: 100%;
+  height: 100%;
+`;
 
 export const CardInfo = styled.div`
   padding: 20px;
@@ -97,7 +101,7 @@ export const CardName = styled.p`
 
 export const CardButton = styled.button`
   height: 24px;
-  border:none;
+  border: none;
   background: rgba(245, 55, 75, 0.2);
   border-radius: 2px;
   font-style: normal;
@@ -106,6 +110,6 @@ export const CardButton = styled.button`
   line-height: 23px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #FC1C34;
-  padding:0px 15px;
+  color: #fc1c34;
+  padding: 0px 15px;
 `;

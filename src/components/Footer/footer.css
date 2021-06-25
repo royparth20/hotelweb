@@ -1,0 +1,13 @@
+.footer label {
+  color: white;
+}
+
+.footer input {
+  color: #fff !important;
+  background-color: #043565 !important;
+}
+
+.list-inline ul li {
+  color: white;
+  margin-bottom: 15px;
+}

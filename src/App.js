@@ -1,5 +1,6 @@
+import "./css/bootstrap.min.css";
 import "./css/scrollbar-theme.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import Header from "./components/Header/Header";
 import HeaderLoggedin from "./components/HeaderLoggedin/HeaderLoggedin";
@@ -32,7 +33,10 @@ import Reports from "./pages/Reports/Reports";
 import withClearCache from "./ClearCache";
 import Service from "./pages/Service/Service";
 import TouristReport from "./pages/Reports/TouristReport";
-
+import { useDispatch, useSelector } from "react-redux";
+import authActions from "./store/actions/authActions";
+import userActions from "./store/actions/userAction";
+import api from "./axios";
 const ClearCacheComponent = withClearCache(withRouter(App));
 
 function MainApp() {
@@ -43,8 +47,36 @@ function MainApp() {
   );
 }
 function App() {
-  const isLoggedIn = localStorage.getItem("token");
+  const dispatch = useDispatch();
+  // const isLoggedIn = localStorage.getItem("token");
+  const isLoggedIn = useSelector((state) => state.auth.authenticated);
   console.log("token", isLoggedIn);
+  const resetToken = useSelector((state) => state.user.resetToken);
+  useEffect(async () => {
+    if (isLoggedIn) {
+      if (
+        resetToken === null ||
+        resetToken === undefined ||
+        resetToken === ""
+      ) {
+        // setTimeout(async () => {
+        try {
+          const element = await api.getHotel();
+          dispatch({
+            type: userActions.actions.USER_DETAILS,
+            payload: { ...element.data.data[0] },
+          });
+          // dispatch({
+          //   type: authActions.actions.LOADEXIST,
+          // });
+        } catch (err) {
+          console.error("ERROR ==> ", err);
+        }
+        // }, 50);
+      } else {
+      }
+    }
+  }, []);
   return (
     <>
       <GlobalStyle />

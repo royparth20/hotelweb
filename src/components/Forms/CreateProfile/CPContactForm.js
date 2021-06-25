@@ -24,7 +24,7 @@ const CPContactForm = (props) => {
         <FormGroup>
           <FormLabel>Name</FormLabel>
           <FormInput>
-            <Input placeholder="Enter Guests Name" readOnly="readonly" value={props.name}  onChange={e => updateName(e.target.value)}></Input>
+            <Input placeholder="Enter Guests Name" readOnly="readonly" value={props.name} disabled  onChange={e => updateName(e.target.value)}></Input>
           </FormInput>
         </FormGroup>
         <FormGroup>
@@ -36,7 +36,7 @@ const CPContactForm = (props) => {
         <FormGroup>
           <FormLabel>Email</FormLabel>
           <FormInput>
-            <Input placeholder="Email" value={props.email} onChange={e => updateEmail(e.target.value)}></Input>
+            <Input placeholder="Email" value={props.email} onChange={e => updateEmail(e.target.value)} disabled></Input>
           </FormInput>
         </FormGroup>
       </FormContainer>
