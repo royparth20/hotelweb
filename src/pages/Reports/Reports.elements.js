@@ -1,11 +1,12 @@
-import styled from "styled-components"
-import { media } from 'styled-bootstrap-grid';
+import styled from "styled-components";
+import { media } from "styled-bootstrap-grid";
 
 export const Main = styled.main`
-  display:flex;
+  display: flex;
   justify-content: center;
-  align-items:center;
-  background-color: #FBFDFF;;
+  align-items: center;
+  background-color: #fbfdff;
+  padding-bottom: 50px;
 `;
 
 export const PageTitleContainer = styled.div`
@@ -19,7 +20,6 @@ export const PageTitleContainer = styled.div`
   font-weight: 600;
 `;
 
-
 export const PageTitle = styled.div`
   font-size: 24px;
   line-height: 142.9%;
@@ -31,24 +31,20 @@ export const PageTitle = styled.div`
   align-self: flex-start;
 `;
 
-
 export const PageParagraph = styled.p`
   align-self: flex-start;
-  width:70%;
-  
+  width: 70%;
 `;
-export const ContentWrapper = styled.div`
-  
-`;
+export const ContentWrapper = styled.div``;
 
 export const FormSection = styled.div`
-  height:1024px;
-  width:100%;
-  position:relative;
+  height: 1024px;
+  width: 100%;
+  position: relative;
 `;
 
 export const ImageContent = styled.p`
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -63,4 +59,3 @@ export const ImageContent = styled.p`
     margin-left: 56px;
   `}
 `;
-

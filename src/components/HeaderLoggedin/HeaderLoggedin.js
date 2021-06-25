@@ -33,6 +33,10 @@ const HeaderLoggedin = () => {
   //     console.log(111)
   //     window.location.href = '/login';
   // }
+  const userType = useSelector((state) => state.auth.userType);
+  const isHotelAdmin = () => {
+    return userType === "HOTEL";
+  };
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -88,16 +92,21 @@ const HeaderLoggedin = () => {
                               Create Tourist
                             </ProfileContextItemLink>
                           </ProfileContextItem>
-                          <ProfileContextItem>
-                            <ProfileContextItemLink to="/createStaff">
-                              Create Staff
-                            </ProfileContextItemLink>
-                          </ProfileContextItem>
-                          <ProfileContextItem>
-                            <ProfileContextItemLink to="/branchDetails">
-                              Create Branch
-                            </ProfileContextItemLink>
-                          </ProfileContextItem>
+
+                          {userType && isHotelAdmin() && (
+                            <>
+                              <ProfileContextItem>
+                                <ProfileContextItemLink to="/createStaff">
+                                  Create Staff
+                                </ProfileContextItemLink>
+                              </ProfileContextItem>
+                              <ProfileContextItem>
+                                <ProfileContextItemLink to="/branchDetails">
+                                  Create Branch
+                                </ProfileContextItemLink>
+                              </ProfileContextItem>
+                            </>
+                          )}
                           <ProfileContextItemMobile>
                             <LogoutButton
                               className="text-left p-0  btn btn-link"
@@ -152,16 +161,21 @@ const HeaderLoggedin = () => {
                               Create Tourist
                             </ProfileContextItemLink>
                           </ProfileContextItem>
-                          <ProfileContextItem>
-                            <ProfileContextItemLink to="/createStaff">
-                              Create Staff
-                            </ProfileContextItemLink>
-                          </ProfileContextItem>
-                          <ProfileContextItem>
-                            <ProfileContextItemLink to="/branchDetails">
-                              Create Branch
-                            </ProfileContextItemLink>
-                          </ProfileContextItem>
+                          {userType && isHotelAdmin() && (
+                            <>
+                              <ProfileContextItem>
+                                <ProfileContextItemLink to="/createStaff">
+                                  Create Staff
+                                </ProfileContextItemLink>
+                              </ProfileContextItem>
+
+                              <ProfileContextItem>
+                                <ProfileContextItemLink to="/branchDetails">
+                                  Create Branch
+                                </ProfileContextItemLink>
+                              </ProfileContextItem>
+                            </>
+                          )}
                           <ProfileContextItem>
                             <LogoutButton
                               className="text-left p-0  btn btn-link"
