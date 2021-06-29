@@ -46,6 +46,9 @@ const CreateStaff = () => {
       staffPassword: pass,
       assignHotel: [curbranch],
     };
+    if (curbranch === null || curbranch === undefined) {
+      data.assignHotel = [id];
+    }
     var config = {
       method: "post",
       url: "hotel/create-staff?assignHotel=" + id,
