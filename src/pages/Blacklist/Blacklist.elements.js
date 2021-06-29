@@ -1,11 +1,11 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const Main = styled.main`
-  display:flex;
+  display: flex;
   justify-content: center;
-  align-items:center;
-  padding-bottom:100px;
-  background-color: #FBFDFF;
+  align-items: center;
+  padding-bottom: 100px;
+  background-color: #fbfdff;
 `;
 
 export const PageTitleContainer = styled.div`
@@ -15,7 +15,6 @@ export const PageTitleContainer = styled.div`
   padding: 40px;
 `;
 
-
 export const PageTitle = styled.div`
   font-style: normal;
   font-weight: 600;
@@ -24,18 +23,16 @@ export const PageTitle = styled.div`
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #061422;
-  margin-left:15px;
+  margin-left: 15px;
 `;
 
-export const PageTitleLine = styled.img`
-  
-`;
+export const PageTitleLine = styled.img``;
 
 export const CardWrapper = styled.div`
-  min-height: 320px;
-  background: #FFFFFF;
-  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.11);
-  margin:10px;
+  max-height: 320px;
+  // background: #ffffff;
+  // box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.11);
+  // margin: 10px;
 `;
 
 export const CardImage = styled.img`
@@ -43,9 +40,8 @@ export const CardImage = styled.img`
   min-height: 200px;
 `;
 
-
 export const CardInfo = styled.div`
-  padding: 20px;
+  // padding: 20px;
 `;
 
 export const CardName = styled.p`
@@ -60,8 +56,8 @@ export const CardName = styled.p`
 
 export const CardButton = styled.button`
   height: 24px;
-  border:none;
-  background: #096DAB;
+  border: none;
+  background: #096dab;
   border-radius: 2px;
   font-style: normal;
   font-weight: 500;
@@ -69,6 +65,6 @@ export const CardButton = styled.button`
   line-height: 23px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: #FFFFFF;
-  padding:0px 15px;
+  color: #ffffff;
+  padding: 0px 15px;
 `;

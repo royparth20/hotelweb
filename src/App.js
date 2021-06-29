@@ -25,6 +25,7 @@ import Blog from "./pages/Blog/Blog";
 import Register from "./pages/Register/Register";
 import Hotel from "./pages/Hotel/Hotel";
 import Staff from "./pages/Staff/Staff";
+import StaffDetails from "./pages/Staff/StaffDetails";
 import HotelDetail from "./pages/HotelDetail/HotelDetail";
 import TouristDetail from "./pages/TouristDetail/TouristDetail";
 import BranchDetail from "./pages/BranchDetail/BranchDetail";
@@ -190,6 +191,11 @@ function App() {
                 <Route path="/staff" exact>
                   <HeaderLoggedin />
                   <Staff />
+                  <Footer />
+                </Route>
+                <Route path="/staff-details" exact>
+                  <HeaderLoggedin />
+                  <StaffDetails />
                   <Footer />
                 </Route>
                 <Route path="/createStaff" exact>

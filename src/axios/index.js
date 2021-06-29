@@ -26,9 +26,17 @@ export default {
   getStaffMembers: () => api.get("/hotel/getStaffMembers?all=true"),
   getStaffMemberById: (branchId) =>
     api.get(`/hotel/getStaffMembers?hotelId=${branchId}`),
+  getStaffMemberByStaffId: (staffMemberId) =>
+    api.get(`/hotel/getStaffMembers?staffMemberId=${staffMemberId}`),
 
   raiseTouristAlert: (payload) =>
     api.post(`hotel/raise-alert?touristId=${payload}`),
 
   getBranchData: (payload) => api.get(`/hotel/?branchId=${payload}`),
+  contactUs: (payload) => api.post("/users/contact-us", payload),
+  socialLink: () => api.get("/social"),
+  // /contactus
+
+  updateStaff: (payload, id) =>
+    api.put(`/hotel/create-staff?staffId=${id}`, payload),
 };

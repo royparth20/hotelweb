@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { map } from "rxjs/operators";
 import { useSelector } from "react-redux";
 import api from "../../axios";
@@ -19,16 +19,18 @@ import { Modal, Button, Form } from "react-bootstrap";
 import { Container, Col, Row } from "styled-bootstrap-grid";
 import { useHistory } from "react-router-dom";
 import { Link, useLocation } from "react-router-dom";
-
+import toastr from "toastr";
 const Staff = () => {
   const branchId = new URLSearchParams(useLocation().search).get("branchId");
   const [staffs, setstaffs] = useState([]);
+  const refBtn = useRef();
   let history = useHistory();
   // if (branchId !== null || branchId !== undefined) {
+
   useEffect(() => {
     fetchData()
       .then((element) => {
-        // console.log(element);
+        console.log(element);
         setstaffs(element.data.data);
       })
       .catch(function (error) {
@@ -75,41 +77,89 @@ const Staff = () => {
   const handleShow = () => setShow(true);
 
   const branches = useSelector((state) => state.user.branches);
-  const [staffMemberData, setStaffMemberData] = useState({});
+  const [staffMemberData, setStaffMemberData] = useState(null);
   const [checkedState, setCheckedState] = useState([]);
-  const handleEditBtn = (e) => {
-    // console.table(data);
-    const data = e.target?.dataset?.staff;
-    if (data) setStaffMemberData(JSON.parse(data));
-    console.log("handleEditBtn == >", staffMemberData, checkedState);
-    // console.log(new Array(branches.length).fill(false));
-    // branches.map((type) => {
-    //   setCheckedState(
-    //     checkedState.push(
-    //       staffMemberData &&
-    //         staffMemberData.assignedHotel &&
-    //         staffMemberData?.assignedHotel.includes(type._id)
-    //     )
-    //   );
-    // });
-    // setCheckedState(new Array(branches.length).fill(false));
-    handleShow();
-  };
 
+  // const handleEditBtn = async (e) => {
+  //   // e.preventDefault();
+  //   return;
+  //   // if (staffMemberData && show === false) handleShow();
+  // };
+  // useEffect(() => {
+  //   try {
+  //     // setStaffMemberData(data);
+  //     setCheckedState([]);
+  //     branches.map((type) => {
+  //       // console.log(type);
+  //       setCheckedState((checkedState) => [
+  //         ...checkedState,
+  //         staffMemberData &&
+  //           staffMemberData.assignedHotel &&
+  //           staffMemberData?.assignedHotel.includes(type._id),
+  //       ]);
+  //     });
+  //     // setCheckedState(new Array(branches.length).fill(false));
+  //     console.log(checkedState.length);
+  //     if (staffMemberData) handleShow();
+  //   } catch (err) {
+  //     console.error(err);
+  //     handleClose();
+  //   }
+  // }, [staffMemberData, setStaffMemberData]);
+  const handleEditBtn = useCallback(async (e) => {
+    try {
+      // setStaffMemberData(data);
+      setCheckedState([]);
+      await branches.map((type) => {
+        // console.log(type);
+        setCheckedState((checkedState) => [
+          ...checkedState,
+          staffMemberData &&
+            staffMemberData.assignedHotel &&
+            staffMemberData?.assignedHotel.includes(type._id),
+        ]);
+      });
+      // setCheckedState(new Array(branches.length).fill(false));
+      console.log(staffMemberData, branches, checkedState.length);
+      if (staffMemberData || checkedState.length > 0) handleShow();
+    } catch (err) {
+      console.error(err);
+      handleClose();
+    }
+  });
+  // useEffect(() => {
+  //   // console.table(checkedState);
+  // }, [checkedState, setCheckedState]);
   const handleOnChange = (e, position) => {
-    console.log(checkedState.length);
     const updatedCheckedState = checkedState.map((item, index) => {
-      console.log(index === position ? !item : item);
       return index === position ? !item : item;
     });
 
-    // setCheckedState(updatedCheckedState);
-    console.log(e.target.checked, position, updatedCheckedState);
+    setCheckedState(updatedCheckedState);
   };
 
-  // const updatedCheckedState = checkedState.map((item, index) =>
-  //     index === position ? !item : item
-  //   );
+  const onSubmit = async (e) => {
+    try {
+      let payload = { ...staffMemberData, assignHotel: [] };
+      const id = payload._id;
+      payload.assignedHotel = [];
+      payload._id = undefined;
+      branches.map((type, index) => {
+        // console.log(index, type?.address, checkedState[index]);
+        if (checkedState[index]) {
+          payload.assignHotel = [...payload.assignHotel, type._id];
+        }
+      });
+      // console.log(payload);
+      const { data } = await api.updateStaff(payload, id);
+      // updateStaff
+      // console.log(data);
+      toastr.success(data.data);
+      history.replace("/home");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <Main>
@@ -149,16 +199,12 @@ const Staff = () => {
                         </span>
                       </div>
 
-                      <button
+                      <Link
                         className="btn btn-warning card-link"
-                        onClick={(e) => handleEditBtn(e)}
-                        data-staff={JSON.stringify(element)}
+                        to={`/staff-details?staffId=${element._id}`}
                       >
                         Edit
-                      </button>
-                      {/* <Link to="#" className="card-link">
-                        Another link
-                      </Link> */}
+                      </Link>
                     </div>
                   </CardInfo>
                 </CardWrapper>
@@ -297,7 +343,7 @@ const Staff = () => {
               <Button variant="secondary" onClick={handleClose}>
                 Close
               </Button>
-              <Button variant="primary" onClick={handleClose}>
+              <Button variant="primary" onClick={onSubmit}>
                 Save Changes
               </Button>
             </Modal.Footer>

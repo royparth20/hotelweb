@@ -65,7 +65,7 @@ const TouristDetail = () => {
 
     //var data = JSON.stringify({"ownerName":pname,"mobile":bnumber,"email":bemail,"address":address,"hotelImages":[]});
      if(passport&&photo){
-    var data = JSON.stringify(
+    var data = 
       { "touristName":touristFirstname+" "+touristLastname,
         "residentCountry":country,
         "mobileNumber":mobile,
@@ -86,7 +86,7 @@ const TouristDetail = () => {
         "uploadPassportOrTazkera":tpassport,
         "uploadVisa":tvisa,
         "hotelId":localStorage.getItem('hotel_id')
-      });
+      };
       
     var config = {
       method: 'post',
@@ -207,7 +207,7 @@ const TouristDetail = () => {
     <Main>
     <form onSubmit={handleSubmit}>
       <Container>
-        <Row>
+        {/* <Row>
           <Col>
             <PageTitleContainer>
               <PageTitle>TOURIST DETAILS</PageTitle>
@@ -216,7 +216,7 @@ const TouristDetail = () => {
               </PageParagraph>
             </PageTitleContainer>
           </Col>
-        </Row>
+        </Row> */}
 
         <ContentWrapper className="p- m-0">
             <BgTopRightImage src="./assets/icons/form_back.svg"/>

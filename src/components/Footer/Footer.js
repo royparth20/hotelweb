@@ -8,6 +8,7 @@ import {
   Heading,
   CopyRight,
   FooterLink,
+  FooterSocialLink,
 } from "./Footer.elements";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
@@ -42,6 +43,7 @@ const Footer = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [socialLink, setSocialLink] = useState();
   // const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const scrollToTop = (e) => {
@@ -105,6 +107,14 @@ const Footer = () => {
       setMessage(event.target.value);
     }
   };
+
+  useEffect(async () => {
+    try {
+      const { data } = await api.socialLink();
+      // console.log(data);
+      setSocialLink(data.data);
+    } catch (error) {}
+  }, []);
   return (
     <>
       <FooterWrapper className="footer">
@@ -250,25 +260,34 @@ const Footer = () => {
 
               <ul className="m-0 list-inline">
                 <li className="list-inline-item">
-                  <FooterLink to="#">
+                  <FooterSocialLink
+                    href={socialLink && socialLink?.facebook}
+                    target="_blank"
+                  >
                     <img alt="#" src={facebook} />
-                  </FooterLink>
+                  </FooterSocialLink>
                 </li>
                 <li className="list-inline-item">
-                  <FooterLink to="#">
+                  <FooterSocialLink
+                    href={socialLink && socialLink?.twitter}
+                    target="_blank"
+                  >
                     <img alt="#" src={twitter} />
-                  </FooterLink>
+                  </FooterSocialLink>
                 </li>
                 <li className="list-inline-item">
-                  <FooterLink to="#">
+                  <FooterSocialLink
+                    href={socialLink && socialLink?.instagram}
+                    target="_blank"
+                  >
                     <img alt="#" src={instagram} />
-                  </FooterLink>
+                  </FooterSocialLink>
                 </li>
-                <li className="list-inline-item">
-                  <FooterLink to="#">
+                {/* <li className="list-inline-item">
+                  <FooterLink href={socialLink && socialLink?.facebook}>
                     <img alt="#" src={linkedIn} />
                   </FooterLink>
-                </li>
+                </li> */}
               </ul>
             </Col>
           </Row>

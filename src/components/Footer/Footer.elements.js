@@ -23,6 +23,16 @@ export const AboutText = styled.h2`
   color: #ffffff;
 `;
 
+export const FooterSocialLink = styled.a`
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 150.5%;
+  text-transform: capitalize;
+  color: #fff;
+  font-weight: 600;
+  font-size: 18px;
+`;
 export const FooterLink = styled(Link)`
   font-style: normal;
   font-weight: normal;
@@ -33,7 +43,6 @@ export const FooterLink = styled(Link)`
   font-weight: 600;
   font-size: 18px;
 `;
-
 export const Heading = styled.h3`
   font-style: normal;
   font-weight: 600;

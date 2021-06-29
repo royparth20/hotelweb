@@ -75,6 +75,7 @@ const HotelDetail = () => {
                         maxWidth: "350px",
                         borderRadius: "5%",
                         height: "fit-content",
+                        maxHeight:'350px'
                       }}
                     />
                   ) : (
@@ -114,7 +115,7 @@ const HotelDetail = () => {
           <Row>
             {hotels?.branches &&
               hotels.branches.map((br) => (
-                <Col sm={12} lg={4}>
+                <Col sm={12} lg={4} key={br._id}>
                   {/* {console.log(br)} */}
                   <CardWrapper>
                     {br.hotelImages.length > 0 ? (

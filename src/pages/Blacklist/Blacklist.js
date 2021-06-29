@@ -51,12 +51,34 @@ const Blacklist = () => {
 
           <Row>
             {blockLists.map((bl) => (
-              <Col sm={12} lg={4}>
+              <Col sm={12} lg={4} key={bl._id}>
+                {console.log(bl)}
                 <CardWrapper>
-                  <CardImage src="https://via.placeholder.com/360x200" />
-                  <CardInfo>
-                    <CardName>{bl?.touristId?.touristName}</CardName>
-                    <CardButton>Download CSV</CardButton>
+                  {/* <CardImage src="https://via.placeholder.com/360x200" /> */}
+                  <CardInfo className="card m-2">
+                    <div className="card-header">
+                      <CardName>
+                        {bl?.touristId?.touristName || "Name"}
+                      </CardName>
+                    </div>
+                    {/* <hr /> */}
+                    <div className="card-body">
+                      <p className="text-muted">
+                        Mobile Number :- {bl?.touristId?.mobileNumber || ""}
+                      </p>
+                      <p className="text-muted">
+                        Passport Number :- {bl?.touristId?.passportNumber || ""}
+                      </p>
+                      <p className="text-muted">
+                        Tazkera Number :- {bl?.touristId?.tazkeraNumber || ""}
+                      </p>
+                      <p className="text-muted">
+                        Nationality :- {bl?.touristId?.nationality || ""}
+                      </p>
+                    </div>
+                    <div className="card-footer">
+                      <CardButton>Download CSV</CardButton>
+                    </div>
                   </CardInfo>
                 </CardWrapper>
               </Col>
