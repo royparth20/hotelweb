@@ -11,7 +11,8 @@ import {
 
 import { useSelector } from "react-redux";
 const BDDetailForm = (props) => {
-  const { updatePNam, updateBMName, updateAddress } = props;
+  const { updatePNam, updateBMName, updateAddress, pname, bmname, address } =
+    props;
   const user = useSelector((state) => state.user);
   useEffect(() => {
     console.log("BDDetails ==> ", user);
@@ -37,6 +38,7 @@ const BDDetailForm = (props) => {
           <FormLabel>Branch Manager Name</FormLabel>
           <FormInput>
             <Input
+              value={bmname}
               placeholder="Manager Name"
               onChange={(e) => updateBMName(e.target.value)}
             ></Input>
@@ -46,6 +48,7 @@ const BDDetailForm = (props) => {
           <FormLabel>Address</FormLabel>
           <FormInput>
             <TextArea
+            value={address}
               placeholder="Address"
               onChange={(e) => updateAddress(e.target.value)}
             ></TextArea>

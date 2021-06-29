@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import API from "../../../api";
+import api from "../../../axios";
 import {
   FormContainer,
   FormGroup,
@@ -28,6 +29,7 @@ export default function LoginForm() {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState({});
+  const [userType, setUserType] = useState("hotel");
   const dispatch = useDispatch();
   ////////////Ajax/////////////////////////////////////////
   async function LoginUser(credentials) {
@@ -92,10 +94,32 @@ export default function LoginForm() {
     if (!valid()) {
       return false;
     }
-    const token = await LoginUser({
-      username,
-      password,
-    });
+    console.log(userType);
+    if (userType === "hotel") {
+      const token = await LoginUser({
+        username,
+        password,
+      });
+    } else {
+      const payload = {
+        // staff/login
+        staffEmail: username,
+        staffPassword: password,
+      };
+      try {
+        const { data } = await api.loginStaff(payload);
+        toastr.success(data.message);
+
+        dispatch({
+          type: authActions.actions.LOGIN,
+          payload: data,
+        });
+        history.push("/home");
+      } catch (error) {
+        console.log("ERR LOGIN ==>", error);
+        toastr.error(error.response.data.message);
+      }
+    }
     // setToken(token);
   };
   ////////////Ajax/////////////////////////////////////////
@@ -104,6 +128,50 @@ export default function LoginForm() {
       <FormContainer>
         <form onSubmit={handleSubmit}>
           <FormGroup>
+            <div className="row">
+              <div className="col-6">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="userType"
+                    id="flexRadioStaff"
+                    value="staff"
+                    checked={userType === "staff"}
+                    onChange={(e) => {
+                      setUserType(e.currentTarget.value);
+                    }}
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexRadioDefault1"
+                  >
+                    Staff
+                  </label>
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="form-check">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    value="hotel"
+                    name="userType"
+                    checked={userType === "hotel"}
+                    id="flexRadioHotel"
+                    onChange={(e) => {
+                      setUserType(e.currentTarget.value);
+                    }}
+                  />
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexRadioDefault1"
+                  >
+                    Hotel
+                  </label>
+                </div>
+              </div>
+            </div>
             <FormLabel>Email</FormLabel>
             <FormInput>
               <Input

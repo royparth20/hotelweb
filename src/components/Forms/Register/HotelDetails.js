@@ -23,6 +23,13 @@ const HotelDetails = (props) => {
     setCountry,
     setCity,
     error,
+    countryList,
+    stateList,
+    onchangeState,
+    onchangeCountry,
+    cityList,
+    setCityList,
+    setStateList,
   } = props;
   //   const [username, setUserName] = useState();
 
@@ -75,23 +82,57 @@ const HotelDetails = (props) => {
         <FormInput>
           <InputDropdown
             placeholder="Enter Country"
-            onChange={(e) => setCountry(e.target.value || "India")}
+            onChange={(e) => {
+              try {
+                let newVal = JSON.parse(e.target.value);
+                onchangeCountry(newVal);
+                setCountry(newVal.name);
+              } catch (error) {
+                setCityList([]);
+                setStateList([]);
+                setCountry("");
+              }
+            }}
+            // onChange={(e) => setCountry(e.target.value || "India")}
           >
-            <InputDropdownOption>India</InputDropdownOption>
-            <InputDropdownOption>US</InputDropdownOption>
+            <InputDropdownOption>Select Country</InputDropdownOption>
+            {countryList &&
+              countryList.map((item) => (
+                <InputDropdownOption value={JSON.stringify(item)}>
+                  {item.name}
+                </InputDropdownOption>
+              ))}
+            {/* <InputDropdownOption>India</InputDropdownOption>
+            <InputDropdownOption>US</InputDropdownOption> */}
           </InputDropdown>
         </FormInput>
       </FormGroup>
 
       <FormGroup>
-        <FormLabel>District</FormLabel>
+        <FormLabel>State</FormLabel>
         <FormInput>
           <InputDropdown
-            placeholder="Enter District"
-            onChange={(e) => setDistrict(e.target.value || "District1")}
+            placeholder="Enter State"
+            onChange={(e) => {
+              try {
+                let newVal = JSON.parse(e.target.value);
+                onchangeState(newVal);
+                setDistrict(newVal.name);
+              } catch (error) {
+                setCityList([]);
+                setDistrict("");
+              }
+              // handleChange(e);
+            }}
+            // onChange={(e) => setDistrict(e.target.value || "District1")}
           >
-            <InputDropdownOption>District1</InputDropdownOption>
-            <InputDropdownOption>District2</InputDropdownOption>
+            <InputDropdownOption>Select State</InputDropdownOption>
+            {stateList &&
+              stateList.map((item) => (
+                <InputDropdownOption value={JSON.stringify(item)}>
+                  {item.name}
+                </InputDropdownOption>
+              ))}
           </InputDropdown>
         </FormInput>
       </FormGroup>
@@ -103,8 +144,13 @@ const HotelDetails = (props) => {
             placeholder="Enter City"
             onChange={(e) => setCity(e.target.value || "Mumbai")}
           >
-            <InputDropdownOption>Mumbai</InputDropdownOption>
-            <InputDropdownOption>Delhi</InputDropdownOption>
+            <InputDropdownOption>Select City</InputDropdownOption>
+            {cityList &&
+              cityList.map((item) => (
+                <InputDropdownOption value={item.name}>
+                  {item.name}
+                </InputDropdownOption>
+              ))}
           </InputDropdown>
         </FormInput>
       </FormGroup>

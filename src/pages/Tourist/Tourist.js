@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { map } from "rxjs/operators";
 import API from "../../api_test";
+import api from "../../axios";
 import {
   Main,
   PageTitleContainer,
@@ -17,7 +18,7 @@ import {
 import { Container, Row, Col } from "styled-bootstrap-grid";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import toastr from "toastr";
 const Tourist = () => {
   const [tourists, setTourists] = useState([]);
   let history = useHistory();
@@ -65,6 +66,17 @@ const Tourist = () => {
       }
     }
   };
+  const handleAlert = async (e, id) => {
+    try {
+      // console.log(id);
+      const { data } = await api.raiseTouristAlert(id);
+      // console.log(data);
+      toastr.success(data.data);
+    } catch (error) {
+      toastr.error(error.response.data.message);
+    }
+    // raiseTouristAlert
+  };
 
   return (
     <>
@@ -96,7 +108,10 @@ const Tourist = () => {
                     <CardName>{element.touristName}</CardName>
                     <div className="row">
                       <div className="col-md-6">
-                        <CardButton className="btn-danger btn">
+                        <CardButton
+                          className="btn-danger btn"
+                          onClick={(e) => handleAlert(e, element._id)}
+                        >
                           Alert
                         </CardButton>
                       </div>

@@ -11,7 +11,7 @@ export const Nav = styled.nav`
   align-items: center;
   position: sticky;
   top: 0;
-  z-index: 9999;
+  z-index: 101;
   margin-bottom: 0px;
 `;
 

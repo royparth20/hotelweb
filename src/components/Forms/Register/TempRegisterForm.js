@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactWizard from "react-bootstrap-wizard";
 import { useHistory } from "react-router-dom";
 import API from "../../../api";
+import api from "../../../axios";
 import {
   FormContainer,
   FormGroup,
@@ -195,6 +196,42 @@ const TempRegisterForm = () => {
       });
   };
 
+  const [countryList, setCountryList] = useState(null);
+  const [stateList, setStateList] = useState([]);
+  const [cityList, setCityList] = useState([]);
+  useEffect(async () => {
+    try {
+      const { data } = await api.getCountryList();
+      // console.log(data.data);
+      setCountryList(data.data);
+    } catch (error) {
+      console.error("COUNTRY LIST ERR ==> ", error);
+    }
+  }, []);
+  const onchangeCountry = async (item) => {
+    // e.preventDefault();
+    // console.log(JSON.stringify(item, null, 4));
+    try {
+      const { data } = await api.getStateList(item._id);
+      // console.log(data?.data?.stateList);
+      setStateList(data?.data?.stateList);
+      setCityList([]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const onchangeState = async (item) => {
+    // e.preventDefault();
+    // console.log(JSON.stringify(item, null, 4));
+    try {
+      const { data } = await api.getCityList(item._id);
+      // console.log(data?.data?.cityList);
+      setCityList(data?.data?.cityList);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   var steps = [
     // this step hasn't got a isValidated() function, so it will be considered to be true
     {
@@ -209,7 +246,14 @@ const TempRegisterForm = () => {
           setDistrict={setDistrict}
           handleLogoChange={handleLogoChange}
           setCountry={setCountry}
+          setStateList={setStateList}
+          setCityList={setCityList}
           setCity={setCity}
+          countryList={countryList}
+          onchangeCountry={onchangeCountry}
+          onchangeState={onchangeState}
+          stateList={stateList}
+          cityList={cityList}
           error={error}
         />
       ),

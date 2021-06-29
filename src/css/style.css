@@ -79,3 +79,7 @@
   text-transform: capitalize;
   color: #043565;
 }
+
+.modal-open {
+  padding: 0 !important;
+}

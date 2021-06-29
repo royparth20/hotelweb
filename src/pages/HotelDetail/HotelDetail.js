@@ -26,6 +26,7 @@ import userActions from "../../store/actions/userAction";
 import { Container, Row, Col } from "styled-bootstrap-grid";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 const HotelDetail = () => {
   const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -59,15 +60,31 @@ const HotelDetail = () => {
             {hotels && (
               <>
                 {" "}
-                <Col xs={12} sm={12} md={12} lg={6} xl={6}>
+                <Col
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={6}
+                  xl={6}
+                  className="text-center"
+                >
                   {hotels.hotelImages ? (
-                    <img src={hotels.hotelLogo} style={{ maxWidth: "100%" }} />
+                    <img
+                      src={hotels.hotelLogo}
+                      style={{
+                        maxWidth: "350px",
+                        borderRadius: "5%",
+                        height: "fit-content",
+                      }}
+                    />
                   ) : (
-                    <img src="https://via.placeholder.com/460x560" />
+                    <img src="https://via.placeholder.com/300x300" />
                   )}
                 </Col>
                 <Col xs={12} sm={12} md={12} lg={6} xl={6}>
-                  <HotelName>{hotels.hotelName}</HotelName>
+                  <HotelName className="text-capitalize">
+                    {hotels.hotelName}
+                  </HotelName>
                   <HotelBasicInformation>
                     <HotelInfo>
                       <HotelInfoLabel>Address:</HotelInfoLabel>
@@ -115,7 +132,23 @@ const HotelDetail = () => {
 
                     <CardInfo>
                       <CardName>{br.address}</CardName>
-                      <CardButton>Alert</CardButton>
+                      {auth && auth.userType === "HOTEL" && (
+                        <div className="row d-flex justify-content-between mx-2">
+                          
+
+                          <Link to={`/branchDetails?branchId=${br._id}`}>
+                            <button className="btn btn-outline-dark">
+                              View
+                            </button>
+                          </Link>
+
+                          <Link to={`/staff?branchId=${br._id}`}>
+                            <button className="btn btn-primary">
+                              Show Staff
+                            </button>
+                          </Link>
+                        </div>
+                      )}
                     </CardInfo>
                   </CardWrapper>
                 </Col>

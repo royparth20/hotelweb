@@ -56,7 +56,7 @@ const HeaderLoggedin = () => {
 
   return (
     <>
-      <Container fluid className="p-0 m-0">
+      <Container fluid className="p-0 m-0" >
         <Row className="p-0 m-0">
           <Col xs={12} sm={12} md={12} lg={12} xl={12} className="p-0 m-0">
             <IconContext.Provider value={{ color: "#096DAB" }}>
@@ -128,6 +128,9 @@ const HeaderLoggedin = () => {
                       </NavItem>
                       <NavItem>
                         <NavLinks to="/tourist">Tourist</NavLinks>
+                      </NavItem>
+                      <NavItem>
+                        <NavLinks to="/staff">Staff</NavLinks>
                       </NavItem>
                       <NavItem>
                         <NavLinks to="/blacklist">Blacklist</NavLinks>

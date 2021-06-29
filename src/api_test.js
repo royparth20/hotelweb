@@ -34,6 +34,6 @@ api.interceptors.request.use(
     Promise.reject(err);
   }
 );
-console.log(api);
+// console.log(api);
 
 export default api;

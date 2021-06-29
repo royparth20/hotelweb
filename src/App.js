@@ -51,7 +51,8 @@ function App() {
   const dispatch = useDispatch();
   // const isLoggedIn = localStorage.getItem("token");
   const isLoggedIn = useSelector((state) => state.auth.authenticated);
-  console.log("token", isLoggedIn);
+  const userType = useSelector((state) => state.auth.userType);
+  // console.log("token", isLoggedIn);
   const resetToken = useSelector((state) => state.user.resetToken);
   useEffect(async () => {
     if (isLoggedIn) {
@@ -168,16 +169,7 @@ function App() {
               <Blacklist />
               <Footer />
             </Route>
-            <Route path="/branchDetails" exact>
-              <HeaderLoggedin />
-              <BranchDetail />
-              <Footer />
-            </Route>
-            <Route path="/createStaff" exact>
-              <HeaderLoggedin />
-              <CreateStaff />
-              <Footer />
-            </Route>
+
             <Route path="/createProfile" exact>
               <HeaderLoggedin />
               <CreateProfile />
@@ -188,16 +180,30 @@ function App() {
               <TouristReport />
               <Footer />
             </Route>
-            <Route path="/staff" exact>
-              <HeaderLoggedin />
-              <Staff />
-              <Footer />
-            </Route>
             <Route path="/reports" exact>
               <HeaderLoggedin />
               <Reports />
               <Footer />
             </Route>
+            {userType && userType === "HOTEL" && (
+              <>
+                <Route path="/staff" exact>
+                  <HeaderLoggedin />
+                  <Staff />
+                  <Footer />
+                </Route>
+                <Route path="/createStaff" exact>
+                  <HeaderLoggedin />
+                  <CreateStaff />
+                  <Footer />
+                </Route>
+                <Route path="/branchDetails" exact>
+                  <HeaderLoggedin />
+                  <BranchDetail />
+                  <Footer />
+                </Route>
+              </>
+            )}
           </>
         ) : (
           <Redirect to="/login" />

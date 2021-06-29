@@ -99,17 +99,15 @@ export const CardName = styled.p`
   color: #061422;
 `;
 
-export const CardButton = styled.button`
-  height: 24px;
-  border: none;
-  background: rgba(245, 55, 75, 0.2);
-  border-radius: 2px;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 23px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #fc1c34;
-  padding: 0px 15px;
-`;
+export const CardButton = styled.button``;
+// border: none;
+//   background: rgba(245, 55, 75, 0.2);
+//   border-radius: 2px;
+//   font-style: normal;
+//   font-weight: 500;
+//   font-size: 16px;
+//   line-height: 23px;
+//   letter-spacing: 0.04em;
+//   text-transform: uppercase;
+//   color: #fc1c34;
+//   padding: 0px 15px;
