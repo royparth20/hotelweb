@@ -66,9 +66,7 @@ const Footer = () => {
           .then(({ data }) => {
             console.log("data", values);
             dispatch(contactUsActions.contactUs(data.data));
-            dispatch(
-              uiActions.showSuccessSnackbar("Message Sent Successfully.!")
-            );
+            toastr.success(data.data);
             setName("");
             setEmail("");
             setMessage("");

@@ -30,7 +30,7 @@ const StaffDetails = () => {
         ]);
       });
       // setCheckedState(new Array(branches.length).fill(false));
-      console.log(checkedState.length);
+      // console.log(checkedState.length);
     } catch (err) {
       console.error(err);
     }
@@ -52,26 +52,32 @@ const StaffDetails = () => {
 
   const handleOnChange = (e, position) => {
     const updatedCheckedState = checkedState.map((item, index) => {
-      return index === position ? !item : item;
+      return index === position ? e.target.checked : item;
     });
 
+    // console.log(updatedCheckedState);
     setCheckedState(updatedCheckedState);
   };
 
   const onSubmit = async (e) => {
     try {
-      let payload = { ...staffMemberData, assignHotel: [] };
+      let payload = { ...staffMemberData };
 
-      payload.assignedHotel = undefined;
-      payload._id = undefined;
+      payload.assignedHotel = [];
+      // payload._id = undefined;
+      delete payload._id;
+      // delete payload.assignedHotel;
+
       branches.map((type, index) => {
         // console.log(index, type?.address, checkedState[index]);
         if (checkedState[index]) {
-          payload.assignHotel = [...payload.assignHotel, type._id];
+          payload.assignedHotel = [...payload.assignedHotel, type._id];
         }
       });
-      // console.log(payload);
-      const { data } = await api.updateStaff(payload, staffId);
+      const { active, parentHotel, staffPassword, token, ...payloadData } =
+        payload;
+      console.table({ payloadData });
+      const { data } = await api.updateStaff(payloadData, staffId);
       // updateStaff
       // console.log(data);
       toastr.success(data.data);
@@ -198,14 +204,18 @@ const StaffDetails = () => {
                           key={type._id}
                         >
                           <Form.Check
-                            inline
                             label={type?.address}
                             name="branches"
-                            type="checkbox"
-                            value={type._id}
+                            type="switch"
                             id={`inline-${type._id}-1`}
                             defaultChecked={checkedState[index]}
-                            onChange={(e) => handleOnChange(e, index)}
+                            // onChange={(e) => {
+                            //   console.log(index);
+                            // }}
+                            onClick={(e) => {
+                              handleOnChange(e, index);
+                              // console.log(index);
+                            }}
                           />
                         </div>
                       ))}

@@ -43,7 +43,7 @@ const HeaderLoggedin = () => {
   const logout = (e) => {
     e.preventDefault();
     // localStorage.clear();
-    console.log(111);
+    // console.log(111);
     dispatch({ type: authActions.actions.LOGOUT });
     history.push("/login");
   };

@@ -33,10 +33,9 @@ export default {
     api.post(`hotel/raise-alert?touristId=${payload}`),
 
   getBranchData: (payload) => api.get(`/hotel/?branchId=${payload}`),
-  contactUs: (payload) => api.post("/users/contact-us", payload),
+  contactUs: (payload) => api.post("/contactus", payload),
   socialLink: () => api.get("/social"),
   // /contactus
 
-  updateStaff: (payload, id) =>
-    api.put(`/hotel/create-staff?staffId=${id}`, payload),
+  updateStaff: (payload, id) => api.put(`/hotel/create-staff/${id}`, payload),
 };
