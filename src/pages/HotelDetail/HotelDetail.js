@@ -75,7 +75,7 @@ const HotelDetail = () => {
                         maxWidth: "350px",
                         borderRadius: "5%",
                         height: "fit-content",
-                        maxHeight:'350px'
+                        maxHeight: "350px",
                       }}
                     />
                   ) : (
@@ -116,7 +116,7 @@ const HotelDetail = () => {
             {hotels?.branches &&
               hotels.branches.map((br) => (
                 <Col sm={12} lg={4} key={br._id}>
-                  {/* {console.log(br)} */}
+                  {console.log(br)}
                   <CardWrapper>
                     {br.hotelImages.length > 0 ? (
                       <CardImage>
@@ -133,22 +133,29 @@ const HotelDetail = () => {
 
                     <CardInfo>
                       <CardName>{br.address}</CardName>
-                      {auth && auth.userType === "HOTEL" && (
-                        <div className="row d-flex justify-content-between mx-2">
-                          
+                      {br && br.approved ? (
+                        auth &&
+                        auth.userType === "HOTEL" && (
+                          <div className="row d-flex justify-content-between mx-2">
+                            <Link to={`/branchDetails?branchId=${br._id}`}>
+                              <button className="btn btn-outline-dark">
+                                View
+                              </button>
+                            </Link>
 
-                          <Link to={`/branchDetails?branchId=${br._id}`}>
-                            <button className="btn btn-outline-dark">
-                              View
-                            </button>
-                          </Link>
-
-                          <Link to={`/staff?branchId=${br._id}`}>
-                            <button className="btn btn-primary">
-                              Show Staff
-                            </button>
-                          </Link>
-                        </div>
+                            <Link to={`/staff?branchId=${br._id}`}>
+                              <button className="btn btn-primary">
+                                Show Staff
+                              </button>
+                            </Link>
+                          </div>
+                        )
+                      ) : (
+                        <>
+                          <div className="text-danger font-weight-bold branch-not-approved">
+                            Branch Not Approved
+                          </div>
+                        </>
                       )}
                     </CardInfo>
                   </CardWrapper>

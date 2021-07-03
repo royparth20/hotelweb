@@ -20,7 +20,24 @@ const CPPictureForm = (props) => {
         ) : (
           <ProfileImage src="https://via.placeholder.com/240x200" />
         )}
-        <FileB onChange={ch}></FileB>
+
+        <div
+          style={{ cursor: "pointer", position: "relative" }}
+          className="upload-btn mt-2"
+        >
+          upload Profile
+          <FileB
+            onChange={ch}
+            style={{
+              width: "100%",
+              height: "100%",
+              opacity: 0,
+              position: "absolute",
+              left: 0,
+              top: 0,
+            }}
+          ></FileB>
+        </div>
       </FormContainer>
     </>
   );

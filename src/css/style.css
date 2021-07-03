@@ -89,3 +89,39 @@
   right: 5%;
   z-index: 100;
 }
+
+.upload-btn {
+  padding: 10px 21px;
+  background: #ffffff;
+  display: inline-block;
+  margin-bottom: 20px;
+  border: 1px solid #043565;
+  box-sizing: border-box;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 166.5%;
+  letter-spacing: 0.1em;
+  text-transform: capitalize;
+  color: #373737;
+  transition: all 0.3s;
+}
+
+.upload-btn:hover {
+  color: #fff;
+  background-color: #043565;
+}
+
+.branch-not-approved {
+  font-size: 0.9rem;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+}
