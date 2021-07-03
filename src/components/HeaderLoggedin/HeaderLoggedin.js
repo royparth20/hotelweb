@@ -5,13 +5,16 @@ import { Container, Row, Col } from "styled-bootstrap-grid";
 import authActions from "../../store/actions/authActions";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { Dropdown, NavDropdown } from "react-bootstrap";
 import {
+  SubMenu,
   Nav,
   NavbarContainer,
   Navlogo,
   TopBar,
   NavItemProfileMobile,
   ProfilePictureMobile,
+  DropdownToggle,
   ProfileContextMobile,
   ProfileContextItemMobile,
   ProfileContextItemMobileLink,
@@ -21,10 +24,13 @@ import {
   NavItem,
   NavLinks,
   NavItemProfile,
+  DropdownNavLinks,
   ProfilePicture,
   ProfileContext,
   ProfileContextItem,
   ProfileContextItemLink,
+  MobileDropDown,
+  DesktopDropDown,
 } from "./HeaderLoggedin.elements";
 
 const HeaderLoggedin = () => {
@@ -126,12 +132,98 @@ const HeaderLoggedin = () => {
                       <NavItem>
                         <NavLinks to="/home">Dashboard</NavLinks>
                       </NavItem>
-                      <NavItem>
+                      {/* <NavItem>
                         <NavLinks to="/tourist">Tourist</NavLinks>
                       </NavItem>
                       <NavItem>
                         <NavLinks to="/staff">Staff</NavLinks>
-                      </NavItem>
+                      </NavItem> */}
+                      <DesktopDropDown>
+                        <Dropdown>
+                          <DropdownToggle variant="" id="dropdown-tourist">
+                            Tourist
+                          </DropdownToggle>
+
+                          <Dropdown.Menu>
+                            <Dropdown.Item>
+                              <DropdownNavLinks
+                                to="/touristDetails"
+                                className="d-flex"
+                              >
+                                Create Tourist
+                              </DropdownNavLinks>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              <DropdownNavLinks
+                                to="/tourist"
+                                className="d-flex"
+                              >
+                                Manage Tourist
+                              </DropdownNavLinks>
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                        <Dropdown>
+                          <DropdownToggle variant="" id="dropdown-staff">
+                            Staff
+                          </DropdownToggle>
+
+                          <Dropdown.Menu>
+                            {userType && isHotelAdmin() && (
+                              <Dropdown.Item>
+                                <DropdownNavLinks to="/createStaff">
+                                  Create Staff
+                                </DropdownNavLinks>
+                              </Dropdown.Item>
+                            )}
+                            <Dropdown.Item>
+                              <DropdownNavLinks to="/staff" className="d-flex">
+                                Manage Staff
+                              </DropdownNavLinks>
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </DesktopDropDown>
+                      <MobileDropDown>
+                        <div className="pl-4 head">
+                          <span>Tourist</span>
+                          <SubMenu>
+                            <Dropdown.Item>
+                              <DropdownNavLinks
+                                to="/touristDetails"
+                                className="d-flex"
+                              >
+                                Create Tourist
+                              </DropdownNavLinks>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              <DropdownNavLinks
+                                to="/tourist"
+                                className="d-flex"
+                              >
+                                Manage Tourist
+                              </DropdownNavLinks>
+                            </Dropdown.Item>
+                          </SubMenu>
+                        </div>
+                        <div className="pl-4 head">
+                          <span>Staff</span>
+                          <SubMenu>
+                            {userType && isHotelAdmin() && (
+                              <Dropdown.Item>
+                                <DropdownNavLinks to="/createStaff">
+                                  Create Staff
+                                </DropdownNavLinks>
+                              </Dropdown.Item>
+                            )}
+                            <Dropdown.Item>
+                              <DropdownNavLinks to="/staff" className="d-flex">
+                                Manage Staff
+                              </DropdownNavLinks>
+                            </Dropdown.Item>
+                          </SubMenu>
+                        </div>
+                      </MobileDropDown>
                       <NavItem>
                         <NavLinks to="/blacklist">Blacklist</NavLinks>
                       </NavItem>
@@ -166,11 +258,11 @@ const HeaderLoggedin = () => {
                           </ProfileContextItem> */}
                           {userType && isHotelAdmin() && (
                             <>
-                              <ProfileContextItem>
+                              {/* <ProfileContextItem>
                                 <ProfileContextItemLink to="/createStaff">
                                   Create Staff
                                 </ProfileContextItemLink>
-                              </ProfileContextItem>
+                              </ProfileContextItem> */}
 
                               <ProfileContextItem>
                                 <ProfileContextItemLink to="/branchDetails">

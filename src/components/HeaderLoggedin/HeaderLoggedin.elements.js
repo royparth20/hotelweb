@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { media } from "styled-bootstrap-grid";
 import { Link } from "react-router-dom";
-
+import { Dropdown } from "react-bootstrap";
 export const Nav = styled.nav`
   width: 100%;
   height: 100px;
@@ -61,6 +61,24 @@ export const NavItemProfileMobile = styled.div`
   `}
 `;
 
+// DesktopDropDown
+export const DesktopDropDown = styled.div`
+  display: none;
+  ${media.lg`
+display: flex;
+`}
+`;
+// MobileDropDown
+export const MobileDropDown = styled.div`
+  display: block;
+  ${media.lg`
+    display: none;
+  `}
+`;
+
+export const SubMenu = styled.div`
+  padding-left: 0px;
+`;
 export const ProfilePictureMobile = styled.img`
   margin-right: 10px;
   border-radius: 50%;
@@ -177,7 +195,64 @@ export const NavLinks = styled(Link)`
     }
   `}
 `;
+export const DropdownToggle = styled(Dropdown.Toggle)`
+  color: #096dab;
+  padding: 1.4rem;
+  display: block;
+  &:hover {
+    color: #fbfdff;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    background-color: #096dab;
+  }
 
+  ${media.lg`
+  
+  width:140px;
+  background: #FBFDFF;
+  color: #6B6B6B;
+  display: flex;
+  font-size: 22px;
+  text-transform: none;
+  padding: 0.5rem 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  justify-content:center;
+  align-items:center;
+  &:hover {
+    color: #096DAB;
+    text-decoration:none;
+    background-color: #FBFDFF;
+  }
+  &.active{
+    color: #096DAB;
+    text-decoration:none;
+    background-color: #FBFDFF;
+  }
+`}
+`;
+export const DropdownNavLinks = styled(Link)`
+  color: #096dab;
+  display: block;
+  &:hover {
+    color: #383838;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  ${media.lg`
+    color: #6B6B6B;
+    font-size: 14px;
+    text-transform: none;
+    text-decoration: none;
+    font-weight: 600;
+    align-items:center;
+    &:hover {
+    }
+    &.active{
+    }
+  `}
+`;
 export const NavItemProfile = styled.div`
   display: none;
   ${media.lg`

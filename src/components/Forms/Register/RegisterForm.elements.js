@@ -38,7 +38,7 @@ export const Input = styled.input.attrs((props) => ({
   color: black;
 `;
 export const InputTelephone = styled.input.attrs((props) => ({
-  type: "number",
+  type: "tel",
 }))`
   width: 100%;
   height: 55px;

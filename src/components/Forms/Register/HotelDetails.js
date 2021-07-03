@@ -11,7 +11,11 @@ import {
   InputFile,
   InputDropdownOption,
 } from "./RegisterForm.elements";
-
+import "react-phone-number-input/style.css";
+import PhoneInput, {
+  formatPhoneNumber,
+  formatPhoneNumberIntl,
+} from "react-phone-number-input";
 const HotelDetails = (props) => {
   let history = useHistory();
 
@@ -159,11 +163,29 @@ const HotelDetails = (props) => {
       <FormGroup>
         <FormLabel>Telephone</FormLabel>
         <FormInput>
-          <InputTelephone
+          {/* <input
+            type="tel"
+            autoComplete="tel"
+            className="PhoneInputInput"
             pattern="[0-9]*"
             placeholder="Enter Hotel Telephone number"
-            onChange={(e) => setContact(e.target.value)}
-          ></InputTelephone>
+            onChange={(e) => setContact(e)}
+          /> */}
+
+          <PhoneInput
+            defaultCountry="IN"
+            pattern="[0-9]*"
+            className="pt-3 p-2 w-100"
+            withCountryCallingCode="false"
+            international="false"
+            countryCallingCodeEditable={false}
+            placeholder="Enter Hotel Telephone number"
+            onChange={(e) => {
+              // console.log(e);
+              // console.log(parseInt(formatPhoneNumber(e).split(" ").join("")));
+              setContact(parseInt(formatPhoneNumber(e).split(" ").join("")));
+            }}
+          />
         </FormInput>
         <FormLabelError>{error["contact"]}</FormLabelError>
       </FormGroup>
