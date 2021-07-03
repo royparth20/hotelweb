@@ -267,7 +267,7 @@ const TouristDetail = () => {
             <Col lg={12} className="p-0 m-0 d-flex">    
               <ButtonContainer>
                 <CancelButton>Cancel</CancelButton>
-                <SaveButton>Save</SaveButton>
+                <SaveButton tabIndex={22}>Save</SaveButton>
                 <Col lg={2} className="p-0 m-0 d-flex">   
                   {(loader) ? <Loader type="TailSpin" color="#0A3565" height={20} width={20}  /> : null}
                   </Col>

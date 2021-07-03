@@ -7,6 +7,7 @@ import {
   Input,
   FormLabelError,
   InputDropdown,
+  InputTelephone,
   InputFile,
   InputDropdownOption,
 } from "./RegisterForm.elements";
@@ -158,10 +159,11 @@ const HotelDetails = (props) => {
       <FormGroup>
         <FormLabel>Telephone</FormLabel>
         <FormInput>
-          <Input
+          <InputTelephone
+            pattern="[0-9]*"
             placeholder="Enter Hotel Telephone number"
             onChange={(e) => setContact(e.target.value)}
-          ></Input>
+          ></InputTelephone>
         </FormInput>
         <FormLabelError>{error["contact"]}</FormLabelError>
       </FormGroup>

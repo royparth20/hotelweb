@@ -40,7 +40,7 @@ const Tourist = () => {
   };
 
   const handleReportTourist = (event) => {
-    console.log("eent", event.target.id);
+    console.log("event", event.target.id);
     if (event.target.id) {
       let test = {
         name: event.target.name,
@@ -84,9 +84,14 @@ const Tourist = () => {
         <Container>
           <Row>
             <Col>
-              <PageTitleContainer>
+              <PageTitleContainer className="clearfix">
                 <PageTitleLine src="./assets/icons/line.svg" />
                 <PageTitle>TOURIST</PageTitle>
+                <div className="float-btn-tourist float-right">
+                  <Link to="/touristDetails">
+                    <div className="btn btn-primary">Create Tourist</div>
+                  </Link>
+                </div>
               </PageTitleContainer>
             </Col>
           </Row>
