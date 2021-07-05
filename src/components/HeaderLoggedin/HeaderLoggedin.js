@@ -224,9 +224,9 @@ const HeaderLoggedin = () => {
                           </SubMenu>
                         </div>
                       </MobileDropDown>
-                      <NavItem>
+                      {/* <NavItem>
                         <NavLinks to="/blacklist">Blacklist</NavLinks>
-                      </NavItem>
+                      </NavItem> */}
                       <NavItemProfile>
                         <ProfilePicture
                           src={

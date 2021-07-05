@@ -35,6 +35,7 @@ import Reports from "./pages/Reports/Reports";
 import withClearCache from "./ClearCache";
 import Service from "./pages/Service/Service";
 import TouristReport from "./pages/Reports/TouristReport";
+import TouristInfo from "./pages/Tourist/TouristInfo";
 import { useDispatch, useSelector } from "react-redux";
 import authActions from "./store/actions/authActions";
 import userActions from "./store/actions/userAction";
@@ -165,12 +166,17 @@ function App() {
               <TouristDetail />
               <Footer />
             </Route>
+            <Route path="/touristInfo" exact>
+              <HeaderLoggedin />
+              <TouristInfo />
+              <Footer />
+            </Route>
             <Route path="/blacklist" exact>
               <HeaderLoggedin />
               <Blacklist />
               <Footer />
             </Route>
-
+            {/* touristInfo */}
             <Route path="/createProfile" exact>
               <HeaderLoggedin />
               <CreateProfile />

@@ -38,7 +38,7 @@ export const CardWrapper = styled.div`
 export const CardImage = styled.div`
   width: 100%;
   height: 250px;
-  text-align: center;
+  // text-align: center;
 `;
 
 export const Image = styled.img`

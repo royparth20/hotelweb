@@ -164,7 +164,7 @@ const HotelDetail = () => {
           </Row>
         </Container>
       </Main>
-    </>
+    </>   
   );
 };
 

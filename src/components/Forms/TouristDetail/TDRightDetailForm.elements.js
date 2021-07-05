@@ -37,7 +37,7 @@ font-style: normal;
   border-radius:5px;
   box-sizing: border-box;
   padding:15px 20px;
-  margin: 5px 0px 10px  0px;
+  margin: 15px 0px 15px  0px;
   height:55px;
   width: 470px;
 `;

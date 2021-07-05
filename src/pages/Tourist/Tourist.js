@@ -54,8 +54,7 @@ const Tourist = () => {
             state: { detail: event.target.id },
           }}
         >
-          {" "}
-          My Link{" "}
+          My Link
         </Link>;
         // history.push({
         //   pathname: '/touristReports',
@@ -78,6 +77,9 @@ const Tourist = () => {
     // raiseTouristAlert
   };
 
+  const handleTouristDetails = (_id) => {
+    history.push(`/touristInfo?touristId=${_id}`);
+  };
   return (
     <>
       <Main>
@@ -99,7 +101,10 @@ const Tourist = () => {
           <Row>
             {tourists.map((element) => (
               <Col sm={12} lg={4}>
-                <CardWrapper>
+                <CardWrapper
+                  onClick={() => handleTouristDetails(element._id)}
+                  style={{ cursor: "pointer" }}
+                >
                   {element.touristImage ? (
                     <CardImage>
                       <Image src={element.touristImage} />

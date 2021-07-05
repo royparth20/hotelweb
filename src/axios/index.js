@@ -38,4 +38,7 @@ export default {
   // /contactus
 
   updateStaff: (payload, id) => api.put(`/hotel/create-staff/${id}`, payload),
+
+  getTouristDataById: (touristId) =>
+    api.get(`/tourist/get-tourist?touristId=${touristId}`),
 };
