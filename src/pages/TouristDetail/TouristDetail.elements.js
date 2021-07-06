@@ -1,12 +1,12 @@
-import styled from "styled-components"
-import { media } from 'styled-bootstrap-grid';
+import styled from "styled-components";
+import { media } from "styled-bootstrap-grid";
 
 export const Main = styled.main`
-  display:flex;
+  display: flex;
   justify-content: center;
-  align-items:center;
-  background-color: #FBFDFF;
-  padding-bottom:100px;
+  align-items: center;
+  background-color: #fbfdff;
+  padding-bottom: 100px;
 `;
 
 export const PageTitleContainer = styled.div`
@@ -21,10 +21,10 @@ export const PageTitleContainer = styled.div`
 `;
 
 export const FormLabelError = styled.label`
-  font-weight:600;
-  margin:0px;
-  color:red;
-  width:100%;
+  font-weight: 600;
+  margin: 0px;
+  color: red;
+  width: 100%;
   text-align: center;
 `;
 export const PageTitle = styled.div`
@@ -38,7 +38,6 @@ export const PageTitle = styled.div`
   align-self: flex-start;
 `;
 
-
 export const PageParagraph = styled.p`
   font-style: normal;
   font-weight: 500;
@@ -47,7 +46,7 @@ export const PageParagraph = styled.p`
   letter-spacing: 0.1em;
   text-transform: capitalize;
   color: #373737;
-  width:100%;
+  width: 100%;
   align-self: flex-start;
   ${media.lg`
     width:60%;
@@ -58,13 +57,13 @@ export const ContentWrapper = styled.div`
 `;
 
 export const FormSection = styled.div`
-  height:1024px;
-  width:100%;
-  position:relative;
+  height: 1024px;
+  width: 100%;
+  position: relative;
 `;
 
 export const ImageContent = styled.p`
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -81,15 +80,15 @@ export const ImageContent = styled.p`
 `;
 
 export const ButtonContainer = styled.div`
-  display:flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  padding:80px 0px 0px 0px;
-  width:100%;
-`
+  padding: 80px 0px 0px 0px;
+  width: 100%;
+`;
 
 export const CancelButton = styled.button`
-  background: #FBFDFF;
+  background: #fbfdff;
   border: 1px solid #043565;
   box-sizing: border-box;
   border-radius: 30px;
@@ -100,9 +99,9 @@ export const CancelButton = styled.button`
   letter-spacing: 0.1em;
   text-transform: capitalize;
   color: #373737;
-  padding:10px 40px;
-  margin-right:20px;
-`
+  padding: 10px 40px;
+  margin-right: 20px;
+`;
 export const SaveButton = styled.button`
   background: #043565;
   border-radius: 30px;
@@ -112,24 +111,66 @@ export const SaveButton = styled.button`
   line-height: 166.5%;
   letter-spacing: 0.1em;
   text-transform: capitalize;
-  color: #FFFFFF;
-  padding:10px 40px;
+  color: #ffffff;
+  padding: 10px 40px;
   border: 1px solid #043565;
-`
+`;
 
 export const BgTopRightImage = styled.img`
-  display:none;
+  display: none;
   ${media.lg`
     position:absolute;
     right:-35px;
     top:-35px;
   `}
-`
+`;
 export const BgBottomLeftImage = styled.img`
-  display:none;
+  display: none;
   ${media.lg`
     position:absolute;
     right:-35px;
     top:-35px;
   `}
-`
+`;
+export const Select = styled.select`
+  width: 100%;
+  height: 55px;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  padding-left: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 19px;
+  color: black;
+  &.fileInput {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+`;
+export const Options = styled.option`
+  width: 100%;
+  height: 55px;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  padding-left: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 19px;
+  color: black;
+`;
+export const FormLabel = styled.label`
+  font-weight: 600;
+  margin: 0px;
+  color: #373737;
+`;
+
+export const FormGroup = styled.div`
+  color: black;
+`;
+export const FormInput = styled.div`
+  color: black;
+`;

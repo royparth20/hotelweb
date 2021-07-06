@@ -29,7 +29,7 @@ const TDLeftDetailForm = (props) => {
     updatePhoto,
     ch,
     setType,
-
+    updateTFatherName,
     type,
   } = props;
 
@@ -42,20 +42,6 @@ const TDLeftDetailForm = (props) => {
       <FormTitle>{/* <p>Details</p> */}</FormTitle>
 
       <FormGroup>
-        <FormLabel> From </FormLabel>
-        <FormInput>
-          <Select
-            tabIndex={1}
-            onChange={(e) => {
-              setType(e.target.value);
-            }}
-          >
-            <Options value={true}>National</Options>
-            <Options value={false}>International</Options>
-          </Select>
-        </FormInput>
-      </FormGroup>
-      <FormGroup>
         <FormLabel>First Name</FormLabel>
         <FormInput>
           <Input
@@ -66,7 +52,17 @@ const TDLeftDetailForm = (props) => {
           ></Input>
         </FormInput>
       </FormGroup>
-
+      <FormGroup>
+        <FormLabel>Father Name</FormLabel>
+        <FormInput>
+          <Input
+            required
+            placeholder="Father Name"
+            tabIndex={3}
+            onChange={(e) => updateTFatherName(e.target.value)}
+          ></Input>
+        </FormInput>
+      </FormGroup>
       <FormGroup>
         <FormLabel>Resident Country</FormLabel>
         <FormInput>
@@ -84,7 +80,6 @@ const TDLeftDetailForm = (props) => {
         <FormInput>
           <Dt
             required
-            placeholder="Enter Nationality"
             tabIndex={7}
             onChange={(e) => updateDtArrival(e.target.value)}
           ></Dt>

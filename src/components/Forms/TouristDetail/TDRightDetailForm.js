@@ -16,7 +16,7 @@ const TDRightDetailForm = (props) => {
     updateTLname,
     updateNumber,
     updateJob,
-    updateNationality,
+    // updateNationality,
     updateMobile,
     updateArrivedFrom,
     updateTnumber,
@@ -44,7 +44,7 @@ const TDRightDetailForm = (props) => {
         </FormInput>
       </FormGroup>
 
-      <FormGroup>
+      {/* <FormGroup>
         <FormLabel>Nationality</FormLabel>
         <FormInput>
           <Input
@@ -54,7 +54,7 @@ const TDRightDetailForm = (props) => {
             onChange={(e) => updateNationality(e.target.value)}
           ></Input>
         </FormInput>
-      </FormGroup>
+      </FormGroup> */}
 
       <FormGroup>
         <FormLabel>Passport Number</FormLabel>

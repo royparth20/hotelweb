@@ -28,7 +28,7 @@ export const FileB = styled.input.attrs((props) => ({
   padding: 15px 20px;
   margin: 15px 0px 15px 0px;
   height: 55px;
-  width: 470px;
+  width: 100%;
 `;
 export const FormTitle = styled.p`
   position: relative;
@@ -129,9 +129,87 @@ export const Input = styled.input.attrs((props) => ({
     border-bottom-right-radius: 0px;
   }
 `;
+// [0-9]{10}
+export const InputPhoneNumber = styled.input.attrs((props) => ({
+  type: "text",
+  pattern: "[0-9]{10}",
+  title:"Please enter valid phone number"
+}))`
+  width: 100%;
+  height: 55px;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  padding-left: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 19px;
+  color: black;
+  &.fileInput {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+`;
+export const InputNumber = styled.input.attrs((props) => ({
+  type: "number",
+  pattern: "^(1[89]|[2-9]d)$",
+  title:"Please enter valid age"
+}))`
+  width: 100%;
+  height: 55px;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  padding-left: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 19px;
+  color: black;
+  &.fileInput {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+`;
 export const Dt = styled.input.attrs((props) => ({
   type: "date",
 }))`
+  width: 100%;
+  height: 55px;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  padding-left: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 19px;
+  color: black;
+  &.fileInput {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+`;
+
+export const InputDropdown = styled.select`
+  width: 100%;
+  height: 55px;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  padding-left: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 19px;
+  color: black;
+  &.fileInput {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+`;
+export const InputDropdownOption = styled.option`
   width: 100%;
   height: 55px;
   border: 1px solid #000000;

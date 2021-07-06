@@ -9,6 +9,11 @@ import {
   BgTopRightImage,
   BgBottomLeftImage,
   PageParagraph,
+  FormGroup,
+  Select,
+  Options,
+  FormInput,
+  FormLabel,
   ButtonContainer,
   CancelButton,
   SaveButton,
@@ -17,17 +22,22 @@ import {
 import { FormTitle } from "../../components/Forms/TouristDetail/TDLeftDetailForm.elements";
 import TDLeftDetailForm from "../../components/Forms/TouristDetail/TDLeftDetailForm";
 import TDRightDetailForm from "../../components/Forms/TouristDetail/TDRightDetailForm";
+import National from "../../components/Forms/TouristDetail/National";
 import { Container, Row, Col } from "styled-bootstrap-grid";
 import Loader from "react-loader-spinner";
 import API from "../../api_test";
+import { useHistory } from "react-router-dom";
 const TouristDetail = () => {
+  const history = useHistory();
   const [loader, setLoader] = useState(false);
   const [touristFirstname, setTFName] = useState();
   const [touristLastname, setTLname] = useState();
+  const [touristFathername, setTFathername] = useState();
   const [country, setCountry] = useState();
   const [dtArraival, setDtArrival] = useState();
   const [dtDeparture, setDtDeparture] = useState();
   const [city, setCity] = useState("");
+  const [state, setState] = useState("");
   const [address, setaddress] = useState("");
   const [district, setdistrict] = useState("");
   const [countryArrivedFrom, setcountryArrivedFrom] = useState();
@@ -38,7 +48,6 @@ const TouristDetail = () => {
   const [number, setNumber] = useState();
   const [tnumber, setTnumber] = useState();
   const [nationality, setNationality] = useState();
-  const [pass, setPass] = useState();
   const [mobile, setMobile] = useState();
   const [photo, setPhoto] = useState();
   const [visa, setVisa] = useState();
@@ -49,6 +58,12 @@ const TouristDetail = () => {
   const [guestMembers, setGuestMember] = useState(false);
   const [inputList, setInputList] = useState([]);
 
+  const [residentPlace, setResidentPlace] = useState("");
+  const [additionalNumber, setAdditionalNumber] = useState();
+  const [gender, setGender] = useState("");
+  const [grantor, setGrantor] = useState("");
+  const [age, setAge] = useState("");
+  const [vehicle, setVehicle] = useState("");
   ///////////////////////////////////
   const changeHandler = (event) => {
     setPhoto(event.target.files[0]);
@@ -72,32 +87,36 @@ const TouristDetail = () => {
     if (passport && photo) {
       if (type === "true") {
         if (address === "" || city === "" || district === "") {
+          console.log("Address Not valid");
           setError({ name: "Fill All the details!" });
           setLoader(false);
           return;
         }
       }
       if (
-        touristFirstname &&
-        country &&
-        mobile &&
-        dtArraival &&
-        dtDeparture &&
-        number &&
-        nationality &&
-        countryArrivedFrom &&
-        reasonForStay &&
-        provinceArrivedFrom &&
-        tnumber &&
-        visaNumber
+        touristFirstname !== "" &&
+        residentPlace !== "" &&
+        // country &&
+        mobile !== "" &&
+        dtArraival !== "" &&
+        dtDeparture !== "" &&
+        // nationality &&
+        // countryArrivedFrom &&
+        reasonForStay !== "" &&
+        // provinceArrivedFrom &&
+        tnumber !== "" &&
+        age !== "" &&
+        gender !== "" &&
+        roomNumber !== ""
       ) {
         var data = {
-          touristName: touristFirstname + " " + touristLastname,
+          touristName: touristFirstname,
           residentCountry: country,
           mobileNumber: mobile,
           address: address,
           city: city,
           district: district,
+          state: state,
           dateOfArrival: dtArraival,
           dateOfDeparture: dtDeparture,
           passportNumber: number,
@@ -112,7 +131,19 @@ const TouristDetail = () => {
           uploadPassportOrTazkera: tpassport,
           uploadVisa: tvisa,
           hotelId: localStorage.getItem("hotel_id"),
+          lastName: touristLastname,
+          fatherName: touristFathername,
+          additionalContact: additionalNumber,
+          // number: yup.string(),
+          grantor: grantor,
+          age: age,
+          gender: gender,
+          vehicalNumberPlate: vehicle,
+          accompaniedMember: inputList,
+          residentPlace: residentPlace,
+          isForeigner: type === "true" ? false : true,
         };
+        console.log("payload", data);
 
         var config = {
           method: "post",
@@ -123,7 +154,8 @@ const TouristDetail = () => {
         return await API(config)
           .then(function (response) {
             setLoader(false);
-            window.location.href = "/tourist";
+            history.replace("/tourist");
+            // window.location.href = "/tourist";
             //setToken(data.token)
             console.log("response", response);
           })
@@ -135,14 +167,34 @@ const TouristDetail = () => {
                   "Please Fix These Errors:  " + error.response.data.message,
               });
               setLoader(false);
+              console.log(error.response.data.message);
             }
           });
       } else {
+        console.log(
+          "Field Not valid",
+          typeof (
+            touristFirstname !== "" &&
+            residentPlace !== "" &&
+            mobile !== "" &&
+            dtArraival !== "" &&
+            dtDeparture !== "" &&
+            reasonForStay !== "" &&
+            tnumber !== "" &&
+            visaNumber !== "" &&
+            age !== "" &&
+            gender !== "" &&
+            roomNumber !== ""
+          )
+        );
         setError({ name: "Fill All the details!" });
         setLoader(false);
       }
     } else {
-      setError({ name: "Fill All the details!" });
+      console.log("Photo Field Not valid");
+      setError({
+        name: "Upload Photos of Visa && Passport/tazkera && Tourist",
+      });
       setLoader(false);
     }
   }
@@ -175,7 +227,7 @@ const TouristDetail = () => {
       await API(touristImageconfig)
         .then((response) => {
           setLoader(false);
-          console.log("image", response);
+          // console.log("image", response);
           timage = response.data.data;
           //  CreateProfileAjax(timage);
           // tpassport,tvisa
@@ -192,7 +244,7 @@ const TouristDetail = () => {
       await API(passportConfig)
         .then((response) => {
           setLoader(false);
-          console.log("image", response);
+          // console.log("image", response);
           tpassport = response.data.data;
           //  CreateProfileAjax(tpassport);
           // tpassport,tvisa
@@ -209,7 +261,7 @@ const TouristDetail = () => {
       await API(VisaImageConfig)
         .then((response) => {
           setLoader(false);
-          console.log("image", response);
+          // console.log("image", response);
           tvisa = response.data.data;
           //  CreateProfileAjax(tvisa);
           // tpassport,tvisa
@@ -223,8 +275,8 @@ const TouristDetail = () => {
             setLoader(false);
           }
         });
-      if (timage && tpassport) {
-        CreateProfileAjax(timage, tpassport);
+      if (timage && tpassport && tvisa) {
+        CreateProfileAjax(timage, tpassport, tvisa);
       }
     } else {
       CreateProfileAjax("");
@@ -286,13 +338,64 @@ const TouristDetail = () => {
                 <p>Details</p>
               </FormTitle>
 
+              <FormGroup>
+                {/* <FormLabel> From </FormLabel> */}
+                <FormInput>
+                  <Select
+                    // tabIndex={1}
+                    onChange={(e) => {
+                      setType(e.target.value);
+                    }}
+                  >
+                    <Options value={true}>National</Options>
+                    <Options value={false}>International</Options>
+                  </Select>
+                </FormInput>
+              </FormGroup>
               <Row className="p-0 m-0">
-                <Col md={6} lg={6} className="p-2 m-0">
+                <Col md={12} lg={12} className="p-0 m-0">
+                  <National
+                    setType={setType}
+                    type={type}
+                    ch={changeHandler}
+                    updateState={setState}
+                    updateTFname={setTFName}
+                    updateTFatherName={setTFathername}
+                    updateCountry={setCountry}
+                    updateDtArrival={setDtArrival}
+                    updateDtDeparture={setDtDeparture}
+                    updateAddress={setaddress}
+                    updateDistrict={setdistrict}
+                    updateCountryArrivedFrom={setcountryArrivedFrom}
+                    updateReasonOfStay={setreasonForStay}
+                    updateRoomNumber={setroomNumber}
+                    updatePhoto={setPhoto}
+                    changePassport={setPassport}
+                    updateTLname={setTLname}
+                    updateNumber={setNumber}
+                    updateMobile={setMobile}
+                    updateCity={setCity}
+                    updateVisaNumber={setVisaNumber}
+                    updateTnumber={setTnumber}
+                    updateArrivedFrom={setProvinceArrivedFrom}
+                    updateJob={setJob}
+                    uploadVisa={setVisa}
+                    updateNationality={setNationality}
+                    updateResidentPlace={setResidentPlace}
+                    updateAdditionalNumber={setAdditionalNumber}
+                    updateGender={setGender}
+                    updateGrantor={setGrantor}
+                    updateAge={setAge}
+                    updateVehicle={setVehicle}
+                  ></National>
+                </Col>
+                {/* <Col md={6} lg={6} className="p-2 m-0">
                   <TDLeftDetailForm
                     setType={setType}
                     type={type}
                     ch={changeHandler}
                     updateTFname={setTFName}
+                    updateTFatherName={setTFathername}
                     updateCountry={setCountry}
                     updateDtArrival={setDtArrival}
                     updateDtDeparture={setDtDeparture}
@@ -310,7 +413,7 @@ const TouristDetail = () => {
                     updateTLname={setTLname}
                     type={type}
                     updateNumber={setNumber}
-                    updateNationality={setNationality}
+                    
                     updateMobile={setMobile}
                     updateCity={setCity}
                     updateVisaNumber={setVisaNumber}
@@ -319,7 +422,7 @@ const TouristDetail = () => {
                     updateJob={setJob}
                     uploadVisa={setVisa}
                   />
-                </Col>
+                </Col> */}
               </Row>
             </ContentWrapper>
             <Row className="">
@@ -357,7 +460,7 @@ const TouristDetail = () => {
                     inputList.map((x, i) => {
                       return (
                         <>
-                          <div className="row mt-1">
+                          <div className="row mt-1" key={i}>
                             <div className="text-muted mt-1 h6 text-center m-auto">
                               {i + 1}
                             </div>
@@ -422,7 +525,7 @@ const TouristDetail = () => {
               <Col lg={12} className="p-0 m-0 d-flex">
                 <ButtonContainer>
                   <CancelButton>Cancel</CancelButton>
-                  <SaveButton tabIndex={22}>Save</SaveButton>
+                  <SaveButton>Save</SaveButton>
                   <Col lg={2} className="p-0 m-0 d-flex">
                     {loader ? (
                       <Loader
