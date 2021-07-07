@@ -22,6 +22,7 @@ import { Link, useLocation } from "react-router-dom";
 import toastr from "toastr";
 const Staff = () => {
   const branchId = new URLSearchParams(useLocation().search).get("branchId");
+  const user = useSelector((state) => state.user);
   const [staffs, setstaffs] = useState([]);
   const refBtn = useRef();
   let history = useHistory();
@@ -30,23 +31,24 @@ const Staff = () => {
   useEffect(() => {
     fetchData()
       .then((element) => {
-        console.log(element);
+        // console.log(element);
         setstaffs(element.data.data);
       })
       .catch(function (error) {
         console.error("ERR ==> ", error);
       });
-  }, []);
+  }, [branchId, user]);
   // } else {
 
   // }
   const fetchData = async () => {
     if (branchId) return await api.getStaffMemberById(branchId);
-    return await api.getStaffMembers();
+    // console.log(user._id);
+    return await api.getStaffMemberById(user._id);
   };
 
   const handleReportstaff = (event) => {
-    console.log("eent", event.target.id);
+    // console.log("eent", event.target.id);
     if (event.target.id) {
       let test = {
         name: event.target.name,
@@ -67,7 +69,7 @@ const Staff = () => {
         //   customNameData: event.target.id,
         // });
         // history.push("/staffReports",event.target.id);
-        console.log("staffs", test);
+        // console.log("staffs", test);
       }
     }
   };
@@ -120,7 +122,7 @@ const Staff = () => {
         ]);
       });
       // setCheckedState(new Array(branches.length).fill(false));
-      console.log(staffMemberData, branches, checkedState.length);
+      // console.log(staffMemberData, branches, checkedState.length);
       if (staffMemberData || checkedState.length > 0) handleShow();
     } catch (err) {
       console.error(err);

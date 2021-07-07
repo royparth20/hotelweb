@@ -41,6 +41,28 @@ const TouristInfo = () => {
     return api.getTouristDataById(touristId);
   };
 
+  const onExistTourist = async (e) => {
+    try {
+      e.preventDefault();
+      const confirmBox = window.confirm("Do you really want to tourist?");
+      if (confirmBox === true) {
+        const { data } = await api.leaveTourist({ touristId: touristId });
+        console.log(data);
+        setLoading(true);
+        fetchData()
+          .then((element) => {
+            console.log(element.data.data);
+            setTourist(element.data.data);
+            setLoading(false);
+          })
+          .catch(function (error) {});
+        toastr.success(data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Main>
@@ -197,7 +219,7 @@ const TouristInfo = () => {
                       </div>
                       <div className="col-md-6">{tourist.reasonOfStay}</div>
                     </div>
-                    {tourist.accompaniedMember && (
+                    {tourist.accompaniedMember.length > 0 && (
                       <>
                         <div className="text-capitalize font-weight-bold h5 text-primary p-2">
                           accompanied Member
@@ -228,6 +250,24 @@ const TouristInfo = () => {
                             ))}
                           </tbody>
                         </table>
+                      </>
+                    )}
+                    {tourist?.dateOfLeave ? (
+                      <>
+                        <div className="text-danger text-capitalize font-weight-bold p-2 m-2">
+                          Date Of Leave : {tourist.dateOfLeave}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="col-12">
+                          <button
+                            className="btn btn-danger"
+                            onClick={onExistTourist}
+                          >
+                            Exit Tourist
+                          </button>
+                        </div>
                       </>
                     )}
                   </div>

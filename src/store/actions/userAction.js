@@ -1,10 +1,17 @@
 const actions = {
   USER_DETAILS: "USER_DETAILS",
+  SET_BRANCH: "SET_BRANCH",
 };
 
 const methods = {
-  getHotelDetails: (payload) => {
+  getHotelDetails: (state, payload) => {
     return {
+      ...payload,
+    };
+  },
+  setBranches: (state, payload) => {
+    return {
+      ...state,
       ...payload,
     };
   },

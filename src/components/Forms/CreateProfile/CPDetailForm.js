@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 const CPDetailForm = (props) => {
   const { updateHName } = props;
-  const { updateAddress } = props;
+  const { updateAddress, hname } = props;
 
   return (
     <>
@@ -19,18 +19,21 @@ const CPDetailForm = (props) => {
         <FormTitle>
           <p>Details</p>
         </FormTitle>
-        <FormGroup>
-          <FormLabel>Hotel Name</FormLabel>
-          <FormInput>
-            <Input
-              placeholder="Enter Guests Name"
-              readOnly="readonly"
-              disabled
-              value={props.hName}
-              onChange={(e) => updateHName(e.target.value)}
-            ></Input>
-          </FormInput>
-        </FormGroup>
+        {hname && (
+          <FormGroup>
+            <FormLabel>Hotel Name</FormLabel>
+            <FormInput>
+              <Input
+                placeholder="Enter Guests Name"
+                readOnly="readonly"
+                disabled
+                value={props.hName}
+                onChange={(e) => updateHName(e.target.value)}
+              ></Input>
+            </FormInput>
+          </FormGroup>
+        )}
+
         <FormGroup>
           <FormLabel>Address</FormLabel>
           <FormInput>

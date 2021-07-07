@@ -26,7 +26,13 @@ const initialState = {
 export default (state = initialState, { type, payload }) => {
   switch (type) {
     case userActions.actions.USER_DETAILS:
-      return userActions.methods.getHotelDetails(payload);
+      return userActions.methods.getHotelDetails(state, payload);
+    case userActions.actions.SET_BRANCH:
+      // console.log("userActions.actions.SET_BRANCH", { ...state }, payload);
+      return {
+        ...state,
+        branches: [...state.branches, payload],
+      };
 
     default:
       return state;

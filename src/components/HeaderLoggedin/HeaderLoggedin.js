@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { IconContext } from "react-icons/lib";
 import { Container, Row, Col } from "styled-bootstrap-grid";
@@ -6,6 +6,9 @@ import authActions from "../../store/actions/authActions";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Dropdown, NavDropdown } from "react-bootstrap";
+import api from "../../axios";
+import userActions from "../../store/actions/userAction";
+// import {PersonIcon} from "@material-ui/icons";
 import {
   SubMenu,
   Nav,
@@ -39,6 +42,7 @@ const HeaderLoggedin = () => {
   //     console.log(111)
   //     window.location.href = '/login';
   // }
+  const auth = useSelector((state) => state.auth);
   const userType = useSelector((state) => state.auth.userType);
   const isHotelAdmin = () => {
     return userType === "HOTEL";
@@ -60,6 +64,16 @@ const HeaderLoggedin = () => {
   const [profileContext, setProfileContext] = useState(false);
   const toggleProfileContext = () => setProfileContext(!profileContext);
 
+  useEffect(async () => {
+    if (!isHotelAdmin()) {
+      const { data } = await api.getStaffMemberByStaffId(auth.id);
+      // console.log(isHotelAdmin(),data);
+      dispatch({
+        type: userActions.actions.USER_DETAILS,
+        payload: { ...data.data, branches: [] },
+      });
+    }
+  }, [auth]);
   return (
     <>
       <Container fluid className="p-0 m-0">
@@ -76,7 +90,7 @@ const HeaderLoggedin = () => {
                           src={
                             user && user.hotelLogo
                               ? user.hotelLogo
-                              : "https://via.placeholder.com/50x50"
+                              : "https://image.flaticon.com/icons/png/512/660/660611.png"
                           }
                           onClick={toggleProfileContext}
                         />
@@ -163,26 +177,31 @@ const HeaderLoggedin = () => {
                             </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
-                        <Dropdown>
-                          <DropdownToggle variant="" id="dropdown-staff">
-                            Staff
-                          </DropdownToggle>
+                        {userType && isHotelAdmin() && (
+                          <>
+                            <Dropdown>
+                              <DropdownToggle variant="" id="dropdown-staff">
+                                Staff
+                              </DropdownToggle>
 
-                          <Dropdown.Menu>
-                            {userType && isHotelAdmin() && (
-                              <Dropdown.Item>
-                                <DropdownNavLinks to="/createStaff">
-                                  Create Staff
-                                </DropdownNavLinks>
-                              </Dropdown.Item>
-                            )}
-                            <Dropdown.Item>
-                              <DropdownNavLinks to="/staff" className="d-flex">
-                                Manage Staff
-                              </DropdownNavLinks>
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
+                              <Dropdown.Menu>
+                                <Dropdown.Item>
+                                  <DropdownNavLinks to="/createStaff">
+                                    Create Staff
+                                  </DropdownNavLinks>
+                                </Dropdown.Item>
+                                <Dropdown.Item>
+                                  <DropdownNavLinks
+                                    to="/staff"
+                                    className="d-flex"
+                                  >
+                                    Manage Staff
+                                  </DropdownNavLinks>
+                                </Dropdown.Item>
+                              </Dropdown.Menu>
+                            </Dropdown>
+                          </>
+                        )}
                       </DesktopDropDown>
                       <MobileDropDown>
                         <div className="pl-4 head">
@@ -232,7 +251,7 @@ const HeaderLoggedin = () => {
                           src={
                             user && user.hotelLogo
                               ? user.hotelLogo
-                              : "https://via.placeholder.com/50x50"
+                              : "https://image.flaticon.com/icons/png/512/660/660611.png"
                           }
                           onClick={toggleProfileContext}
                         />

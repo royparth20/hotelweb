@@ -20,8 +20,11 @@ import Loader from "react-loader-spinner";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 import "../../css/style.css";
+import { useSelector } from "react-redux";
 
 const CreateProfile = () => {
+  const auth = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.user);
   const [profile, setProfile] = useState({});
   const [loader, setLoader] = useState(false);
   const [name, setName] = useState();
@@ -46,42 +49,58 @@ const CreateProfile = () => {
     //setIsSelected(true);
   };
 
-  const useFetch = (url, defaultData) => {
-    const [data, updateData] = useState(defaultData);
+  async function fetchData(url, defaultData) {
+    var config = {
+      method: "get",
+      url: url,
+    };
 
-    useEffect(() => {
-      async function fetchData() {
-        var config = {
-          method: "get",
-          url: url,
-        };
+    API(config)
+      .then((bl) => {
+        // console.log("fetched data", bl.data.data[0]);
 
-        API(config)
-          .then((bl) => {
-            console.log("fetched data", bl.data.data[0]);
+        //setHNamep(bl.data.data[0].hotelName)
+        var f = bl.data.data[0];
+        setProfile(f);
+        setEmail(f.email);
+        setHName(f.hotelName);
 
-            //setHNamep(bl.data.data[0].hotelName)
-            var f = bl.data.data[0];
-            setProfile(f);
-            setEmail(f.email);
-            setHName(f.hotelName);
+        setName(f.ownerName);
+        setNumber(f.ownerTelephoneNumber);
+        setAddress(f.address);
+        if (f.hotelImages) setImageUrl(f.hotelImages);
+      })
+      .catch(function (error) {
+        console.log("load error", error);
+      });
+  }
 
-            setName(f.ownerName);
-            setNumber(f.ownerTelephoneNumber);
-            setAddress(f.address);
-            if (f.hotelImages) setImageUrl(f.hotelImages);
-          })
-          .catch(function (error) {
-            console.log("load error", error);
-          });
-      }
-      fetchData();
-    }, []);
+  const staffFetch = async () => {
+    // const { data } = await api.getStaffMemberByStaffId(auth.id);
+    // console.log("staffFetch", user);
+    if (user) {
+      setProfile("");
+      setEmail(user?.staffEmail);
+      setHName("");
 
-    //return data;
+      setName(user?.staffName);
+      setNumber(user?.staffContact);
+      setAddress(user?.staffAddress);
+    }
   };
-
-  const result = useFetch("hotel/getHotelDetails", {});
+  useEffect(() => {
+    if (auth.userType === "HOTEL") {
+      //  useFetch();
+      fetchData("hotel/getHotelDetails", {});
+    } else {
+      staffFetch();
+    }
+  }, []);
+  useEffect(() => {
+    if (auth.userType !== "HOTEL") {
+      staffFetch();
+    }
+  }, [user]);
   async function CreateProfileAjax(image) {
     setLoader(true);
 
@@ -110,6 +129,27 @@ const CreateProfile = () => {
       });
   }
   async function upload() {
+    if (auth?.userType === "STAFF") {
+      setLoader(true);
+      var t = { staffContact: num, staffEmail: email, staffAddress: address };
+
+      await api
+        .editStaffProfile(t, auth.id)
+        .then(function (response) {
+          setLoader(false);
+          toastr.success(response.data.message);
+          //   window.location.href = "/home"
+          //setToken(data.token)
+          // console.log("CREATE PROFILE ==> ", response);
+        })
+        .catch(function (error) {
+          setLoader(false);
+          if (error.response) {
+            toastr.success(error.response.data.message);
+          }
+        });
+      return;
+    }
     if (selectedFile) {
       var data = new FormData();
       console.log("selectedFile", selectedFile);
@@ -172,11 +212,30 @@ const CreateProfile = () => {
             <ContentWrapper className="p- m-0">
               <Row className="p-0 m-0">
                 <Col lg={3} className="p-2 m-0">
-                  <CPPictureForm
-                    ch={changeHandler}
-                    pro={profile}
-                    imagePreview={imagePreview}
-                  />
+                  {auth.userType !== "STAFF" ? (
+                    <CPPictureForm
+                      ch={changeHandler}
+                      pro={profile}
+                      imagePreview={imagePreview}
+                    />
+                  ) : (
+                    <>
+                      <div className="text-center">
+                        <img
+                          width={100}
+                          src={
+                            "https://image.flaticon.com/icons/png/512/660/660611.png"
+                          }
+                        />
+                        <div
+                          style={{ position: "relative" }}
+                          className="mt-2 text-muted font-weight-bold"
+                        >
+                          Profile
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </Col>
 
                 <Col lg={5} className="p-2 m-0">

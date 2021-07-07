@@ -29,6 +29,7 @@ import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 const HotelDetail = () => {
   const auth = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const history = useHistory();
   const [hotels, setHotels] = useState([]);
@@ -37,27 +38,54 @@ const HotelDetail = () => {
     e.target.src = "https://via.placeholder.com/360x200";
   };
   useEffect(() => {
-    setTimeout(async () => {
-      try {
-        const element = await api.getHotel();
-        console.log("fetchData Hotels ==> ", element.data.data[0]);
-        dispatch({
-          type: userActions.actions.USER_DETAILS,
-          payload: { ...element.data.data[0] },
-        });
-        setHotels(element.data.data[0]);
-      } catch (err) {
-        console.log("sdfsdf", err);
-      }
-    }, 0);
+    if (auth.userType !== "STAFF") {
+      setTimeout(async () => {
+        try {
+          const element = await api.getHotel();
+          console.log("fetchData Hotels ==> ", element.data.data[0]);
+          dispatch({
+            type: userActions.actions.USER_DETAILS,
+            payload: { ...element.data.data[0] },
+          });
+          setHotels(element.data.data[0]);
+        } catch (err) {
+          console.log("sdfsdf", err);
+        }
+      }, 0);
+    } else {
+      setTimeout(async () => {
+        try {
+          const { data } = await api.getStaffMemberByStaffId(auth.id);
+          dispatch({
+            type: userActions.actions.USER_DETAILS,
+            payload: { ...data.data, branches: [] },
+          });
+          // setHotels(data.data);
+          const assignHotels = data.data.assignedHotel;
+          assignHotels.map(async (_ids, index) => {
+            const res = await api.getBranchDataByStaff(_ids);
+            // console.log(index, res.data.data);
+            dispatch({
+              type: userActions.actions.SET_BRANCH,
+              payload: { ...res.data.data },
+            });
+          });
+
+          // console.table({ data: data.data, assignHotels });
+        } catch (error) {}
+      }, 0);
+    }
   }, []);
+  useEffect(() => {
+    setHotels(user);
+  }, [user]);
   // console.log("hotels == > ", hotels);
   return (
     <>
       <Main>
         <Container>
           <Row>
-            {hotels && (
+            {hotels.length > 0 && (
               <>
                 {" "}
                 <Col
@@ -116,7 +144,7 @@ const HotelDetail = () => {
             {hotels?.branches &&
               hotels.branches.map((br) => (
                 <Col sm={12} lg={4} key={br._id}>
-                  {console.log(br)}
+                  {/* {console.log(br)} */}
                   <CardWrapper>
                     {br.hotelImages.length > 0 ? (
                       <CardImage>
@@ -164,7 +192,7 @@ const HotelDetail = () => {
           </Row>
         </Container>
       </Main>
-    </>   
+    </>
   );
 };
 

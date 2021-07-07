@@ -25,11 +25,11 @@ const methods = {
     }
   },
   login: (payload) => {
-    // if (store.isAvailable()) {
-    //   store.setItem(LOCAL_STORE_KEYS.authenticated, true);
-    //   store.setItem(LOCAL_STORE_KEYS.token, payload.token);
-    //   store.setItem(LOCAL_STORE_KEYS.id, payload.id);
-    // }
+    if (store.isAvailable()) {
+      store.setItem(LOCAL_STORE_KEYS.authenticated, true);
+      store.setItem(LOCAL_STORE_KEYS.token, payload.token);
+      store.setItem(LOCAL_STORE_KEYS.id, payload.id);
+    }
 
     // console.log("LOGIN ACTION ==> ", payload);
     return {

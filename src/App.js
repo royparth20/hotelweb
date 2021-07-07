@@ -27,15 +27,20 @@ import Hotel from "./pages/Hotel/Hotel";
 import Staff from "./pages/Staff/Staff";
 import StaffDetails from "./pages/Staff/StaffDetails";
 import HotelDetail from "./pages/HotelDetail/HotelDetail";
-import TouristDetail from "./pages/TouristDetail/TouristDetail";
 import BranchDetail from "./pages/BranchDetail/BranchDetail";
 import CreateProfile from "./pages/CreateProfile/CreateProfile";
 import CreateStaff from "./pages/CreateStaff/CreateStaff";
 import Reports from "./pages/Reports/Reports";
 import withClearCache from "./ClearCache";
 import Service from "./pages/Service/Service";
+import TouristDetail from "./pages/TouristDetail/TouristDetail";
 import TouristReport from "./pages/Reports/TouristReport";
 import TouristInfo from "./pages/Tourist/TouristInfo";
+
+import StaffTouristDetail from "./pages/TouristDetail/Staff/TouristDetail";
+import StaffTouristReport from "./pages/Reports/Staff/TouristReport";
+import StaffTouristInfo from "./pages/Tourist/Staff/TouristInfo";
+
 import { useDispatch, useSelector } from "react-redux";
 import authActions from "./store/actions/authActions";
 import userActions from "./store/actions/userAction";
@@ -54,6 +59,9 @@ function App() {
   // const isLoggedIn = localStorage.getItem("token");
   const isLoggedIn = useSelector((state) => state.auth.authenticated);
   const userType = useSelector((state) => state.auth.userType);
+  const isHotelAdmin = () => {
+    return userType === "HOTEL";
+  };
   // console.log("token", isLoggedIn);
   const resetToken = useSelector((state) => state.user.resetToken);
   useEffect(async () => {
@@ -65,11 +73,13 @@ function App() {
       ) {
         // setTimeout(async () => {
         try {
-          const element = await api.getHotel();
-          dispatch({
-            type: userActions.actions.USER_DETAILS,
-            payload: { ...element.data.data[0] },
-          });
+          if (userType !== "STAFF") {
+            const element = await api.getHotel();
+            dispatch({
+              type: userActions.actions.USER_DETAILS,
+              payload: { ...element.data.data[0] },
+            });
+          }
           // dispatch({
           //   type: authActions.actions.LOADEXIST,
           // });
@@ -158,17 +168,17 @@ function App() {
             </Route>
             <Route path="/tourist" exact>
               <HeaderLoggedin />
-              <Tourist />
+              {isHotelAdmin() ? <Tourist /> : <></>}
               <Footer />
             </Route>
             <Route path="/touristDetails" exact>
               <HeaderLoggedin />
-              <TouristDetail />
+              {isHotelAdmin() ? <TouristDetail /> : <></>}
               <Footer />
             </Route>
             <Route path="/touristInfo" exact>
               <HeaderLoggedin />
-              <TouristInfo />
+              {isHotelAdmin() ? <TouristInfo /> : <></>}
               <Footer />
             </Route>
             <Route path="/blacklist" exact>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {store} from "../store";
+import { store } from "../store";
 import storage from "../utils/localStorage";
 import LOCAL_STORE_KEYS from "../utils/LOCAL_STORAGE_KEYS";
 
@@ -17,6 +17,7 @@ api.interceptors.request.use(
     if (session !== null)
       req.headers["Authorization"] = `Bearer ${session.toString()}`;
     if (token !== null) req.headers["Authorization"] = `Bearer ${token}`;
+    // console.log(token, session);
     return req;
   },
   (err) => {
