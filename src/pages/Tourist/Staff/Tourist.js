@@ -18,7 +18,10 @@ import {
 import { Container, Row, Col } from "styled-bootstrap-grid";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { parse } from "query-string";
 import toastr from "toastr";
+
+import { useLocation, useParams, useHistory } from "react-router-dom";
 const Tourist = () => {
   const [tourists, setTourists] = useState([]);
   let history = useHistory();

@@ -20,9 +20,10 @@ import Loader from "react-loader-spinner";
 import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 import "../../css/style.css";
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import userAction from "../../store/actions/userAction";
 const CreateProfile = () => {
+  const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const user = useSelector((state) => state.user);
   const [profile, setProfile] = useState({});
@@ -30,8 +31,8 @@ const CreateProfile = () => {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [imageUrl, setImageUrl] = useState([]);
-  const [num, setNumber] = useState();
-  const [hname, setHName] = useState();
+  const [num, setNumber] = useState("");
+  const [hname, setHName] = useState("");
   const [address, setAddress] = useState();
   const [image, setImage] = useState();
   const [error, setError] = useState({});
@@ -57,18 +58,18 @@ const CreateProfile = () => {
 
     API(config)
       .then((bl) => {
-        // console.log("fetched data", bl.data.data[0]);
+        console.log("fetched data", bl.data.data[0]);
 
         //setHNamep(bl.data.data[0].hotelName)
         var f = bl.data.data[0];
-        setProfile(f);
+        setProfile(f.hotelLogo);
         setEmail(f.email);
         setHName(f.hotelName);
 
         setName(f.ownerName);
         setNumber(f.ownerTelephoneNumber);
         setAddress(f.address);
-        if (f.hotelImages) setImageUrl(f.hotelImages);
+        if (f.hotelLogo) setImageUrl(f.hotelLogo);
       })
       .catch(function (error) {
         console.log("load error", error);
@@ -106,7 +107,7 @@ const CreateProfile = () => {
 
     var t = { ownerTelephoneNumber: num, email: email, address: address };
     if (image) {
-      t["hotelImages"] = [image];
+      t["hotelLogo"] = image;
     }
 
     t["mobile"] = num;
@@ -119,6 +120,12 @@ const CreateProfile = () => {
         toastr.success(response.data.message);
         //   window.location.href = "/home"
         //setToken(data.token)
+        if (image) {
+          dispatch({
+            type: userAction.actions.UPDATE_HOTEL_LOGO,
+            payload: { hotelLogo: image },
+          });
+        }
         console.log("CREATE PROFILE ==> ", response);
       })
       .catch(function (error) {
@@ -212,7 +219,7 @@ const CreateProfile = () => {
             <ContentWrapper className="p- m-0">
               <Row className="p-0 m-0">
                 <Col lg={3} className="p-2 m-0">
-                  {auth.userType !== "STAFF" ? (
+                  {auth?.userType === "HOTEL" ? (
                     <CPPictureForm
                       ch={changeHandler}
                       pro={profile}
@@ -241,7 +248,7 @@ const CreateProfile = () => {
                 <Col lg={5} className="p-2 m-0">
                   <CPDetailForm
                     updateHName={setHName}
-                    hName={hname}
+                    hname={hname}
                     add={address}
                     updateAddress={setAddress}
                   />

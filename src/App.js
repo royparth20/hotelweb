@@ -166,19 +166,24 @@ function App() {
               <HotelDetail />
               <Footer />
             </Route>
+            <Route path="/tourist/:id" exact>
+              <HeaderLoggedin />
+              {isHotelAdmin() ? <Tourist /> : <Tourist />}
+              <Footer />
+            </Route>
             <Route path="/tourist" exact>
               <HeaderLoggedin />
-              {isHotelAdmin() ? <Tourist /> : <></>}
+              {isHotelAdmin() ? <Tourist /> : <Tourist />}
               <Footer />
             </Route>
             <Route path="/touristDetails" exact>
               <HeaderLoggedin />
-              {isHotelAdmin() ? <TouristDetail /> : <></>}
+              {isHotelAdmin() ? <TouristDetail /> : <TouristDetail />}
               <Footer />
             </Route>
             <Route path="/touristInfo" exact>
               <HeaderLoggedin />
-              {isHotelAdmin() ? <TouristInfo /> : <></>}
+              {isHotelAdmin() ? <TouristInfo /> : <TouristInfo />}
               <Footer />
             </Route>
             <Route path="/blacklist" exact>

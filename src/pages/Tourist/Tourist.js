@@ -19,17 +19,35 @@ import { Container, Row, Col } from "styled-bootstrap-grid";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import toastr from "toastr";
+import { parse } from "query-string";
+import { useLocation, useParams } from "react-router-dom";
 const Tourist = () => {
+  const params = useParams();
+  const { search } = useLocation();
+  let query;
+  if (search) query = parse(search);
+  console.log("ShowDetails", params.id);
   const [tourists, setTourists] = useState([]);
   let history = useHistory();
   useEffect(() => {
-    fetchData()
-      .then((element) => {
-        setTourists(element.data.data);
-      })
-      .catch(function (error) {});
+    if (params.id === undefined ) {
+      fetchData()
+        .then((element) => {
+          setTourists(element.data.data);
+        })
+        .catch(function (error) {});
+    } else {
+      fetchTouristByBranch();
+    }
   }, []);
 
+  const fetchTouristByBranch = async () => {
+    try {
+      const { data } = await api.getTouristDataByBranch(params.id);
+      console.log("fetchTouristByBranch", data.data);
+      setTourists(data.data);
+    } catch (error) {}
+  };
   const fetchData = async () => {
     var config = {
       method: "get",
@@ -87,7 +105,7 @@ const Tourist = () => {
           <Row>
             <Col>
               <PageTitleContainer className="clearfix">
-                <PageTitleLine src="./assets/icons/line.svg" />
+                <PageTitleLine src="/assets/icons/line.svg" />
                 <PageTitle>TOURIST</PageTitle>
                 <div className="float-btn-tourist float-right">
                   <Link to="/touristDetails">
@@ -101,16 +119,17 @@ const Tourist = () => {
           <Row>
             {tourists.map((element) => (
               <Col sm={12} lg={4}>
-                <CardWrapper
-                  onClick={() => handleTouristDetails(element._id)}
-                  style={{ cursor: "pointer" }}
-                >
+                <CardWrapper style={{ cursor: "pointer" }}>
                   {element.touristImage ? (
-                    <CardImage>
+                    <CardImage
+                      onClick={() => handleTouristDetails(element._id)}
+                    >
                       <Image src={element.touristImage} />
                     </CardImage>
                   ) : (
-                    <CardImage>
+                    <CardImage
+                      onClick={() => handleTouristDetails(element._id)}
+                    >
                       <Image src="https://via.placeholder.com/360x250" />
                     </CardImage>
                   )}

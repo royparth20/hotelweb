@@ -33,7 +33,13 @@ export default (state = initialState, { type, payload }) => {
         ...state,
         branches: [...state.branches, payload],
       };
-
+    case userActions.actions.UPDATE_HOTEL_LOGO:
+      console.log(
+        "userActions.actions.UPDATE_HOTEL_LOGO",
+        { ...state },
+        payload
+      );
+      return userActions.methods.updateHoteLogo(state, payload);
     default:
       return state;
   }

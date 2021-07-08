@@ -23,7 +23,8 @@ export default {
   uploadFile: (payload) => api.post("/files", payload),
 
   editProfile: (payload) => api.put(`/hotel/edit-profile`, payload),
-  editStaffProfile: (payload,_staffId) => api.put(`/hotel/create-staff/${_staffId}`, payload),
+  editStaffProfile: (payload, _staffId) =>
+    api.put(`/hotel/create-staff/${_staffId}`, payload),
   getStaffMembers: () => api.get("/hotel/getStaffMembers?all=true"),
   getStaffMemberById: (branchId) =>
     api.get(`/hotel/getStaffMembers?hotelId=${branchId}`),
@@ -34,7 +35,8 @@ export default {
     api.post(`hotel/raise-alert?touristId=${payload}`),
 
   getBranchData: (payload) => api.get(`/hotel/?branchId=${payload}`),
-  getBranchDataByStaff: (payload) => api.get(`/staff/getHotelInfo?branchId=${payload}`),
+  getBranchDataByStaff: (payload) =>
+    api.get(`/staff/getHotelInfo?branchId=${payload}`),
   contactUs: (payload) => api.post("/contactus", payload),
   socialLink: () => api.get("/social"),
   // /contactus
@@ -45,4 +47,13 @@ export default {
     api.get(`/tourist/get-tourist?touristId=${touristId}`),
 
   leaveTourist: (payload) => api.post(`/tourist/leave-tourist`, payload),
+
+  getTouristDataByBranch: (branchId) =>
+    api.get(`/tourist/get-tourist-by-hotelId?hotelId=${branchId}`),
+  getTouristDataFromStaffById: (touristId) =>
+    api.get(`/tourist/get-tourist-by-hotelId?touristId=${touristId}`),
+  createTouristByStaffBranch: (payload) =>
+    api.post("/tourist/createBystaff", payload),
+  createTouristByManagerInBranch: (payload) =>
+    api.post("/tourist/createBymanager", payload),
 };

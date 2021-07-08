@@ -66,14 +66,33 @@ const HeaderLoggedin = () => {
 
   useEffect(async () => {
     if (!isHotelAdmin()) {
-      const { data } = await api.getStaffMemberByStaffId(auth.id);
-      // console.log(isHotelAdmin(),data);
-      dispatch({
-        type: userActions.actions.USER_DETAILS,
-        payload: { ...data.data, branches: [] },
-      });
+      try {
+        if (!user._id) {
+          const { data } = await api.getStaffMemberByStaffId(auth.id);
+          dispatch({
+            type: userActions.actions.USER_DETAILS,
+            payload: { ...data.data, branches: [] },
+          });
+          // setHotels(data.data);
+          if (user?.branches.length <= 0) {
+            const assignHotels = data.data.assignedHotel;
+            assignHotels.map(async (_ids, index) => {
+              const res = await api.getBranchDataByStaff(_ids);
+              // console.log(index, res.data.data);
+              dispatch({
+                type: userActions.actions.SET_BRANCH,
+                payload: { ...res.data.data },
+              });
+            });
+          }
+        }
+
+        // console.table({ data: data.data, assignHotels });
+      } catch (error) {}
     }
   }, [auth]);
+
+  
   return (
     <>
       <Container fluid className="p-0 m-0">
@@ -97,11 +116,11 @@ const HeaderLoggedin = () => {
                         <ProfileContextMobile
                           className={profileContext ? "hide" : "show"}
                         >
-                          <ProfileContextItemMobile>
+                          {/* <ProfileContextItemMobile>
                             <ProfileContextItemMobileLink to="/hotelDetails">
                               Profile
                             </ProfileContextItemMobileLink>
-                          </ProfileContextItemMobile>
+                          </ProfileContextItemMobile> */}
                           <ProfileContextItem>
                             <ProfileContextItemLink to="/createProfile">
                               Create Profile
@@ -260,11 +279,11 @@ const HeaderLoggedin = () => {
                             profileContext ? "hide" : "show"
                           } `}
                         >
-                          <ProfileContextItemMobile>
+                          {/* <ProfileContextItemMobile>
                             <ProfileContextItemMobileLink to="/hotelDetails">
                               Profile
                             </ProfileContextItemMobileLink>
-                          </ProfileContextItemMobile>
+                          </ProfileContextItemMobile> */}
                           <ProfileContextItem>
                             <ProfileContextItemLink to="/createProfile">
                               Create Profile

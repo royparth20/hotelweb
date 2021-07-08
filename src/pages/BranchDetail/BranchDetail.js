@@ -254,15 +254,17 @@ const BranchDetail = () => {
 
   useEffect(async () => {
     try {
-      const { data } = await api.getBranchData(branchId);
-      console.log(data.data);
-      const { address, email, hotelImages, ownerName, hotelTelephoneNumber } =
-        data.data;
-      setAddress(address);
-      setBEmail(email);
-      setBMName(ownerName);
-      setBNumber(hotelTelephoneNumber);
-      setImagePreview(hotelImages[0]);
+      if (branchId !== null) {
+        const { data } = await api.getBranchData(branchId);
+        console.log(data.data);
+        const { address, email, hotelImages, ownerName, hotelTelephoneNumber } =
+          data.data;
+        setAddress(address);
+        setBEmail(email);
+        setBMName(ownerName);
+        setBNumber(hotelTelephoneNumber);
+        setImagePreview(hotelImages[0]);
+      }
       // ownerName
     } catch (error) {
       console.error(error);

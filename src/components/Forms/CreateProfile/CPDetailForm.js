@@ -24,10 +24,10 @@ const CPDetailForm = (props) => {
             <FormLabel>Hotel Name</FormLabel>
             <FormInput>
               <Input
-                placeholder="Enter Guests Name"
+                placeholder="Hotel Name"
                 readOnly="readonly"
                 disabled
-                value={props.hName}
+                value={hname}
                 onChange={(e) => updateHName(e.target.value)}
               ></Input>
             </FormInput>
@@ -44,11 +44,13 @@ const CPDetailForm = (props) => {
             ></Input>
           </FormInput>
         </FormGroup>
-        <FormGroup>
-          <Link to="/branchDetails">
-            <OtherBranchesBtn>Other Branches</OtherBranchesBtn>
-          </Link>
-        </FormGroup>
+        {hname && (
+          <FormGroup>
+            <Link to="/branchDetails">
+              <OtherBranchesBtn>Other Branches</OtherBranchesBtn>
+            </Link>
+          </FormGroup>
+        )}
       </FormContainer>
     </>
   );

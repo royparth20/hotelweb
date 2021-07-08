@@ -63,17 +63,19 @@ const StaffDetails = () => {
     try {
       let payload = { ...staffMemberData };
 
-      payload.assignedHotel = [];
       // payload._id = undefined;
       delete payload._id;
       // delete payload.assignedHotel;
 
-      branches.map((type, index) => {
-        // console.log(index, type?.address, checkedState[index]);
-        if (checkedState[index]) {
-          payload.assignedHotel = [...payload.assignedHotel, type._id];
-        }
-      });
+      if (branches.length > 0) {
+        payload.assignedHotel = [];
+        branches.map((type, index) => {
+          // console.log(index, type?.address, checkedState[index]);
+          if (checkedState[index]) {
+            payload.assignedHotel = [...payload.assignedHotel, type._id];
+          }
+        });
+      }
       const { active, parentHotel, staffPassword, token, ...payloadData } =
         payload;
       console.table({ payloadData });

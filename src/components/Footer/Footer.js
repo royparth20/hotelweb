@@ -141,6 +141,11 @@ const Footer = () => {
                     <FooterLink to="/tourist">Tourist</FooterLink>
                   </li>
                 </div>
+                <div className="mb-1" onClick={scrollToTop}>
+                  <li>
+                    <FooterLink to="/staff">Staff</FooterLink>
+                  </li>
+                </div>
                 {/* <div className="mb-1" onClick={scrollToTop}>
                   <li>
                     <FooterLink to="/blacklist">Blacklist</FooterLink>

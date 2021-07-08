@@ -6,18 +6,13 @@ import {
   FormLabel,
   FormInput,
   Input,
-  FileInputContainer,
-  FileInputB,
   Dt,
   FileB,
-  Select,
-  Options,
   InputNumber,
   InputDropdownOption,
   InputDropdown,
   InputPhoneNumber,
 } from "../TDLeftDetailForm.elements";
-import { Container, Row, Col } from "styled-bootstrap-grid";
 
 const TDLeftDetailForm = (props) => {
   const {
@@ -418,13 +413,22 @@ const TDLeftDetailForm = (props) => {
         <div className="col-md-6 col-sm-12">
           <FormGroup>
             <FormLabel>Gender</FormLabel>
-            <FormInput>
-              <Input
-                required
-                placeholder="Gender"
-                onChange={(e) => updateGender(e.target.value)}
-              ></Input>
-            </FormInput>
+            {/* <FormInput>
+              <Input required placeholder="Gender"></Input>
+            </FormInput> */}
+
+            <InputDropdown
+              required
+              
+              onChange={(e) => {
+                updateGender(e.target.value);
+              }}
+            >
+              <InputDropdownOption value="Male">
+                Male
+              </InputDropdownOption>
+              <InputDropdownOption value="Female">Female</InputDropdownOption>
+            </InputDropdown>
           </FormGroup>
         </div>
 

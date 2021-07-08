@@ -14,6 +14,7 @@
     "loader": "^2.1.1",
     "mime": "^1.6.0",
     "moment": "^2.29.1",
+    "query-string": "^7.0.1",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.0",
     "react-bootstrap-wizard": "^0.0.9",
@@ -60,5 +61,5 @@
       "last 1 safari version"
     ]
   },
-  "buildDate": 1625670521991
+  "buildDate": 1625757370040
 }

@@ -16,12 +16,13 @@ import {
   CardButton,
 } from "./Tourist.elements";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
+import { useSelector } from "react-redux";
 import { Container, Row, Col } from "styled-bootstrap-grid";
 import { useHistory, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import toastr from "toastr";
 const TouristInfo = () => {
+  const userType = useSelector((state) => state.auth.userType);
   const [tourist, setTourist] = useState(null);
   const [loading, setLoading] = useState(false);
   const touristId = new URLSearchParams(useLocation().search).get("touristId");
@@ -30,7 +31,7 @@ const TouristInfo = () => {
     setLoading(true);
     fetchData()
       .then((element) => {
-        console.log(element.data.data);
+        // console.log(element.data.data);
         setTourist(element.data.data);
         setLoading(false);
       })
@@ -38,7 +39,11 @@ const TouristInfo = () => {
   }, [touristId]);
 
   const fetchData = async () => {
-    return api.getTouristDataById(touristId);
+    if (userType === "HOTEL") {
+      return api.getTouristDataById(touristId);
+    } else {
+      return api.getTouristDataFromStaffById(touristId);
+    }
   };
 
   const onExistTourist = async (e) => {
@@ -259,16 +264,18 @@ const TouristInfo = () => {
                         </div>
                       </>
                     ) : (
-                      <>
-                        <div className="col-12">
-                          <button
-                            className="btn btn-danger"
-                            onClick={onExistTourist}
-                          >
-                            Exit Tourist
-                          </button>
-                        </div>
-                      </>
+                      userType === "HOTEL" && (
+                        <>
+                          <div className="col-12">
+                            <button
+                              className="btn btn-danger"
+                              onClick={onExistTourist}
+                            >
+                              Exit Tourist
+                            </button>
+                          </div>
+                        </>
+                      )
                     )}
                   </div>
                 </>

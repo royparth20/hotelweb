@@ -53,29 +53,31 @@ const HotelDetail = () => {
         }
       }, 0);
     } else {
-      setTimeout(async () => {
-        try {
-          const { data } = await api.getStaffMemberByStaffId(auth.id);
-          dispatch({
-            type: userActions.actions.USER_DETAILS,
-            payload: { ...data.data, branches: [] },
-          });
-          // setHotels(data.data);
-          const assignHotels = data.data.assignedHotel;
-          assignHotels.map(async (_ids, index) => {
-            const res = await api.getBranchDataByStaff(_ids);
-            // console.log(index, res.data.data);
-            dispatch({
-              type: userActions.actions.SET_BRANCH,
-              payload: { ...res.data.data },
-            });
-          });
+      // if (user?.branches.length <= 0) {
+      //   setTimeout(async () => {
+      //     try {
+      //       const { data } = await api.getStaffMemberByStaffId(auth.id);
+      //       dispatch({
+      //         type: userActions.actions.USER_DETAILS,
+      //         payload: { ...data.data, branches: [] },
+      //       });
+      //       // setHotels(data.data);
+      //       const assignHotels = data.data.assignedHotel;
+      //       assignHotels.map(async (_ids, index) => {
+      //         const res = await api.getBranchDataByStaff(_ids);
+      //         console.log(index, res.data.data);
+      //         dispatch({
+      //           type: userActions.actions.SET_BRANCH,
+      //           payload: { ...res.data.data },
+      //         });
+      //       });
 
-          // console.table({ data: data.data, assignHotels });
-        } catch (error) {}
-      }, 0);
+      //       // console.table({ data: data.data, assignHotels });
+      //     } catch (error) {}
+      //   }, 0);
+      // }
     }
-  }, []);
+  }, [auth]);
   useEffect(() => {
     setHotels(user);
   }, [user]);
@@ -85,7 +87,7 @@ const HotelDetail = () => {
       <Main>
         <Container>
           <Row>
-            {hotels.length > 0 && (
+            {hotels?.hotelName && (
               <>
                 {" "}
                 <Col
@@ -162,22 +164,34 @@ const HotelDetail = () => {
                     <CardInfo>
                       <CardName>{br.address}</CardName>
                       {br && br.approved ? (
-                        auth &&
-                        auth.userType === "HOTEL" && (
-                          <div className="row d-flex justify-content-between mx-2">
-                            <Link to={`/branchDetails?branchId=${br._id}`}>
-                              <button className="btn btn-outline-dark">
-                                View
-                              </button>
-                            </Link>
+                        <div className="row">
+                          {auth && auth.userType === "HOTEL" && (
+                            <>
+                              <Link
+                                to={`/branchDetails?branchId=${br._id}`}
+                                className="mr-1"
+                              >
+                                <button className="btn btn-outline-dark">
+                                  View
+                                </button>
+                              </Link>
 
-                            <Link to={`/staff?branchId=${br._id}`}>
-                              <button className="btn btn-primary">
-                                Show Staff
-                              </button>
-                            </Link>
-                          </div>
-                        )
+                              <Link
+                                to={`/staff?branchId=${br._id}`}
+                                className="mx-1"
+                              >
+                                <button className="btn btn-primary">
+                                  Show Staff
+                                </button>
+                              </Link>
+                            </>
+                          )}
+                          <Link to={`/tourist/${br._id}`} className="ml-1">
+                            <button className="btn btn-secondary">
+                              Show Tourist
+                            </button>
+                          </Link>
+                        </div>
                       ) : (
                         <>
                           <div className="text-danger font-weight-bold branch-not-approved">

@@ -1,6 +1,7 @@
 const actions = {
   USER_DETAILS: "USER_DETAILS",
   SET_BRANCH: "SET_BRANCH",
+  UPDATE_HOTEL_LOGO: "UPDATE_HOTEL_LOGO",
 };
 
 const methods = {
@@ -10,6 +11,12 @@ const methods = {
     };
   },
   setBranches: (state, payload) => {
+    return {
+      ...state,
+      ...payload,
+    };
+  },
+  updateHoteLogo: (state, payload) => {
     return {
       ...state,
       ...payload,

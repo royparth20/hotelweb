@@ -26,9 +26,13 @@ import National from "../../components/Forms/TouristDetail/National";
 import { Container, Row, Col } from "styled-bootstrap-grid";
 import Loader from "react-loader-spinner";
 import API from "../../api_test";
+import api from "../../axios";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 const TouristDetail = () => {
   const history = useHistory();
+  const bb = useSelector((state) => state.user.branches);
+  const userType = useSelector((state) => state.auth.userType);
   const [loader, setLoader] = useState(false);
   const [touristFirstname, setTFName] = useState();
   const [touristLastname, setTLname] = useState();
@@ -57,17 +61,22 @@ const TouristDetail = () => {
   const [type, setType] = useState("true");
   const [guestMembers, setGuestMember] = useState(false);
   const [inputList, setInputList] = useState([]);
-
+  const [branch, setBranch] = useState();
   const [residentPlace, setResidentPlace] = useState("");
   const [additionalNumber, setAdditionalNumber] = useState();
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("Male");
   const [grantor, setGrantor] = useState("");
   const [age, setAge] = useState("");
   const [vehicle, setVehicle] = useState("");
+  const [branches, setBranches] = useState([]);
   ///////////////////////////////////
+
+  useEffect(() => {
+    setBranches(bb);
+  }, [bb]);
   const changeHandler = (event) => {
     setPhoto(event.target.files[0]);
-    console.log("event.target.files[0]", event);
+    // console.log("event.target.files[0]", event);
   };
   if (passport) {
     console.log("passport", passport.target.files);
@@ -105,7 +114,6 @@ const TouristDetail = () => {
         reasonForStay !== "" &&
         // provinceArrivedFrom &&
         tnumber !== "" &&
-        age !== "" &&
         gender !== "" &&
         roomNumber !== ""
       ) {
@@ -145,47 +153,70 @@ const TouristDetail = () => {
         };
         console.log("payload", data);
 
-        var config = {
-          method: "post",
-          url: "tourist/createBymanager",
+        if (branches.length > 0) {
+          if (branch !== "") {
+            data["hotelId"] = branch;
 
-          data: data,
-        };
-        return await API(config)
-          .then(function (response) {
-            setLoader(false);
-            history.replace("/tourist");
-            // window.location.href = "/tourist";
-            //setToken(data.token)
-            console.log("response", response);
-          })
-          .catch(function (error) {
-            setLoader(false);
-            if (error.response) {
-              setError({
-                name:
-                  "Please Fix These Errors:  " + error.response.data.message,
-              });
+            try {
+              if (userType === "HOTEL") {
+                const response = await api.createTouristByManagerInBranch(data);
+                setLoader(false);
+              } else {
+                const response = await api.createTouristByStaffBranch(data);
+                setLoader(false);
+              }
+              history.replace(`/tourist/${branch}`);
+              //setToken(data.token)
+              // console.log("response", response);
+            } catch (error) {
               setLoader(false);
-              console.log(error.response.data.message);
+              if (error.response) {
+                setError({
+                  name:
+                    "Please Fix These Errors:  " + error.response.data.message,
+                });
+                setLoader(false);
+                // console.log(error.response.data.message);
+              }
             }
-          });
+          } else {
+            setError({
+              name: "Please Select Branch",
+            });
+            setLoader(false);
+          }
+        } else {
+          var config = {
+            method: "post",
+            url: "tourist/createBymanager",
+
+            data: data,
+          };
+          return await API(config)
+            .then(function (response) {
+              setLoader(false);
+              history.replace("/tourist");
+              // window.location.href = "/tourist";
+              //setToken(data.token)
+              console.log("response", response);
+            })
+            .catch(function (error) {
+              setLoader(false);
+              if (error.response) {
+                setError({
+                  name:
+                    "Please Fix These Errors:  " + error.response.data.message,
+                });
+                setLoader(false);
+                console.log(error.response.data.message);
+              }
+            });
+        }
       } else {
         console.log(
           "Field Not valid",
-          typeof (
-            touristFirstname !== "" &&
-            residentPlace !== "" &&
-            mobile !== "" &&
-            dtArraival !== "" &&
-            dtDeparture !== "" &&
-            reasonForStay !== "" &&
-            tnumber !== "" &&
-            visaNumber !== "" &&
-            age !== "" &&
-            gender !== "" &&
-            roomNumber !== ""
-          )
+
+          gender
         );
         setError({ name: "Fill All the details!" });
         setLoader(false);
@@ -337,9 +368,28 @@ const TouristDetail = () => {
               <FormTitle>
                 <p>Details</p>
               </FormTitle>
+              {branches && branches.length > 0 && (
+                <FormGroup>
+                  <FormLabel> Branch </FormLabel>
+                  <FormInput>
+                    <Select
+                      // tabIndex={1}
+                      onChange={(e) => {
+                        setBranch(e.target.value);
+                      }}
+                    >
+                      {branches.map((item) => (
+                        <Options value={item._id} key={item._id}>
+                          {item.address}
+                        </Options>
+                      ))}
+                    </Select>
+                  </FormInput>
+                </FormGroup>
+              )}
 
               <FormGroup>
-                {/* <FormLabel> From </FormLabel> */}
+                <FormLabel> From </FormLabel>
                 <FormInput>
                   <Select
                     // tabIndex={1}
