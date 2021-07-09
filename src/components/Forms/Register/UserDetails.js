@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { useHistory } from "react-router-dom";
 import {
@@ -11,10 +11,17 @@ import {
   InputPass,
 } from "./RegisterForm.elements";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import VisibilityIcon from "@material-ui/icons/Visibility";
 const UserDetails = (props) => {
+  const [passwordShown, setPasswordShown] = useState(false);
   const { setEmail, setPassword, setConfPass, error } = props;
   let history = useHistory();
-
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
   //   const [email, setEmail] = useState();
   //   const [password, setPassword] = useState();
   //   const [conf_pass, setConfPass] = useState();
@@ -35,13 +42,32 @@ const UserDetails = (props) => {
 
       <FormGroup>
         <FormLabel>Password</FormLabel>
-        <FormInput>
+        <InputPass
+          placeholder="Enter Password"
+          type={passwordShown ? "text" : "password"}
+          onChange={(e) => setPassword(e.target.value)}
+          variant="outlined"
+          id="outlined-Password"
+          label="Password"
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                onClick={togglePasswordVisiblity}
+                onMouseDown={togglePasswordVisiblity}
+              >
+                {passwordShown ? <VisibilityIcon /> : <VisibilityOffIcon />}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+        {/* <FormInput>
+
           <InputPass
             type="password"
             placeholder="Enter your password"
             onChange={(e) => setPassword(e.target.value)}
           ></InputPass>
-        </FormInput>
+        </FormInput> */}
         <FormLabelError>{error["password"]}</FormLabelError>
       </FormGroup>
 
@@ -49,6 +75,7 @@ const UserDetails = (props) => {
         <FormLabel>Confirm Password</FormLabel>
         <FormInput>
           <InputPass
+            type="password"
             placeholder="Re-enter your password"
             onChange={(e) => setConfPass(e.target.value)}
           ></InputPass>

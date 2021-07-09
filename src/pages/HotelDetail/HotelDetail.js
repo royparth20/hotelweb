@@ -27,6 +27,8 @@ import { Container, Row, Col } from "styled-bootstrap-grid";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Tourist from "../Tourist/Tourist";
+import Staff from "../Staff/Staff";
 const HotelDetail = () => {
   const auth = useSelector((state) => state.auth);
   const user = useSelector((state) => state.user);
@@ -71,7 +73,6 @@ const HotelDetail = () => {
       //           payload: { ...res.data.data },
       //         });
       //       });
-
       //       // console.table({ data: data.data, assignHotels });
       //     } catch (error) {}
       //   }, 0);
@@ -132,15 +133,16 @@ const HotelDetail = () => {
               </>
             )}
           </Row>
-
-          <Row>
-            <Col>
-              <PageTitleContainer>
-                <PageTitleLine src="./assets/icons/line.svg" />
-                <PageTitle>BRANCHES</PageTitle>
-              </PageTitleContainer>
-            </Col>
-          </Row>
+          {hotels?.branches && hotels?.branches.length > 0 && (
+            <Row>
+              <Col>
+                <PageTitleContainer>
+                  <PageTitleLine src="./assets/icons/line.svg" />
+                  <PageTitle>BRANCHES</PageTitle>
+                </PageTitleContainer>
+              </Col>
+            </Row>
+          )}
 
           <Row>
             {hotels?.branches &&
@@ -148,19 +150,20 @@ const HotelDetail = () => {
                 <Col sm={12} lg={4} key={br._id}>
                   {/* {console.log(br)} */}
                   <CardWrapper>
-                    {br.hotelImages.length > 0 ? (
-                      <CardImage>
-                        <Image
-                          src={br.hotelImages && br.hotelImages[0]}
-                          onError={onImageError}
-                        />
-                      </CardImage>
-                    ) : (
-                      <CardImage>
-                        <Image src="https://via.placeholder.com/360x250" />
-                      </CardImage>
-                    )}
-
+                    <Link to={`/branch/${br._id}`}>
+                      {br.hotelImages.length > 0 ? (
+                        <CardImage>
+                          <Image
+                            src={br.hotelImages && br.hotelImages[0]}
+                            onError={onImageError}
+                          />
+                        </CardImage>
+                      ) : (
+                        <CardImage>
+                          <Image src="https://via.placeholder.com/360x250" />
+                        </CardImage>
+                      )}
+                    </Link>
                     <CardInfo>
                       <CardName>{br.address}</CardName>
                       {br && br.approved ? (
@@ -171,8 +174,8 @@ const HotelDetail = () => {
                                 to={`/branchDetails?branchId=${br._id}`}
                                 className="mr-1"
                               >
-                                <button className="btn btn-outline-dark">
-                                  View
+                                <button className="btn btn-outline-danger">
+                                  Edit
                                 </button>
                               </Link>
 
@@ -180,14 +183,14 @@ const HotelDetail = () => {
                                 to={`/staff?branchId=${br._id}`}
                                 className="mx-1"
                               >
-                                <button className="btn btn-primary">
+                                <button className="btn btn-outline-primary">
                                   Show Staff
                                 </button>
                               </Link>
                             </>
                           )}
                           <Link to={`/tourist/${br._id}`} className="ml-1">
-                            <button className="btn btn-secondary">
+                            <button className="btn btn-outline-secondary">
                               Show Tourist
                             </button>
                           </Link>
@@ -204,6 +207,13 @@ const HotelDetail = () => {
                 </Col>
               ))}
           </Row>
+
+          {hotels?.branches && hotels?.branches.length <= 0 && (
+            <>
+              <Staff />
+              <Tourist />
+            </>
+          )}
         </Container>
       </Main>
     </>

@@ -15,8 +15,13 @@ import {
   RememberMeText,
   ForgetPasswordLink,
   FormLabelError,
+  InputPasswordFeild,
   InputPass,
 } from "./LoginForm.elements";
+// import InputPass from "@material-ui/core/Input";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
+
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { Row, Col } from "styled-bootstrap-grid";
 import { Form } from "react-bootstrap";
@@ -24,12 +29,18 @@ import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 import "../../../css/style.css";
 import authActions from "../../../store/actions/authActions";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+// import InputAdornment from "@material-ui/core/InputAdornment";
+// import VisibilityOff from "@material-ui/icons/VisibilityOff";
 export default function LoginForm() {
   let history = useHistory();
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState({});
   const [userType, setUserType] = useState("hotel");
+  const [passwordShown, setPasswordShown] = useState(false);
+
   const dispatch = useDispatch();
   ////////////Ajax/////////////////////////////////////////
   async function LoginUser(credentials) {
@@ -70,6 +81,7 @@ export default function LoginForm() {
   }
   ////////////Ajax end/////////////////////////////////////////
   function valid() {
+    setError({});
     let errors = {};
     let re =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -80,6 +92,8 @@ export default function LoginForm() {
     }
     if (!password) {
       errors["password"] = "Password is empty";
+    } else if (password.length < 6) {
+      errors["password"] = "Password is should be min 6 length.";
     }
     console.log("errors", errors);
     if (Object.entries(errors).length > 0) {
@@ -121,6 +135,10 @@ export default function LoginForm() {
       }
     }
     // setToken(token);
+  };
+
+  const togglePasswordVisiblity = () => {
+    setPasswordShown(passwordShown ? false : true);
   };
   ////////////Ajax/////////////////////////////////////////
   return (
@@ -178,7 +196,7 @@ export default function LoginForm() {
                 placeholder="Enter email address"
                 onChange={(e) => setUserName(e.target.value)}
               ></Input>
-
+              {}
               <FormLabelError>{error["name"]}</FormLabelError>
             </FormInput>
           </FormGroup>
@@ -187,9 +205,43 @@ export default function LoginForm() {
             <FormLabel>Password</FormLabel>
             <FormInput>
               <InputPass
-                placeholder="Enter your password"
+                placeholder="Enter Password"
+                type={passwordShown ? "text" : "password"}
                 onChange={(e) => setPassword(e.target.value)}
-              ></InputPass>
+                value={password}
+                variant="outlined"
+                id="outlined-Password"
+                label="Password"
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={togglePasswordVisiblity}
+                      onMouseDown={togglePasswordVisiblity}
+                    >
+                      {passwordShown ? (
+                        <VisibilityIcon />
+                      ) : (
+                        <VisibilityOffIcon />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+              {/* <InputPasswordFeild>
+                <InputPass
+                  type={passwordShown ? "text" : "password"}
+                  placeholder="Enter your password"
+                  onChange={(e) => setPassword(e.target.value)}
+                ></InputPass>
+                {passwordShown ? (
+                  <VisibilityIcon onClick={togglePasswordVisiblity} />
+                ) : (
+                  <VisibilityOffIcon
+                    id="clearBtn"
+                    onClick={togglePasswordVisiblity}
+                  />
+                )}
+              </InputPasswordFeild> */}
               <FormLabelError>{error.password}</FormLabelError>
             </FormInput>
           </FormGroup>

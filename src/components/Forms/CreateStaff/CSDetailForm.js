@@ -7,6 +7,7 @@ import {
   Input,
   TextArea,
   FormTitle,
+  InputPassword
 } from "./CSDetailForm.elements";
 
 const CSDetailForm = (props) => {
@@ -36,10 +37,10 @@ const CSDetailForm = (props) => {
         <FormGroup>
           <FormLabel>Staff Password</FormLabel>
           <FormInput>
-            <Input
+            <InputPassword
               value={pass}
               onChange={(e) => updatePass(e.target.value)}
-            ></Input>
+            ></InputPassword>
           </FormInput>
         </FormGroup>
         <FormGroup>

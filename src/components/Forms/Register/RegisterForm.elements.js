@@ -1,3 +1,4 @@
+import Password from "@material-ui/core/Input";
 import styled from "styled-components";
 
 export const FormContainer = styled.div`
@@ -67,21 +68,21 @@ export const InputFile = styled.input.attrs((props) => ({
   line-height: 19px;
   color: black;
 `;
-export const InputPass = styled.input.attrs((props) => ({
-  type: "password",
-}))`
-  width: 100%;
-  height: 55px;
-  border: 1px solid #cacaca;
-  box-sizing: border-box;
-  padding-left: 10px;
-  border-radius: 8px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-size: 16px;
-  line-height: 19px;
-  color: black;
-`;
+// export const InputPass = styled.input.attrs((props) => ({
+//   type: "password",
+// }))`
+//   width: 100%;
+//   height: 55px;
+//   border: 1px solid #cacaca;
+//   box-sizing: border-box;
+//   padding-left: 10px;
+//   border-radius: 8px;
+//   margin-top: 10px;
+//   margin-bottom: 10px;
+//   font-size: 16px;
+//   line-height: 19px;
+//   color: black;
+// `;
 export const Button = styled.button`
   position: relative;
   width: 100%;
@@ -137,4 +138,20 @@ export const UploadButton = styled.button`
   box-sizing: border-box;
   padding: 10px 20px;
   margin-top: 20px;
+`;
+export const InputPass = styled(Password).attrs((props) => ({
+  pattern: "[a-zA-Z0-9]{6,}",
+  title: "Min password length is 6 ",
+}))`
+  width: 100%;
+  height: 55px;
+  border: 1px solid #cacaca;
+  box-sizing: border-box;
+  padding-left: 10px;
+  border-radius: 8px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 19px;
+  color: black;
 `;

@@ -378,11 +378,14 @@ const TouristDetail = () => {
                         setBranch(e.target.value);
                       }}
                     >
-                      {branches.map((item) => (
-                        <Options value={item._id} key={item._id}>
-                          {item.address}
-                        </Options>
-                      ))}
+                      {branches.map(
+                        (item) =>
+                          item.approved && (
+                            <Options value={item._id} key={item._id}>
+                              {item.address}
+                            </Options>
+                          )
+                      )}
                     </Select>
                   </FormInput>
                 </FormGroup>

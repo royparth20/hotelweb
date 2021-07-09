@@ -1,16 +1,16 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 export const FormContainer = styled.div`
-  padding:23px;
-  background: #FFFFFF;
+  padding: 23px;
+  background: #ffffff;
   box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.07);
   border-bottom: 9px solid #043565;
   min-height: 400px;
 `;
 
 export const FormGroup = styled.div`
-  color:black;
-  margin:20px auto;
+  color: black;
+  margin: 20px auto;
 `;
 
 export const FormTitle = styled.p`
@@ -22,57 +22,69 @@ export const FormTitle = styled.p`
   letter-spacing: 0.1em;
 `;
 
-
 export const FormLabel = styled.label`
-  font-weight:600;
-  margin:0px;
+  font-weight: 600;
+  margin: 0px;
   color: #373737;
-  display:block;
-  margin-bottom:10px;
-  margin-left:5px;
+  display: block;
+  margin-bottom: 10px;
+  margin-left: 5px;
 `;
 
 export const FormInput = styled.div`
-  color:black;
+  color: black;
 `;
 
-export const Input = styled.input.attrs(props => ({
-  type: "text"
+export const Input = styled.input.attrs((props) => ({
+  type: "text",
 }))`
   width: 100%;
   border: 1px solid #000000;
   box-sizing: border-box;
-  border:none;
+  border: none;
   border-bottom: 1px solid #000000;
   font-size: 16px;
   color: black;
-  padding-left:5px;
+  padding-left: 5px;
+`;
+export const InputPassword = styled.input.attrs((props) => ({
+  type: "text",
+  pattern: "[a-zA-Z0-9]{6,}",
+  title: "Min password length is 6 ",
+}))`
+  width: 100%;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid #000000;
+  font-size: 16px;
+  color: black;
+  padding-left: 5px;
 `;
 
-export const TextArea = styled.textarea.attrs(props => ({
+export const TextArea = styled.textarea.attrs((props) => ({
   type: "text",
 }))`
   width: 100%;
   height: 50px;
-  border:none;
+  border: none;
   border-bottom: 1px solid #000000;
   margin-top: 10px;
-  resize:none;
+  resize: none;
   font-size: 16px;
   line-height: 19px;
   color: color;
-  padding-left:5px;
+  padding-left: 5px;
 `;
-
 
 export const OtherBranchesBtn = styled.button`
   background: #043565;
   border-radius: 6px;
-  color:white;
-  border:none;
-  padding:15px 40px;
-  font-weight:600;
-`
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  font-weight: 600;
+`;
 
 export const Button = styled.button`
   position: relative;
@@ -85,7 +97,7 @@ export const Button = styled.button`
   font-weight: 500;
   font-size: 16px;
   padding: 0px;
-  border:none;
-  color:white;
+  border: none;
+  color: white;
   margin-top: 20px;
 `;

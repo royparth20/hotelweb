@@ -28,6 +28,7 @@ import Staff from "./pages/Staff/Staff";
 import StaffDetails from "./pages/Staff/StaffDetails";
 import HotelDetail from "./pages/HotelDetail/HotelDetail";
 import BranchDetail from "./pages/BranchDetail/BranchDetail";
+import Branch from "./pages/Branch/Branch";
 import CreateProfile from "./pages/CreateProfile/CreateProfile";
 import CreateStaff from "./pages/CreateStaff/CreateStaff";
 import Reports from "./pages/Reports/Reports";
@@ -205,6 +206,11 @@ function App() {
             <Route path="/reports" exact>
               <HeaderLoggedin />
               <Reports />
+              <Footer />
+            </Route>
+            <Route path="/branch/:id" exact>
+              <HeaderLoggedin />
+              {isHotelAdmin() ? <Branch /> : <Branch />}
               <Footer />
             </Route>
             {userType && userType === "HOTEL" && (
