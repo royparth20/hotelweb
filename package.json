@@ -12,6 +12,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "firebase-tools": "^9.12.1",
+    "formik": "^2.2.9",
     "loader": "^2.1.1",
     "mime": "^1.6.0",
     "moment": "^2.29.1",
@@ -62,5 +63,5 @@
       "last 1 safari version"
     ]
   },
-  "buildDate": 1625821724547
+  "buildDate": 1626075218812
 }

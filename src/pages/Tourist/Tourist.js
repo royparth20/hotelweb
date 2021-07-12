@@ -30,32 +30,32 @@ const Tourist = () => {
   const [tourists, setTourists] = useState([]);
   let history = useHistory();
   useEffect(() => {
-    if (params.id === undefined ) {
+    const fetchData = async () => {
+      var config = {
+        method: "get",
+        url: "tourist/get-tourist",
+      };
+
+      return API(config);
+    };
+
+    const fetchTouristByBranch = async () => {
+      try {
+        const { data } = await api.getTouristDataByBranch(params.id);
+        // console.log("fetchTouristByBranch", data.data);
+        setTourists(data.data);
+      } catch (error) {}
+    };
+    if (params.id === undefined) {
       fetchData()
         .then((element) => {
           setTourists(element.data.data);
         })
-        .catch(function (error) {});
+        .catch(function (_error) {});
     } else {
       fetchTouristByBranch();
     }
   }, []);
-
-  const fetchTouristByBranch = async () => {
-    try {
-      const { data } = await api.getTouristDataByBranch(params.id);
-      console.log("fetchTouristByBranch", data.data);
-      setTourists(data.data);
-    } catch (error) {}
-  };
-  const fetchData = async () => {
-    var config = {
-      method: "get",
-      url: "tourist/get-tourist",
-    };
-
-    return API(config);
-  };
 
   const handleReportTourist = (event) => {
     console.log("event", event.target.id);
@@ -64,7 +64,7 @@ const Tourist = () => {
         name: event.target.name,
         id: event.target.id,
       };
-      if (test != {}) {
+      if (test !== {}) {
         <Link
           to={{
             pathname: "/touristReports",
@@ -108,9 +108,15 @@ const Tourist = () => {
                 <PageTitleLine src="/assets/icons/line.svg" />
                 <PageTitle>TOURIST</PageTitle>
                 <div className="float-btn-tourist float-right">
-                  <Link to="/touristDetails">
-                    <div className="btn btn-primary">Create Tourist</div>
-                  </Link>
+                  {params.id === null || params.id === undefined ? (
+                    <Link to="/touristDetails">
+                      <div className="btn btn-primary">Create Tourist</div>
+                    </Link>
+                  ) : (
+                    <Link to={`/touristDetails/${params.id}`}>
+                      <div className="btn btn-primary">Create Tourist</div>
+                    </Link>
+                  )}
                 </div>
               </PageTitleContainer>
             </Col>

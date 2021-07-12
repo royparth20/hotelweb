@@ -182,6 +182,11 @@ function App() {
               {isHotelAdmin() ? <TouristDetail /> : <TouristDetail />}
               <Footer />
             </Route>
+            <Route path="/touristDetails/:id" exact>
+              <HeaderLoggedin />
+              {isHotelAdmin() ? <TouristDetail /> : <TouristDetail />}
+              <Footer />
+            </Route>
             <Route path="/touristInfo" exact>
               <HeaderLoggedin />
               {isHotelAdmin() ? <TouristInfo /> : <TouristInfo />}

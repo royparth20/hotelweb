@@ -1,25 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { map } from "rxjs/operators";
-import API from "../../api_test";
 import api from "../../axios";
 import {
   Main,
   PageTitleContainer,
   PageTitle,
   PageTitleLine,
-  CardWrapper,
   CardImage,
-  CardInfo,
   Image,
-  CardReportButton,
-  CardName,
-  CardButton,
 } from "./Tourist.elements";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useSelector } from "react-redux";
 import { Container, Row, Col } from "styled-bootstrap-grid";
 import { useHistory, useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
 import toastr from "toastr";
 const TouristInfo = () => {
   const userType = useSelector((state) => state.auth.userType);
@@ -35,7 +27,7 @@ const TouristInfo = () => {
         setTourist(element.data.data);
         setLoading(false);
       })
-      .catch(function (error) {});
+      .catch(function (_error) {});
   }, [touristId]);
 
   const fetchData = async () => {
@@ -60,7 +52,7 @@ const TouristInfo = () => {
             setTourist(element.data.data);
             setLoading(false);
           })
-          .catch(function (error) {});
+          .catch(function (_error) {});
         toastr.success(data.data);
       }
     } catch (error) {

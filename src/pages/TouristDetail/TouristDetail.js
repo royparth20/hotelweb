@@ -23,17 +23,25 @@ import { FormTitle } from "../../components/Forms/TouristDetail/TDLeftDetailForm
 import TDLeftDetailForm from "../../components/Forms/TouristDetail/TDLeftDetailForm";
 import TDRightDetailForm from "../../components/Forms/TouristDetail/TDRightDetailForm";
 import National from "../../components/Forms/TouristDetail/National";
+import Form from "../../components/Forms/TouristDetail/Form";
 import { Container, Row, Col } from "styled-bootstrap-grid";
 import Loader from "react-loader-spinner";
 import API from "../../api_test";
 import api from "../../axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import toastr from "toastr";
 const TouristDetail = () => {
+  const params = useParams();
   const history = useHistory();
   const bb = useSelector((state) => state.user.branches);
   const userType = useSelector((state) => state.auth.userType);
   const [loader, setLoader] = useState(false);
+  const [guestMembers, setGuestMember] = useState(false);
+  const [branches, setBranches] = useState([]);
+  const [inputList, setInputList] = useState([]);
+  const [error, setError] = useState({});
+
   const [touristFirstname, setTFName] = useState();
   const [touristLastname, setTLname] = useState();
   const [touristFathername, setTFathername] = useState();
@@ -55,12 +63,9 @@ const TouristDetail = () => {
   const [mobile, setMobile] = useState();
   const [photo, setPhoto] = useState();
   const [visa, setVisa] = useState();
-  const [error, setError] = useState({});
   const [passport, setPassport] = useState();
   const [job, setJob] = useState();
   const [type, setType] = useState("true");
-  const [guestMembers, setGuestMember] = useState(false);
-  const [inputList, setInputList] = useState([]);
   const [branch, setBranch] = useState();
   const [residentPlace, setResidentPlace] = useState("");
   const [additionalNumber, setAdditionalNumber] = useState();
@@ -68,7 +73,7 @@ const TouristDetail = () => {
   const [grantor, setGrantor] = useState("");
   const [age, setAge] = useState("");
   const [vehicle, setVehicle] = useState("");
-  const [branches, setBranches] = useState([]);
+
   ///////////////////////////////////
 
   useEffect(() => {
@@ -79,10 +84,10 @@ const TouristDetail = () => {
     // console.log("event.target.files[0]", event);
   };
   if (passport) {
-    console.log("passport", passport.target.files);
+    // console.log("passport", passport.target.files);
   }
   if (photo) {
-    console.log("photo", photo.target.files);
+    // console.log("photo", photo.target.files);
   }
   ///////////////////////////////////
   async function CreateProfileAjax(timage, tpassport, tvisa) {
@@ -151,23 +156,56 @@ const TouristDetail = () => {
           residentPlace: residentPlace,
           isForeigner: type === "true" ? false : true,
         };
-        console.log("payload", data);
+        // console.log("payload", data);
 
         if (branches.length > 0) {
-          if (branch !== "") {
-            data["hotelId"] = branch;
+          if (params.id === null || params.id === undefined) {
+            if (branch !== "") {
+              data["hotelId"] = branch;
+
+              try {
+                if (userType === "HOTEL") {
+                  const response = await api.createTouristByManagerInBranch(
+                    data
+                  );
+                  setLoader(false);
+                } else {
+                  const response = await api.createTouristByStaffBranch(data);
+                  setLoader(false);
+                }
+                history.replace(`/tourist/${branch}`);
+                //setToken(data.token)
+                // console.log("response", response);
+              } catch (error) {
+                setLoader(false);
+                toastr.error(error.response.data.message);
+                if (error.response) {
+                  setError({
+                    name:
+                      "Please Fix These Errors:  " +
+                      error.response.data.message,
+                  });
+                  setLoader(false);
+                  // console.log(error.response.data.message);
+                }
+              }
+            } else {
+              setError({
+                name: "Please Select Branch",
+              });
+              setLoader(false);
+            }
+          } else {
+            data["hotelId"] = params.id;
 
             try {
               if (userType === "HOTEL") {
                 const response = await api.createTouristByManagerInBranch(data);
-                setLoader(false);
               } else {
                 const response = await api.createTouristByStaffBranch(data);
-                setLoader(false);
               }
-              history.replace(`/tourist/${branch}`);
-              //setToken(data.token)
-              // console.log("response", response);
+              setLoader(false);
+              history.replace(`/tourist/${params.id}`);
             } catch (error) {
               setLoader(false);
               if (error.response) {
@@ -175,16 +213,43 @@ const TouristDetail = () => {
                   name:
                     "Please Fix These Errors:  " + error.response.data.message,
                 });
+                toastr.error(error.response.data.message);
                 setLoader(false);
                 // console.log(error.response.data.message);
               }
             }
-          } else {
-            setError({
-              name: "Please Select Branch",
-            });
-            setLoader(false);
           }
+          // if (branch !== "") {
+          //   data["hotelId"] = branch;
+
+          //   try {
+          //     if (userType === "HOTEL") {
+          //       const response = await api.createTouristByManagerInBranch(data);
+          //       setLoader(false);
+          //     } else {
+          //       const response = await api.createTouristByStaffBranch(data);
+          //       setLoader(false);
+          //     }
+          //     history.replace(`/tourist/${branch}`);
+          //     //setToken(data.token)
+          //     // console.log("response", response);
+          //   } catch (error) {
+          //     setLoader(false);
+          //     if (error.response) {
+          //       setError({
+          //         name:
+          //           "Please Fix These Errors:  " + error.response.data.message,
+          //       });
+          //       setLoader(false);
+          //       // console.log(error.response.data.message);
+          //     }
+          //   }
+          // } else {
+          //   setError({
+          //     name: "Please Select Branch",
+          //   });
+          //   setLoader(false);
+          // }
         } else {
           var config = {
             method: "post",
@@ -198,17 +263,19 @@ const TouristDetail = () => {
               history.replace("/tourist");
               // window.location.href = "/tourist";
               //setToken(data.token)
-              console.log("response", response);
+              // console.log("response", response);
             })
             .catch(function (error) {
               setLoader(false);
+
               if (error.response) {
+                toastr.error(error.response.data.message);
                 setError({
                   name:
                     "Please Fix These Errors:  " + error.response.data.message,
                 });
                 setLoader(false);
-                console.log(error.response.data.message);
+                // console.log(error.response.data.message);
               }
             });
         }
@@ -326,6 +393,7 @@ const TouristDetail = () => {
 
   ///////////////////////////////////
 
+  // console.error(params.id !== undefined && params.id !== "undefined");
   // handle input change
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
@@ -346,6 +414,7 @@ const TouristDetail = () => {
     setInputList([...inputList, { name: "", relationship: "", age: "" }]);
   };
   ///////////////////////////////////
+
   return (
     <>
       <Main>
@@ -368,28 +437,30 @@ const TouristDetail = () => {
               <FormTitle>
                 <p>Details</p>
               </FormTitle>
-              {branches && branches.length > 0 && (
-                <FormGroup>
-                  <FormLabel> Branch </FormLabel>
-                  <FormInput>
-                    <Select
-                      // tabIndex={1}
-                      onChange={(e) => {
-                        setBranch(e.target.value);
-                      }}
-                    >
-                      {branches.map(
-                        (item) =>
-                          item.approved && (
-                            <Options value={item._id} key={item._id}>
-                              {item.address}
-                            </Options>
-                          )
-                      )}
-                    </Select>
-                  </FormInput>
-                </FormGroup>
-              )}
+              {(params.id === null || params.id === undefined) &&
+                branches &&
+                branches.length > 0 && (
+                  <FormGroup>
+                    <FormLabel> Branch </FormLabel>
+                    <FormInput>
+                      <Select
+                        // tabIndex={1}
+                        onChange={(e) => {
+                          setBranch(e.target.value);
+                        }}
+                      >
+                        {branches.map(
+                          (item) =>
+                            item.approved && (
+                              <Options value={item._id} key={item._id}>
+                                {item.address}
+                              </Options>
+                            )
+                        )}
+                      </Select>
+                    </FormInput>
+                  </FormGroup>
+                )}
 
               <FormGroup>
                 <FormLabel> From </FormLabel>
@@ -407,6 +478,7 @@ const TouristDetail = () => {
               </FormGroup>
               <Row className="p-0 m-0">
                 <Col md={12} lg={12} className="p-0 m-0">
+                  {/* {params.id !== null && params.id !== undefined ? ( */}
                   <National
                     setType={setType}
                     type={type}
@@ -441,41 +513,43 @@ const TouristDetail = () => {
                     updateAge={setAge}
                     updateVehicle={setVehicle}
                   ></National>
+                  {/* ) : (
+                    <Form
+                      setType={setType}
+                      type={type}
+                      ch={changeHandler}
+                      updateState={setState}
+                      updateTFname={setTFName}
+                      updateTFatherName={setTFathername}
+                      updateCountry={setCountry}
+                      updateDtArrival={setDtArrival}
+                      updateDtDeparture={setDtDeparture}
+                      updateAddress={setaddress}
+                      updateDistrict={setdistrict}
+                      updateCountryArrivedFrom={setcountryArrivedFrom}
+                      updateReasonOfStay={setreasonForStay}
+                      updateRoomNumber={setroomNumber}
+                      updatePhoto={setPhoto}
+                      changePassport={setPassport}
+                      updateTLname={setTLname}
+                      updateNumber={setNumber}
+                      updateMobile={setMobile}
+                      updateCity={setCity}
+                      updateVisaNumber={setVisaNumber}
+                      updateTnumber={setTnumber}
+                      updateArrivedFrom={setProvinceArrivedFrom}
+                      updateJob={setJob}
+                      uploadVisa={setVisa}
+                      updateNationality={setNationality}
+                      updateResidentPlace={setResidentPlace}
+                      updateAdditionalNumber={setAdditionalNumber}
+                      updateGender={setGender}
+                      updateGrantor={setGrantor}
+                      updateAge={setAge}
+                      updateVehicle={setVehicle}
+                    ></Form>
+                  )} */}
                 </Col>
-                {/* <Col md={6} lg={6} className="p-2 m-0">
-                  <TDLeftDetailForm
-                    setType={setType}
-                    type={type}
-                    ch={changeHandler}
-                    updateTFname={setTFName}
-                    updateTFatherName={setTFathername}
-                    updateCountry={setCountry}
-                    updateDtArrival={setDtArrival}
-                    updateDtDeparture={setDtDeparture}
-                    updateAddress={setaddress}
-                    updateDistrict={setdistrict}
-                    updateCountryArrivedFrom={setcountryArrivedFrom}
-                    updateReasonOfStay={setreasonForStay}
-                    updateRoomNumber={setroomNumber}
-                    updatePhoto={setPhoto}
-                  />
-                </Col>
-                <Col md={6} lg={6} className="p-2 m-0">
-                  <TDRightDetailForm
-                    changePassport={setPassport}
-                    updateTLname={setTLname}
-                    type={type}
-                    updateNumber={setNumber}
-                    
-                    updateMobile={setMobile}
-                    updateCity={setCity}
-                    updateVisaNumber={setVisaNumber}
-                    updateTnumber={setTnumber}
-                    updateArrivedFrom={setProvinceArrivedFrom}
-                    updateJob={setJob}
-                    uploadVisa={setVisa}
-                  />
-                </Col> */}
               </Row>
             </ContentWrapper>
             <Row className="">
