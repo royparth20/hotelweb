@@ -55,6 +55,7 @@ const HeaderLoggedin = () => {
     // localStorage.clear();
     // console.log(111);
     dispatch({ type: authActions.actions.LOGOUT });
+    dispatch({ type: userActions.actions.CLEAR_USER });
     history.push("/login");
   };
   //mobile menu click
@@ -92,7 +93,6 @@ const HeaderLoggedin = () => {
     }
   }, [auth]);
 
-  
   return (
     <>
       <Container fluid className="p-0 m-0">

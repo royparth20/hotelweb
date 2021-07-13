@@ -34,12 +34,14 @@ export default (state = initialState, { type, payload }) => {
         branches: [...state.branches, payload],
       };
     case userActions.actions.UPDATE_HOTEL_LOGO:
-      console.log(
-        "userActions.actions.UPDATE_HOTEL_LOGO",
-        { ...state },
-        payload
-      );
+      // console.log(
+      //   "userActions.actions.UPDATE_HOTEL_LOGO",
+      //   { ...state },
+      //   payload
+      // );
       return userActions.methods.updateHoteLogo(state, payload);
+    case userActions.actions.CLEAR_USER:
+      return userActions.methods.clearUser(initialState);
     default:
       return state;
   }

@@ -2,6 +2,7 @@ const actions = {
   USER_DETAILS: "USER_DETAILS",
   SET_BRANCH: "SET_BRANCH",
   UPDATE_HOTEL_LOGO: "UPDATE_HOTEL_LOGO",
+  CLEAR_USER: "CLEAR_USER",
 };
 
 const methods = {
@@ -21,6 +22,9 @@ const methods = {
       ...state,
       ...payload,
     };
+  },
+  clearUser: (payload) => {
+    return { ...payload };
   },
 };
 
