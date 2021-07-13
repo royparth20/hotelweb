@@ -120,7 +120,7 @@ export const Input = styled.input.attrs((props) => ({
   padding-left: 10px;
   border-radius: 5px;
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
   font-size: 16px;
   line-height: 19px;
   color: black;
@@ -129,11 +129,19 @@ export const Input = styled.input.attrs((props) => ({
     border-bottom-right-radius: 0px;
   }
 `;
+export const Error = styled.div`
+  margin-bottom: 15px;
+  padding-left: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 19px;
+  color: red;
+`;
 // [0-9]{10}
 export const InputPhoneNumber = styled.input.attrs((props) => ({
   type: "text",
   pattern: "[0-9]{10}",
-  title:"Please enter valid phone number"
+  title: "Please enter valid phone number",
 }))`
   width: 100%;
   height: 55px;
@@ -154,7 +162,7 @@ export const InputPhoneNumber = styled.input.attrs((props) => ({
 export const InputNumber = styled.input.attrs((props) => ({
   type: "number",
   pattern: "^(1[89]|[2-9]d)$",
-  title:"Please enter valid age"
+  title: "Please enter valid age",
 }))`
   width: 100%;
   height: 55px;

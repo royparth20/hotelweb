@@ -38,43 +38,77 @@ const TouristDetail = () => {
   const userType = useSelector((state) => state.auth.userType);
   const [loader, setLoader] = useState(false);
   const [guestMembers, setGuestMember] = useState(false);
+  const [submitBtnStatus, setSubmitBtnStatus] = useState(false);
   const [branches, setBranches] = useState([]);
   const [inputList, setInputList] = useState([]);
   const [error, setError] = useState({});
 
-  const [touristFirstname, setTFName] = useState();
-  const [touristLastname, setTLname] = useState();
-  const [touristFathername, setTFathername] = useState();
-  const [country, setCountry] = useState();
-  const [dtArraival, setDtArrival] = useState();
-  const [dtDeparture, setDtDeparture] = useState();
+  const [touristFirstname, setTFName] = useState("");
+  const [touristLastname, setTLname] = useState("");
+  const [touristFathername, setTFathername] = useState("");
+  const [country, setCountry] = useState("");
+  const [dtArraival, setDtArrival] = useState("");
+  const [dtDeparture, setDtDeparture] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [address, setaddress] = useState("");
   const [district, setdistrict] = useState("");
-  const [countryArrivedFrom, setcountryArrivedFrom] = useState();
-  const [provinceArrivedFrom, setProvinceArrivedFrom] = useState();
+  const [countryArrivedFrom, setcountryArrivedFrom] = useState("");
+  const [provinceArrivedFrom, setProvinceArrivedFrom] = useState("");
   const [reasonForStay, setreasonForStay] = useState("");
   const [roomNumber, setroomNumber] = useState("");
   const [visaNumber, setVisaNumber] = useState("");
-  const [number, setNumber] = useState();
-  const [tnumber, setTnumber] = useState();
-  const [nationality, setNationality] = useState();
-  const [mobile, setMobile] = useState();
-  const [photo, setPhoto] = useState();
-  const [visa, setVisa] = useState();
-  const [passport, setPassport] = useState();
-  const [job, setJob] = useState();
+  const [number, setNumber] = useState("");
+  const [tnumber, setTnumber] = useState("");
+  const [nationality, setNationality] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [photo, setPhoto] = useState("");
+  const [visa, setVisa] = useState("");
+  const [passport, setPassport] = useState("");
+  const [job, setJob] = useState("");
   const [type, setType] = useState("true");
-  const [branch, setBranch] = useState();
+  const [branch, setBranch] = useState("");
   const [residentPlace, setResidentPlace] = useState("");
-  const [additionalNumber, setAdditionalNumber] = useState();
+  const [additionalNumber, setAdditionalNumber] = useState("");
   const [gender, setGender] = useState("Male");
   const [grantor, setGrantor] = useState("");
   const [age, setAge] = useState("");
   const [vehicle, setVehicle] = useState("");
 
-  ///////////////////////////////////
+  ///////////////////////////////
+  var formData = {
+    touristFirstname,
+    touristLastname,
+    touristFathername,
+    country,
+    dtArraival,
+    dtDeparture,
+    city,
+    state,
+    address,
+    district,
+    countryArrivedFrom,
+    provinceArrivedFrom,
+    reasonForStay,
+    roomNumber,
+    visaNumber,
+    number,
+    tnumber,
+    nationality,
+    mobile,
+    photo,
+    visa,
+    passport,
+    job,
+    type,
+    branch,
+    residentPlace,
+    grantor,
+    additionalNumber,
+    vehicle,
+    gender,
+    age,
+  };
 
   useEffect(() => {
     setBranches(bb);
@@ -103,6 +137,7 @@ const TouristDetail = () => {
         if (address === "" || city === "" || district === "") {
           console.log("Address Not valid");
           setError({ name: "Fill All the details!" });
+          toastr.error("Fill All Details!");
           setLoader(false);
           return;
         }
@@ -193,6 +228,7 @@ const TouristDetail = () => {
               setError({
                 name: "Please Select Branch",
               });
+              toastr.error("Fill All Details!");
               setLoader(false);
             }
           } else {
@@ -286,6 +322,7 @@ const TouristDetail = () => {
           gender
         );
         setError({ name: "Fill All the details!" });
+        toastr.error("Fill All Details!");
         setLoader(false);
       }
     } else {
@@ -293,6 +330,7 @@ const TouristDetail = () => {
       setError({
         name: "Upload Photos of Visa && Passport/tazkera && Tourist",
       });
+      toastr.error("Fill All Details!");
       setLoader(false);
     }
   }
@@ -380,13 +418,45 @@ const TouristDetail = () => {
       CreateProfileAjax("");
     }
   }
+
+  const valid = () => {
+    setError({});
+    const phoneRegEx = /^[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-/\s.]?[0-9]{4}$/;
+    // console.log("Valid", mobile.match(phoneRegEx));
+    if (!mobile.match(phoneRegEx)) {
+      // document.getElementById("numloc").innerHTML="Enter Numeric value only";
+
+      setError({
+        ...error,
+        mobile: "Enter Valid Mobile Number",
+      });
+      toastr.error("Enter Valid Mobile Number");
+      return false;
+    } else if (additionalNumber.length > 0) {
+      // console.log(additionalNumber.length);
+      if (!additionalNumber.match(phoneRegEx)) {
+        setError({
+          ...error,
+          additionalNumber: "Enter Valid Additional Mobile Number",
+        });
+        toastr.error("Enter Valid Additional Mobile Number");
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitBtnStatus(true);
+    if (!valid()) {
+      console.log("Valid");
+      return false;
+    }
     await upload();
-    return false;
-    //if(!valid()){
-    // return false;
-    //}
+    return true;
     const token = await CreateProfileAjax();
     // setToken(token);
   };
@@ -413,12 +483,25 @@ const TouristDetail = () => {
   const handleAddClick = () => {
     setInputList([...inputList, { name: "", relationship: "", age: "" }]);
   };
+
+  useEffect(() => {
+    return () => {
+      if (error.mobile !== "" || error.additionalNumber !== "") {
+        setError({});
+      }
+    };
+  }, [mobile, additionalNumber]);
   ///////////////////////////////////
 
   return (
     <>
       <Main>
-        <form onSubmit={handleSubmit}>
+        <form
+          // onSubmit={handleSubmit}
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+        >
           <Container>
             {/* <Row>
           <Col>
@@ -511,7 +594,10 @@ const TouristDetail = () => {
                     updateGender={setGender}
                     updateGrantor={setGrantor}
                     updateAge={setAge}
+                    error={error}
+                    status={submitBtnStatus}
                     updateVehicle={setVehicle}
+                    {...formData}
                   ></National>
                   {/* ) : (
                     <Form
@@ -651,8 +737,15 @@ const TouristDetail = () => {
               </Col>
               <Col lg={12} className="p-0 m-0 d-flex">
                 <ButtonContainer>
-                  <CancelButton>Cancel</CancelButton>
-                  <SaveButton>Save</SaveButton>
+                  <CancelButton type="reset">Cancel</CancelButton>
+                  <SaveButton
+                    type="submit"
+                    onClick={(e) => {
+                      return handleSubmit(e);
+                    }}
+                  >
+                    Save
+                  </SaveButton>
                   <Col lg={2} className="p-0 m-0 d-flex">
                     {loader ? (
                       <Loader

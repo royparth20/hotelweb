@@ -125,3 +125,16 @@
   /* Internet Explorer/Edge */
   user-select: none;
 }
+
+.input-error {
+  border-color: #c40a29 !important;
+}
+
+input:invalid {
+  /* border: 2px solid red; */
+}
+
+/* input:invalid:required {
+  border-color: #c40a29 !important;
+  background-image: linear-gradient(to right, pink, lightgreen);
+} */

@@ -12,6 +12,7 @@ import {
   InputDropdownOption,
   InputDropdown,
   InputPhoneNumber,
+  Error,
 } from "../TDLeftDetailForm.elements";
 
 const TDLeftDetailForm = (props) => {
@@ -49,10 +50,46 @@ const TDLeftDetailForm = (props) => {
     updateAge,
     updateVehicle,
   } = props;
+  const {
+    touristFirstname,
+    touristLastname,
+    touristFathername,
+    country,
+    dtArraival,
+    dtDeparture,
+    city,
+    state,
+    address,
+    district,
+    countryArrivedFrom,
+    provinceArrivedFrom,
+    reasonForStay,
+    roomNumber,
+    visaNumber,
+    number,
+    tnumber,
+    nationality,
+    mobile,
+    photo,
+    visa,
+    passport,
+    job,
+    branch,
+    residentPlace,
+    grantor,
+    additionalNumber,
+    vehicle,
+    gender,
+    age,
+    error,
+    status,
+  } = props;
+
   const [countryList, setCountryList] = useState(null);
   const [stateList, setStateList] = useState([]);
   const [cityList, setCityList] = useState([]);
 
+  // console.log(touristFirstname, error);
   useEffect(async () => {
     try {
       const { data } = await api.getCountryList();
@@ -98,7 +135,15 @@ const TDLeftDetailForm = (props) => {
                 required
                 placeholder="Enter Tourist First Name"
                 onChange={(e) => updateTFname(e.target.value)}
+                className={`${
+                  status && touristFirstname === "" && "input-error"
+                }`}
               ></Input>
+              <Error>
+                {status &&
+                  touristFirstname === "" &&
+                  "Tourist First Name is Required"}
+              </Error>
             </FormInput>
           </FormGroup>
         </div>
@@ -109,7 +154,15 @@ const TDLeftDetailForm = (props) => {
               <Input
                 placeholder="Enter Last Name"
                 onChange={(e) => updateTLname(e.target.value)}
+                className={`${
+                  status && touristLastname === "" && "input-error"
+                }`}
               ></Input>
+              <Error>
+                {status &&
+                  touristLastname === "" &&
+                  "Tourist Last Name is Required"}
+              </Error>
             </FormInput>
           </FormGroup>
         </div>
@@ -121,7 +174,19 @@ const TDLeftDetailForm = (props) => {
                 required={type === "true" ? true : false}
                 placeholder="Father Name"
                 onChange={(e) => updateTFatherName(e.target.value)}
+                className={`${
+                  type === "true" &&
+                  status &&
+                  touristFathername === "" &&
+                  "input-error"
+                }`}
               ></Input>
+              <Error>
+                {type === "true" &&
+                  status &&
+                  touristFathername === "" &&
+                  "Tourist Father Name is Required"}
+              </Error>
             </FormInput>
           </FormGroup>
         </div>
@@ -133,7 +198,11 @@ const TDLeftDetailForm = (props) => {
                 required
                 placeholder="Resident Place"
                 onChange={(e) => updateResidentPlace(e.target.value)}
+                className={`${status && residentPlace === "" && "input-error"}`}
               ></Input>
+              <Error>
+                {status && residentPlace === "" && "Resident Place is Required"}
+              </Error>
             </FormInput>
           </FormGroup>
         </div>
@@ -145,7 +214,11 @@ const TDLeftDetailForm = (props) => {
                 required
                 placeholder="Enter Passport Number"
                 onChange={(e) => updateNumber(e.target.value)}
+                className={`${status && number === "" && "input-error"}`}
               ></Input>
+              <Error>
+                {status && number === "" && "Passport Number is Required"}
+              </Error>
             </FormInput>
           </FormGroup>
         </div>
@@ -168,7 +241,16 @@ const TDLeftDetailForm = (props) => {
                 required
                 placeholder="Enter Mobile Number"
                 onChange={(e) => updateMobile(e.target.value)}
+                className={`${
+                  status && error && error.mobile && "input-error"
+                }`}
               ></InputPhoneNumber>
+              <Error>
+                {status &&
+                  (error.mobile !== ""
+                    ? error.mobile
+                    : mobile === "" && "Mobile is Required")}
+              </Error>
             </FormInput>
           </FormGroup>
         </div>
@@ -180,7 +262,15 @@ const TDLeftDetailForm = (props) => {
               <InputPhoneNumber
                 placeholder="Enter Additional contact number"
                 onChange={(e) => updateAdditionalNumber(e.target.value)}
+                className={`${
+                  status && error && error.additionalNumber && "input-error"
+                }`}
               ></InputPhoneNumber>
+              <Error>
+                {status &&
+                  error.additionalNumber !== "" &&
+                  error.additionalNumber}
+              </Error>
             </FormInput>
           </FormGroup>
         </div>
@@ -192,9 +282,14 @@ const TDLeftDetailForm = (props) => {
                 <FormLabel>Address</FormLabel>
                 <FormInput>
                   <Input
+                    required
                     placeholder="Address"
                     onChange={(e) => updateAddress(e.target.value)}
+                    className={`${status && address === "" && "input-error"}`}
                   ></Input>
+                  <Error>
+                    {status && address === "" && "Address is Required"}
+                  </Error>
                 </FormInput>
               </FormGroup>
             </div>
@@ -215,19 +310,26 @@ const TDLeftDetailForm = (props) => {
                         updateCountry("");
                       }
                     }}
+                    className={`${status && country === "" && "input-error"}`}
                   >
                     <InputDropdownOption value="">
                       Select Country
                     </InputDropdownOption>
                     {countryList &&
                       countryList.map((item) => (
-                        <InputDropdownOption value={JSON.stringify(item)}>
+                        <InputDropdownOption
+                          value={JSON.stringify(item)}
+                          key={item._id}
+                        >
                           {item.name}
                         </InputDropdownOption>
                       ))}
                     {/* <InputDropdownOption>India</InputDropdownOption>
             <InputDropdownOption>US</InputDropdownOption> */}
                   </InputDropdown>
+                  <Error>
+                    {status && country === "" && "Country is Required"}
+                  </Error>
                 </FormInput>
               </FormGroup>
             </div>
@@ -247,17 +349,22 @@ const TDLeftDetailForm = (props) => {
                         updateState("");
                       }
                     }}
+                    className={`${status && state === "" && "input-error"}`}
                   >
                     <InputDropdownOption value="">
                       Select State
                     </InputDropdownOption>
                     {stateList &&
                       stateList.map((item) => (
-                        <InputDropdownOption value={JSON.stringify(item)}>
+                        <InputDropdownOption
+                          value={JSON.stringify(item)}
+                          key={item._id}
+                        >
                           {item.name}
                         </InputDropdownOption>
                       ))}
                   </InputDropdown>
+                  <Error>{status && state === "" && "State is Required"}</Error>
                 </FormInput>
               </FormGroup>
             </div>
@@ -268,17 +375,19 @@ const TDLeftDetailForm = (props) => {
                   <InputDropdown
                     placeholder="Enter City"
                     onChange={(e) => updateCity(e.target.value)}
+                    className={`${status && city === "" && "input-error"}`}
                   >
                     <InputDropdownOption value="">
                       Select City
                     </InputDropdownOption>
                     {cityList &&
                       cityList.map((item) => (
-                        <InputDropdownOption value={item.name}>
+                        <InputDropdownOption value={item.name} key={item.name}>
                           {item.name}
                         </InputDropdownOption>
                       ))}
                   </InputDropdown>
+                  <Error>{status && city === "" && "City is Required"}</Error>
                 </FormInput>
               </FormGroup>
             </div>
@@ -290,7 +399,11 @@ const TDLeftDetailForm = (props) => {
                   <Input
                     placeholder="District"
                     onChange={(e) => updateDistrict(e.target.value)}
+                    className={`${status && district === "" && "input-error"}`}
                   ></Input>
+                  <Error>
+                    {status && district === "" && "District is Required"}
+                  </Error>
                 </FormInput>
               </FormGroup>
             </div>
@@ -306,7 +419,13 @@ const TDLeftDetailForm = (props) => {
                 required
                 placeholder="Reason of stay"
                 onChange={(e) => updateReasonOfStay(e.target.value)}
+                className={`${status && reasonForStay === "" && "input-error"}`}
               ></Input>
+              <Error>
+                {status &&
+                  reasonForStay === "" &&
+                  "Reason For Stay is Required"}
+              </Error>
             </FormInput>
           </FormGroup>
         </div>
@@ -317,7 +436,11 @@ const TDLeftDetailForm = (props) => {
               <Dt
                 required
                 onChange={(e) => updateDtArrival(e.target.value)}
+                className={`${status && dtArraival === "" && "input-error"}`}
               ></Dt>
+              <Error>
+                {status && dtArraival === "" && "Date of Arrival is Required"}
+              </Error>
             </FormInput>
           </FormGroup>
         </div>
@@ -328,7 +451,13 @@ const TDLeftDetailForm = (props) => {
               <Dt
                 required
                 onChange={(e) => updateDtDeparture(e.target.value)}
+                className={`${status && dtDeparture === "" && "input-error"}`}
               ></Dt>
+              <Error>
+                {status &&
+                  dtDeparture === "" &&
+                  "Date Of Departure is Required"}
+              </Error>
             </FormInput>
           </FormGroup>
         </div>
@@ -340,7 +469,11 @@ const TDLeftDetailForm = (props) => {
                 required
                 placeholder="Room number"
                 onChange={(e) => updateRoomNumber(e.target.value)}
+                className={`${status && roomNumber === "" && "input-error"}`}
               ></Input>
+              <Error>
+                {status && roomNumber === "" && "Room Number is Required"}
+              </Error>
             </FormInput>
           </FormGroup>
         </div>
@@ -367,7 +500,13 @@ const TDLeftDetailForm = (props) => {
                     required
                     placeholder="Enter Nationality"
                     onChange={(e) => updateNationality(e.target.value)}
+                    className={`${
+                      status && nationality === "" && "input-error"
+                    }`}
                   ></Input>
+                  <Error>
+                    {status && nationality === "" && "Nationality is Required"}
+                  </Error>
                 </FormInput>
               </FormGroup>
             </div>
@@ -378,7 +517,13 @@ const TDLeftDetailForm = (props) => {
                   <Input
                     placeholder="Enter Visa Number"
                     onChange={(e) => updateVisaNumber(e.target.value)}
+                    className={`${
+                      status && visaNumber === "" && "input-error"
+                    }`}
                   ></Input>
+                  <Error>
+                    {status && visaNumber === "" && "Visa Number is Required"}
+                  </Error>
                 </FormInput>
               </FormGroup>
             </div>
@@ -390,7 +535,15 @@ const TDLeftDetailForm = (props) => {
                     required
                     placeholder="Province arrived from"
                     onChange={(e) => updateArrivedFrom(e.target.value)}
+                    className={`${
+                      status && provinceArrivedFrom === "" && "input-error"
+                    }`}
                   ></Input>
+                  <Error>
+                    {status &&
+                      provinceArrivedFrom === "" &&
+                      "Province Arrived From is Required"}
+                  </Error>
                 </FormInput>
               </FormGroup>
             </div>
@@ -405,7 +558,11 @@ const TDLeftDetailForm = (props) => {
                 <Input
                   placeholder="Garantor"
                   onChange={(e) => updateGrantor(e.target.value)}
+                  className={`${status && grantor === "" && "input-error"}`}
                 ></Input>
+                <Error>
+                  {status && grantor === "" && "Grantor is Required"}
+                </Error>
               </FormInput>
             </FormGroup>
           </div>
@@ -419,16 +576,15 @@ const TDLeftDetailForm = (props) => {
 
             <InputDropdown
               required
-              
               onChange={(e) => {
                 updateGender(e.target.value);
               }}
+              className={`${status && gender === "" && "input-error"}`}
             >
-              <InputDropdownOption value="Male">
-                Male
-              </InputDropdownOption>
+              <InputDropdownOption value="Male">Male</InputDropdownOption>
               <InputDropdownOption value="Female">Female</InputDropdownOption>
             </InputDropdown>
+            <Error>{status && gender === "" && "Gender is Required"}</Error>
           </FormGroup>
         </div>
 
@@ -441,7 +597,9 @@ const TDLeftDetailForm = (props) => {
                 type="number"
                 placeholder="Age"
                 onChange={(e) => updateAge(e.target.value)}
+                className={`${status && age === "" && "input-error"}`}
               ></InputNumber>
+              <Error>{status && age === "" && "Age is Required"}</Error>
             </FormInput>
           </FormGroup>
         </div>
