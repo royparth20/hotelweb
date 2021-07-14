@@ -322,8 +322,8 @@ const BranchDetail = () => {
               <Row className="p-0 m-0">
                 <Col lg={12} className="p-0 m-0 d-flex">
                   <ButtonContainer>
-                    <CancelButton>Cancel</CancelButton>
-                    <SaveButton>Save</SaveButton>
+                    <CancelButton type="reset">Cancel</CancelButton>
+                    <SaveButton type="submit">Save</SaveButton>
                     <Col lg={2} className="p-0 m-0 d-flex">
                       {loader ? (
                         <Loader

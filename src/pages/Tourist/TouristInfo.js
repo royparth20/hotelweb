@@ -102,16 +102,16 @@ const TouristInfo = () => {
                           <div className="col-md-6">{tourist.nationality}</div>
 
                           {/*  tazkeraNumber */}
-                          <div className="col-md-6 text-capitalize font-weight-bold p-2">
+                          {/* <div className="col-md-6 text-capitalize font-weight-bold p-2">
                             Tazkera Number :
                           </div>
                           <div className="col-md-6">
                             {tourist.tazkeraNumber}
-                          </div>
+                          </div> */}
 
                           {/*  provinceArrivedFrom */}
                           <div className="col-md-6 text-capitalize font-weight-bold p-2">
-                            province Arrived From :
+                            Arrived From :
                           </div>
                           <div className="col-md-6">
                             {tourist.provinceArrivedFrom}

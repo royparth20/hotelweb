@@ -218,7 +218,7 @@ const Tourist = () => {
             Close
           </Button>
           <Button variant="primary" onClick={handleModalSubmitAlert}>
-            Save Changes
+            Alert
           </Button>
         </Modal.Footer>
       </Modal>

@@ -70,7 +70,7 @@ const TouristDetail = () => {
   const [branch, setBranch] = useState("");
   const [residentPlace, setResidentPlace] = useState("");
   const [additionalNumber, setAdditionalNumber] = useState("");
-  const [gender, setGender] = useState("Male");
+  const [gender, setGender] = useState("");
   const [grantor, setGrantor] = useState("");
   const [age, setAge] = useState("");
   const [vehicle, setVehicle] = useState("");
@@ -136,6 +136,13 @@ const TouristDetail = () => {
       if (type === "true") {
         if (address === "" || city === "" || district === "") {
           console.log("Address Not valid");
+          setError({ name: "Fill All the details!" });
+          toastr.error("Fill All Details!");
+          setLoader(false);
+          return;
+        }
+      } else {
+        if (nationality === "") {
           setError({ name: "Fill All the details!" });
           toastr.error("Fill All Details!");
           setLoader(false);
@@ -227,7 +234,7 @@ const TouristDetail = () => {
               setError({
                 name: "Please Select Branch",
               });
-              toastr.error("Fill All Details!");
+              toastr.error("Please Select Branch");
               setLoader(false);
             }
           } else {
@@ -531,7 +538,11 @@ const TouristDetail = () => {
                         onChange={(e) => {
                           setBranch(e.target.value);
                         }}
+                        className={`${
+                          submitBtnStatus && branch === "" && "input-error"
+                        }`}
                       >
+                        <Options value="">Select Branch</Options>
                         {branches.map(
                           (item) =>
                             item.approved && (
@@ -541,6 +552,9 @@ const TouristDetail = () => {
                             )
                         )}
                       </Select>
+                      <div className="text-danger">
+                        {submitBtnStatus && branch === "" && "Select Branch"}
+                      </div>
                     </FormInput>
                   </FormGroup>
                 )}
@@ -746,15 +760,42 @@ const TouristDetail = () => {
               <Col lg={12} className="p-0 m-0 d-flex">
                 <ButtonContainer>
                   <CancelButton type="reset">Cancel</CancelButton>
+                  {/* {loader ? (
+                    <Loader
+                      type="TailSpin"
+                      color="#0A3565"
+                      height={20}
+                      width={20}
+                    />
+                  ) : (
+                    <SaveButton
+                      type="submit"
+                      onClick={(e) => {
+                        return handleSubmit(e);
+                      }}
+                    >
+                      Save
+                    </SaveButton>
+                  )} */}
                   <SaveButton
                     type="submit"
                     onClick={(e) => {
                       return handleSubmit(e);
                     }}
+                    disabled={loader}
                   >
-                    Save
+                    {loader ? (
+                      <Loader
+                        type="TailSpin"
+                        color="#0A3565"
+                        height={20}
+                        width={20}
+                      />
+                    ) : (
+                      "Save"
+                    )}
                   </SaveButton>
-                  <Col lg={2} className="p-0 m-0 d-flex">
+                  {/* <Col lg={2} className="p-0 m-0 d-flex">
                     {loader ? (
                       <Loader
                         type="TailSpin"
@@ -763,7 +804,7 @@ const TouristDetail = () => {
                         width={20}
                       />
                     ) : null}
-                  </Col>
+                  </Col> */}
                 </ButtonContainer>
               </Col>
             </Row>

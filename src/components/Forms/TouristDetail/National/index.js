@@ -535,17 +535,17 @@ const TDLeftDetailForm = (props) => {
                 <FormInput>
                   <Input
                     required
-                    placeholder="Province arrived from"
+                    placeholder="Arriving from"
                     onChange={(e) => updateArrivedFrom(e.target.value)}
-                    className={`${
-                      status && provinceArrivedFrom === "" && "input-error"
-                    }`}
+                    // className={`${
+                    //   status && provinceArrivedFrom === "" && "input-error"
+                    // }`}
                   ></Input>
-                  <Error>
+                  {/* <Error>
                     {status &&
                       provinceArrivedFrom === "" &&
                       "Province Arrived From is Required"}
-                  </Error>
+                  </Error> */}
                 </FormInput>
               </FormGroup>
             </div>
@@ -583,6 +583,7 @@ const TDLeftDetailForm = (props) => {
               }}
               className={`${status && gender === "" && "input-error"}`}
             >
+              <InputDropdownOption value="">Select Gender</InputDropdownOption>
               <InputDropdownOption value="Male">Male</InputDropdownOption>
               <InputDropdownOption value="Female">Female</InputDropdownOption>
             </InputDropdown>
@@ -623,7 +624,13 @@ const TDLeftDetailForm = (props) => {
           <FormGroup>
             <FormLabel>Photo Of Tourist</FormLabel>
             <br></br>
-            <FileB onChange={updatePhoto}></FileB>
+            <FileB
+              onChange={updatePhoto}
+              className={`${status && photo === "" && "input-error"}`}
+            ></FileB>
+            <Error>
+              {status && photo === "" && "Photo Of Tourist is Required"}
+            </Error>
           </FormGroup>
         </div>
         {/* <div className="col-md-6 col-sm-12">
@@ -638,7 +645,13 @@ const TDLeftDetailForm = (props) => {
           <FormGroup>
             <FormLabel>Upload passport/tazkera</FormLabel>
             <br></br>
-            <FileB onChange={changePassport}></FileB>
+            <FileB
+              onChange={changePassport}
+              className={`${status && passport === "" && "input-error"}`}
+            ></FileB>
+            <Error>
+              {status && passport === "" && "Passport/Tazkera is Required"}
+            </Error>
           </FormGroup>
         </div>
       </div>
