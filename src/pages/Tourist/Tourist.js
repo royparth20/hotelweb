@@ -21,14 +21,20 @@ import { Link } from "react-router-dom";
 import toastr from "toastr";
 import { parse } from "query-string";
 import { useLocation, useParams } from "react-router-dom";
+
+import { Modal, Button } from "react-bootstrap";
 const Tourist = () => {
   const params = useParams();
   const { search } = useLocation();
-  let query;
-  if (search) query = parse(search);
-  console.log("ShowDetails", params.id);
+  if (search) console.log("ShowDetails", params.id);
   const [tourists, setTourists] = useState([]);
   let history = useHistory();
+  const [show, setShow] = useState(false);
+  const [modalText, setModalText] = useState("");
+  const [touristIDAlert, settouristIdAlert] = useState(null);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   useEffect(() => {
     const fetchData = async () => {
       var config = {
@@ -84,17 +90,34 @@ const Tourist = () => {
     }
   };
   const handleAlert = async (e, id) => {
+    setModalText("");
+    settouristIdAlert(id || null);
+    handleShow();
+
+    // raiseTouristAlert
+  };
+  const handleModalSubmitAlert = async (e) => {
+    e.preventDefault();
     try {
-      // console.log(id);
-      const { data } = await api.raiseTouristAlert(id);
+      // console.log(touristIDAlert);
+      if (touristIDAlert === null) {
+        return;
+      }
+      const alertData = {
+        comment: modalText,
+      };
+      const { data } = await api.raiseTouristAlert(alertData, touristIDAlert);
       // console.log(data);
       toastr.success(data.data);
+      handleClose();
     } catch (error) {
       toastr.error(error.response.data.message);
     }
-    // raiseTouristAlert
   };
 
+  const handleModalClose = (e) => {
+    handleClose();
+  };
   const handleTouristDetails = (_id) => {
     history.push(`/touristInfo?touristId=${_id}`);
   };
@@ -124,7 +147,7 @@ const Tourist = () => {
 
           <Row>
             {tourists.map((element) => (
-              <Col sm={12} lg={4}>
+              <Col sm={12} lg={4} key={element._id}>
                 <CardWrapper style={{ cursor: "pointer" }}>
                   {element.touristImage ? (
                     <CardImage
@@ -170,6 +193,35 @@ const Tourist = () => {
           </Row>
         </Container>
       </Main>
+
+      <Modal show={show} onHide={handleClose} animation={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Alert Tourist</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row">
+            <div className="col-4">
+              <label htmlFor="ModalText">Comment</label>
+            </div>
+            <div className="col-8">
+              <input
+                type="text"
+                name="comment"
+                id="comment"
+                onChange={(e) => setModalText(e.target.value)}
+              />
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleModalClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleModalSubmitAlert}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

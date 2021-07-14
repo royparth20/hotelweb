@@ -154,15 +154,15 @@ const TDLeftDetailForm = (props) => {
               <Input
                 placeholder="Enter Last Name"
                 onChange={(e) => updateTLname(e.target.value)}
-                className={`${
-                  status && touristLastname === "" && "input-error"
-                }`}
+                // className={`${
+                //   status && touristLastname === "" && "input-error"
+                // }`}
               ></Input>
-              <Error>
+              {/* <Error>
                 {status &&
                   touristLastname === "" &&
                   "Tourist Last Name is Required"}
-              </Error>
+              </Error> */}
             </FormInput>
           </FormGroup>
         </div>
@@ -208,21 +208,23 @@ const TDLeftDetailForm = (props) => {
         </div>
         <div className="col-md-6 col-sm-12">
           <FormGroup>
-            <FormLabel>Passport Number</FormLabel>
+            <FormLabel>Passport/tezkera Number</FormLabel>
             <FormInput>
               <Input
                 required
-                placeholder="Enter Passport Number"
+                placeholder="Enter Passport/tezkera  Number"
                 onChange={(e) => updateNumber(e.target.value)}
                 className={`${status && number === "" && "input-error"}`}
               ></Input>
               <Error>
-                {status && number === "" && "Passport Number is Required"}
+                {status &&
+                  number === "" &&
+                  "Passport/tezkera  Number is Required"}
               </Error>
             </FormInput>
           </FormGroup>
         </div>
-        <div className="col-md-6 col-sm-12">
+        {/* <div className="col-md-6 col-sm-12">
           <FormGroup>
             <FormLabel>Tezkera Number</FormLabel>
             <FormInput>
@@ -232,7 +234,7 @@ const TDLeftDetailForm = (props) => {
               ></Input>
             </FormInput>
           </FormGroup>
-        </div>
+        </div> */}
         <div className="col-md-6 col-sm-12">
           <FormGroup>
             <FormLabel>Mobile Number</FormLabel>
@@ -510,7 +512,7 @@ const TDLeftDetailForm = (props) => {
                 </FormInput>
               </FormGroup>
             </div>
-            <div className="col-md-6 col-sm-12">
+            {/* <div className="col-md-6 col-sm-12">
               <FormGroup>
                 <FormLabel>Visa Number</FormLabel>
                 <FormInput>
@@ -526,10 +528,10 @@ const TDLeftDetailForm = (props) => {
                   </Error>
                 </FormInput>
               </FormGroup>
-            </div>
+            </div> */}
             <div className="col-md-6 col-sm-12">
               <FormGroup>
-                <FormLabel>Province arrived from</FormLabel>
+                <FormLabel>Arriving from</FormLabel>
                 <FormInput>
                   <Input
                     required
@@ -558,11 +560,11 @@ const TDLeftDetailForm = (props) => {
                 <Input
                   placeholder="Garantor"
                   onChange={(e) => updateGrantor(e.target.value)}
-                  className={`${status && grantor === "" && "input-error"}`}
+                  // className={`${status && grantor === "" && "input-error"}`}
                 ></Input>
-                <Error>
+                {/* <Error>
                   {status && grantor === "" && "Grantor is Required"}
-                </Error>
+                </Error> */}
               </FormInput>
             </FormGroup>
           </div>
@@ -624,14 +626,14 @@ const TDLeftDetailForm = (props) => {
             <FileB onChange={updatePhoto}></FileB>
           </FormGroup>
         </div>
-        <div className="col-md-6 col-sm-12">
+        {/* <div className="col-md-6 col-sm-12">
           <FormGroup>
             <FormLabel>Upload visa </FormLabel>
             <br />
 
             <FileB onChange={uploadVisa}></FileB>
           </FormGroup>
-        </div>
+        </div> */}
         <div className="col-md-6 col-sm-12">
           <FormGroup>
             <FormLabel>Upload passport/tazkera</FormLabel>

@@ -153,7 +153,6 @@ const TouristDetail = () => {
         // countryArrivedFrom &&
         reasonForStay !== "" &&
         // provinceArrivedFrom &&
-        tnumber !== "" &&
         gender !== "" &&
         roomNumber !== ""
       ) {
@@ -177,7 +176,7 @@ const TouristDetail = () => {
           tazkeraNumber: tnumber,
           touristImage: timage,
           uploadPassportOrTazkera: tpassport,
-          uploadVisa: tvisa,
+          uploadVisa: tvisa || "",
           hotelId: localStorage.getItem("hotel_id"),
           lastName: touristLastname,
           fatherName: touristFathername,
@@ -187,7 +186,7 @@ const TouristDetail = () => {
           age: age,
           gender: gender,
           vehicalNumberPlate: vehicle,
-          accompaniedMember: inputList,
+          accompaniedMember: type === "true" ? inputList : [],
           residentPlace: residentPlace,
           isForeigner: type === "true" ? false : true,
         };
@@ -319,7 +318,8 @@ const TouristDetail = () => {
         console.log(
           "Field Not valid",
 
-          gender
+          // provinceArrivedFrom &&
+          tnumber !== "" && gender !== "" && roomNumber !== ""
         );
         setError({ name: "Fill All the details!" });
         toastr.error("Fill All Details!");
@@ -341,7 +341,7 @@ const TouristDetail = () => {
       var visadata = new FormData();
       touristImagedata.append("file", photo.target.files[0]);
       passportdata.append("file", passport.target.files[0]);
-      visadata.append("file", visa.target.files[0]);
+      // visadata.append("file", visa.target.files[0]);
       let timage;
       let tpassport;
       let tvisa;
@@ -355,11 +355,11 @@ const TouristDetail = () => {
         url: "files",
         data: passportdata,
       };
-      var VisaImageConfig = {
-        method: "post",
-        url: "files",
-        data: visadata,
-      };
+      // var VisaImageConfig = {
+      //   method: "post",
+      //   url: "files",
+      //   data: visadata,
+      // };
       await API(touristImageconfig)
         .then((response) => {
           setLoader(false);
@@ -394,25 +394,25 @@ const TouristDetail = () => {
             setLoader(false);
           }
         });
-      await API(VisaImageConfig)
-        .then((response) => {
-          setLoader(false);
-          // console.log("image", response);
-          tvisa = response.data.data;
-          //  CreateProfileAjax(tvisa);
-          // tpassport,tvisa
-        })
-        .catch(function (error) {
-          setLoader(false);
-          if (error.response) {
-            setError({
-              name: "Please Fix These Errors:  " + error.response.data.message,
-            });
-            setLoader(false);
-          }
-        });
-      if (timage && tpassport && tvisa) {
-        CreateProfileAjax(timage, tpassport, tvisa);
+      // await API(VisaImageConfig)
+      //   .then((response) => {
+      //     setLoader(false);
+      //     // console.log("image", response);
+      //     tvisa = response.data.data;
+      //     //  CreateProfileAjax(tvisa);
+      //     // tpassport,tvisa
+      //   })
+      //   .catch(function (error) {
+      //     setLoader(false);
+      //     if (error.response) {
+      //       setError({
+      //         name: "Please Fix These Errors:  " + error.response.data.message,
+      //       });
+      //       setLoader(false);
+      //     }
+      //   });
+      if (timage && tpassport) {
+        CreateProfileAjax(timage, tpassport, null);
       }
     } else {
       CreateProfileAjax("");
@@ -644,97 +644,105 @@ const TouristDetail = () => {
               </Col>
             </Row>
             <Row className="p-0 m-0">
-              <Col lg={12} className="">
-                <div
-                  className="btn btn-warning"
-                  onClick={(e) => {
-                    if (guestMembers) {
-                      setInputList([]);
-                      setGuestMember(!guestMembers);
-                    } else {
-                      setInputList([{ name: "", relationship: "", age: "" }]);
-                      setGuestMember(!guestMembers);
-                    }
-                  }}
-                >
-                  {guestMembers ? "Remove All Member" : "Add Tourist Member"}
-                </div>
-                <div className="">
-                  {guestMembers && inputList.length > 0 && (
-                    <>
-                      <div className="text-muted mt-2 h4 ">
-                        Add Tourist Member
-                      </div>
-                      <hr />
-                    </>
-                  )}
-                  {guestMembers &&
-                    inputList.length > 0 &&
-                    inputList.map((x, i) => {
-                      return (
+              {type === "true" && (
+                <>
+                  <Col lg={12} className="">
+                    <div
+                      className="btn btn-warning"
+                      onClick={(e) => {
+                        if (guestMembers) {
+                          setInputList([]);
+                          setGuestMember(!guestMembers);
+                        } else {
+                          setInputList([
+                            { name: "", relationship: "", age: "" },
+                          ]);
+                          setGuestMember(!guestMembers);
+                        }
+                      }}
+                    >
+                      {guestMembers
+                        ? "Remove All Member"
+                        : "Add Tourist Member"}
+                    </div>
+                    <div className="">
+                      {guestMembers && inputList.length > 0 && (
                         <>
-                          <div className="row mt-1" key={i}>
-                            <div className="text-muted mt-1 h6 text-center m-auto">
-                              {i + 1}
-                            </div>
-
-                            <div className="form-group m-1">
-                              <input
-                                type="text"
-                                name="name"
-                                className="p-1"
-                                placeholder="Enter Name"
-                                value={x.name}
-                                onChange={(e) => handleInputChange(e, i)}
-                              />
-                            </div>
-                            <div className="form-group m-1">
-                              <input
-                                className="p-1"
-                                type="text"
-                                name="relationship"
-                                placeholder="Enter Relationship"
-                                onChange={(e) => handleInputChange(e, i)}
-                                value={x.relationship}
-                              />
-                            </div>
-                            <div className="form-group m-1">
-                              <input
-                                className="p-1"
-                                type="number"
-                                name="age"
-                                placeholder="Enter Age"
-                                value={x.age}
-                                onChange={(e) => handleInputChange(e, i)}
-                              />
-                            </div>
-                            <div className="col-md-3 text-center d-flex justify-content-around">
-                              {inputList.length !== 1 && (
-                                <div
-                                  className="col-4 btn pl-1 pr-1 btn-danger"
-                                  onClick={() => handleRemoveClick(i)}
-                                >
-                                  Remove
-                                </div>
-                              )}
-                              {inputList.length - 1 === i && (
-                                <div
-                                  className="col-6 btn btn-primary"
-                                  onClick={handleAddClick}
-                                >
-                                  Add
-                                </div>
-                              )}
-                            </div>
+                          <div className="text-muted mt-2 h4 ">
+                            Add Tourist Member
                           </div>
+                          <hr />
                         </>
-                      );
-                    })}
-                </div>
-                {/* <div style={{ marginTop: 20 }}>
+                      )}
+                      {guestMembers &&
+                        inputList.length > 0 &&
+                        inputList.map((x, i) => {
+                          return (
+                            <>
+                              <div className="row mt-1" key={i}>
+                                <div className="text-muted mt-1 h6 text-center m-auto">
+                                  {i + 1}
+                                </div>
+
+                                <div className="form-group m-1">
+                                  <input
+                                    type="text"
+                                    name="name"
+                                    className="p-1"
+                                    placeholder="Enter Name"
+                                    value={x.name}
+                                    onChange={(e) => handleInputChange(e, i)}
+                                  />
+                                </div>
+                                <div className="form-group m-1">
+                                  <input
+                                    className="p-1"
+                                    type="text"
+                                    name="relationship"
+                                    placeholder="Enter Relationship"
+                                    onChange={(e) => handleInputChange(e, i)}
+                                    value={x.relationship}
+                                  />
+                                </div>
+                                <div className="form-group m-1">
+                                  <input
+                                    className="p-1"
+                                    type="number"
+                                    name="age"
+                                    placeholder="Enter Age"
+                                    value={x.age}
+                                    onChange={(e) => handleInputChange(e, i)}
+                                  />
+                                </div>
+                                <div className="col-md-3 text-center d-flex justify-content-around">
+                                  {inputList.length !== 1 && (
+                                    <div
+                                      className="col-4 btn pl-1 pr-1 btn-danger"
+                                      onClick={() => handleRemoveClick(i)}
+                                    >
+                                      Remove
+                                    </div>
+                                  )}
+                                  {inputList.length - 1 === i && (
+                                    <div
+                                      className="col-6 btn btn-primary"
+                                      onClick={handleAddClick}
+                                    >
+                                      Add
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </>
+                          );
+                        })}
+                    </div>
+                    {/* <div style={{ marginTop: 20 }}>
                   {JSON.stringify(inputList, null, 4)}
                 </div> */}
-              </Col>
+                  </Col>
+                </>
+              )}
               <Col lg={12} className="p-0 m-0 d-flex">
                 <ButtonContainer>
                   <CancelButton type="reset">Cancel</CancelButton>

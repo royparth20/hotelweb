@@ -31,8 +31,8 @@ export default {
   getStaffMemberByStaffId: (staffMemberId) =>
     api.get(`/hotel/getStaffMembers?staffMemberId=${staffMemberId}`),
 
-  raiseTouristAlert: (payload) =>
-    api.post(`hotel/raise-alert?touristId=${payload}`),
+  raiseTouristAlert: (payload, id) =>
+    api.post(`hotel/raise-alert?touristId=${id}`, payload),
 
   getBranchData: (payload) => api.get(`/hotel/?branchId=${payload}`),
   getBranchDataByStaff: (payload) =>
