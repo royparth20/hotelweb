@@ -231,11 +231,35 @@ const TouristDetail = () => {
                 }
               }
             } else {
-              setError({
-                name: "Please Select Branch",
-              });
-              toastr.error("Please Select Branch");
-              setLoader(false);
+              try {
+                if (userType === "HOTEL") {
+                  const response = await api.createTouristByManagerInBranch(
+                    data
+                  );
+                  setLoader(false);
+                  history.replace(`/tourist/${branch}`);
+                } else {
+                  setError({
+                    name: "Please Select Branch",
+                  });
+                  toastr.error("Please Select Branch");
+                  setLoader(false);
+                }
+                //setToken(data.token)
+                // console.log("response", response);
+              } catch (error) {
+                setLoader(false);
+                toastr.error(error.response.data.message);
+                if (error.response) {
+                  setError({
+                    name:
+                      "Please Fix These Errors:  " +
+                      error.response.data.message,
+                  });
+                  setLoader(false);
+                  // console.log(error.response.data.message);
+                }
+              }
             }
           } else {
             data["hotelId"] = params.id;
@@ -539,7 +563,10 @@ const TouristDetail = () => {
                           setBranch(e.target.value);
                         }}
                         className={`${
-                          submitBtnStatus && branch === "" && "input-error"
+                          userType !== "HOTEL" &&
+                          submitBtnStatus &&
+                          branch === "" &&
+                          "input-error"
                         }`}
                       >
                         <Options value="">Select Branch</Options>
@@ -553,7 +580,10 @@ const TouristDetail = () => {
                         )}
                       </Select>
                       <div className="text-danger">
-                        {submitBtnStatus && branch === "" && "Select Branch"}
+                        {userType !== "HOTEL" &&
+                          submitBtnStatus &&
+                          branch === "" &&
+                          "Select Branch"}
                       </div>
                     </FormInput>
                   </FormGroup>
@@ -608,6 +638,7 @@ const TouristDetail = () => {
                     updateGender={setGender}
                     updateGrantor={setGrantor}
                     updateAge={setAge}
+                    userType={userType}
                     error={error}
                     status={submitBtnStatus}
                     updateVehicle={setVehicle}

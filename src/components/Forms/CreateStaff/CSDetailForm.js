@@ -7,7 +7,7 @@ import {
   Input,
   TextArea,
   FormTitle,
-  InputPassword
+  InputPassword,
 } from "./CSDetailForm.elements";
 
 const CSDetailForm = (props) => {
@@ -39,6 +39,7 @@ const CSDetailForm = (props) => {
           <FormInput>
             <InputPassword
               value={pass}
+              placeholder="Enter Password"
               onChange={(e) => updatePass(e.target.value)}
             ></InputPassword>
           </FormInput>

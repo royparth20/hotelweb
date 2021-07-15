@@ -126,12 +126,11 @@ function App() {
           <Header />
           <Contact />
           <Footer />
-
-          <Route path="/hotel" exact>
-            <HeaderLoggedin />
-            <Hotel />
-            <Footer />
-          </Route>
+        </Route>
+        <Route path="/hotel" exact>
+          <HeaderLoggedin />
+          <Hotel />
+          <Footer />
         </Route>
         <Route path="/login" exact>
           <Header />

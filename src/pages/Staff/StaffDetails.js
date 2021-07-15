@@ -7,6 +7,7 @@ import { Container } from "styled-bootstrap-grid";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import toastr from "toastr";
+import { TramOutlined } from "@material-ui/icons";
 const StaffDetails = () => {
   const staffId = new URLSearchParams(useLocation().search).get("staffId");
   const refSwitch = useRef();
@@ -15,6 +16,7 @@ const StaffDetails = () => {
   const [staffMemberData, setStaffMemberData] = useState(null);
 
   const branches = useSelector((state) => state.user.branches);
+  const mainBranch = useSelector((state) => state.user?._id);
   const [checkedState, setCheckedState] = useState([]);
 
   useEffect(() => {
@@ -42,7 +44,7 @@ const StaffDetails = () => {
         setStaffMemberData(element.data.data);
       })
       .catch(function (error) {
-        console.error("ERR ==> ", error);
+        // console.error("ERR ==> ", error);
       });
   }, []);
   const fetchData = async () => {
@@ -61,31 +63,46 @@ const StaffDetails = () => {
 
   const onSubmit = async (e) => {
     try {
+      // console.log(
+      //   checkedState.includes(true),
+      //   !staffMemberData.assignedHotel.includes(mainBranch),
+      //   checkedState.includes(true) &&
+      //     !staffMemberData.assignedHotel.includes(mainBranch)
+      // );
       let payload = { ...staffMemberData };
 
       // payload._id = undefined;
       delete payload._id;
       // delete payload.assignedHotel;
+      // if(staffMemberData.){
 
-      if (branches.length > 0) {
-        payload.assignedHotel = [];
-        branches.map((type, index) => {
-          // console.log(index, type?.address, checkedState[index]);
-          if (checkedState[index]) {
-            payload.assignedHotel = [...payload.assignedHotel, type._id];
-          }
-        });
+      // }
+      if (checkedState.includes(true)) {
+        if (branches.length > 0) {
+          payload.assignedHotel = [];
+          branches.map((type, index) => {
+            // console.log(index, type?.address, checkedState[index]);
+            if (checkedState[index]) {
+              payload.assignedHotel = [...payload.assignedHotel, type._id];
+            }
+          });
+        }
+      } else {
+        // console.log(mainBranch);
+        payload.assignedHotel = [mainBranch];
       }
       const { active, parentHotel, staffPassword, token, ...payloadData } =
         payload;
-      console.table({ payloadData });
+      // console.table({ payloadData });
+      // console.log(payloadData.assignedHotel);
+
       const { data } = await api.updateStaff(payloadData, staffId);
-      // updateStaff
-      // console.log(data);
+      // // updateStaff
+      // // console.log(data);
       toastr.success(data.data);
       //       history.replace("/home");
     } catch (error) {
-      toastr.error(error.response.data.message);
+      toastr.error(error.response?.data?.message);
       //       console.log(error.response.data);
     }
   };

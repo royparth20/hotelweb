@@ -29,7 +29,7 @@ const CreateStaff = () => {
   const [snumber, setSNumber] = useState();
   const [semail, setSEmail] = useState();
   const [saddress, setSAddress] = useState();
-  const [pass, setPass] = useState("12345");
+  const [pass, setPass] = useState();
   const [branches, setBranches] = useState();
   const [curbranch, setCBranch] = useState();
   const [error, setError] = useState({});

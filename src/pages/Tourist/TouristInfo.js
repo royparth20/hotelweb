@@ -23,7 +23,7 @@ const TouristInfo = () => {
     setLoading(true);
     fetchData()
       .then((element) => {
-        // console.log(element.data.data);
+        console.log(element.data.data);
         setTourist(element.data.data);
         setLoading(false);
       })
@@ -44,11 +44,11 @@ const TouristInfo = () => {
       const confirmBox = window.confirm("Do you really want to tourist?");
       if (confirmBox === true) {
         const { data } = await api.leaveTourist({ touristId: touristId });
-        console.log(data);
+        // console.log(data);
         setLoading(true);
         fetchData()
           .then((element) => {
-            console.log(element.data.data);
+            // console.log(element.data.data);
             setTourist(element.data.data);
             setLoading(false);
           })
@@ -59,7 +59,37 @@ const TouristInfo = () => {
       console.log(error);
     }
   };
-
+  /*
+additionalContact: ""
+address: "Eu voluptatem aut m"
+age: "25"
+city: ""
+countryArrivedFrom: ""
+createdAt: "2021-07-14T11:11:00.740Z"
+dateOfArrival: "1982-03-09T00:00:00.000Z"
+dateOfDeparture: "2009-05-13T00:00:00.000Z"
+district: "Delectus fuga Aspe"
+fatherName: "Consequuntur irure d"
+gender: "Male"
+grantor: "Harum ullamco ab et "
+hotelId: "60d610044620b06722222d97"
+isForeigner: true
+job: ""
+lastName: "Omnis aut et accusan"
+mobileNumber: "9856748520"
+nationality: "ASD"
+passportNumber: "Aut voluptates eius "
+provinceArrivedFrom: ""
+reasonOfStay: "Aute accusamus exped"
+roomNumber: "Consectetur quia nes"
+tazkeraNumber: ""
+touristImage: "https://hoteladmin.lexicmediatesting.in:8000/api/v1/files/file-fc828e34-5e24-40b8-85fb-fc3caee79531.jpg"
+touristName: "Tempora aliquam temp"
+updatedAt: "2021-07-14T11:11:00.740Z"
+uploadPassportOrTazkera: "https://hoteladmin.lexicmediatesting.in:8000/api/v1/files/file-500e68e2-b64a-4530-9ac9-97c74c951a46.jpg"
+uploadVisa: ""
+vehicalNumberPlate: "Sint id in excepteur"
+*/
   return (
     <>
       <Main>
@@ -86,6 +116,22 @@ const TouristInfo = () => {
                         </CardImage>
                       )}
 
+                      {tourist.lastName && (
+                        <>
+                          <div className="col-md-6 text-capitalize font-weight-bold p-2">
+                            last Name :
+                          </div>
+                          <div className="col-md-6">{tourist.lastName}</div>
+                        </>
+                      )}
+                      {tourist.fatherName && (
+                        <>
+                          <div className="col-md-6 text-capitalize font-weight-bold p-2">
+                            father Name :
+                          </div>
+                          <div className="col-md-6">{tourist.fatherName}</div>
+                        </>
+                      )}
                       {tourist.isForeigner ? (
                         <>
                           {/*  passportNumber */}
@@ -120,15 +166,15 @@ const TouristInfo = () => {
                       ) : (
                         <>
                           {/*  Address */}
-                          <div className="col-md-6 text-capitalize font-weight-bold p-2">
+                          {/* <div className="col-md-6 text-capitalize font-weight-bold p-2">
                             last Name :
                           </div>
-                          <div className="col-md-6">{tourist.lastName}</div>
+                          <div className="col-md-6">{tourist.lastName}</div> */}
                           {/*  Address */}
-                          <div className="col-md-6 text-capitalize font-weight-bold p-2">
+                          {/* <div className="col-md-6 text-capitalize font-weight-bold p-2">
                             father Name :
                           </div>
-                          <div className="col-md-6">{tourist.fatherName}</div>
+                          <div className="col-md-6">{tourist.fatherName}</div> */}
 
                           {/*  Address */}
                           <div className="col-md-6 text-capitalize font-weight-bold p-2">
@@ -249,6 +295,21 @@ const TouristInfo = () => {
                         </table>
                       </>
                     )}
+
+                    {tourist.uploadPassportOrTazkera &&
+                      tourist.uploadPassportOrTazkera !== "" && (
+                        <div className="col-md-6 col-12 mb-1">
+                          <div className="">
+                            <div className="text-muted">Passport/Tazkera</div>
+                            <img
+                              className="img-fluid"
+                              src={tourist.uploadPassportOrTazkera}
+                              alt="img-passportOrTazkera"
+                            />
+                          </div>
+                        </div>
+                      )}
+
                     {tourist?.dateOfLeave ? (
                       <>
                         <div className="text-danger text-capitalize font-weight-bold p-2 m-2">

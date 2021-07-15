@@ -83,6 +83,7 @@ const TDLeftDetailForm = (props) => {
     age,
     error,
     status,
+    userType
   } = props;
 
   const [countryList, setCountryList] = useState(null);
