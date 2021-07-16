@@ -132,6 +132,18 @@ vehicalNumberPlate: "Sint id in excepteur"
                           <div className="col-md-6">{tourist.fatherName}</div>
                         </>
                       )}
+                      {tourist.passportNumber && (
+                        <>
+                          <div className="col-md-6 text-capitalize font-weight-bold p-2">
+                            passport Number :
+                          </div>
+                          <div className="col-md-6">
+                            {tourist.passportNumber}
+                          </div>
+                        </>
+                      )}
+
+                      {/* passportNumber */}
                       {tourist.isForeigner ? (
                         <>
                           {/*  passportNumber */}

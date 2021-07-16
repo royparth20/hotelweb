@@ -202,7 +202,9 @@ const TouristDetail = () => {
         if (branches.length > 0) {
           if (params.id === null || params.id === undefined) {
             if (branch !== "") {
-              data["hotelId"] = branch;
+              if (branch !== "main") {
+                data["hotelId"] = branch;
+              }
 
               try {
                 if (userType === "HOTEL") {
@@ -214,7 +216,8 @@ const TouristDetail = () => {
                   const response = await api.createTouristByStaffBranch(data);
                   setLoader(false);
                 }
-                history.replace(`/tourist/${branch}`);
+                if (branch !== "main") history.replace(`/tourist/${branch}`);
+                else history.replace(`/tourist`);
                 //setToken(data.token)
                 // console.log("response", response);
               } catch (error) {
@@ -231,35 +234,40 @@ const TouristDetail = () => {
                 }
               }
             } else {
-              try {
-                if (userType === "HOTEL") {
-                  const response = await api.createTouristByManagerInBranch(
-                    data
-                  );
-                  setLoader(false);
-                  history.replace(`/tourist/${branch}`);
-                } else {
-                  setError({
-                    name: "Please Select Branch",
-                  });
-                  toastr.error("Please Select Branch");
-                  setLoader(false);
-                }
-                //setToken(data.token)
-                // console.log("response", response);
-              } catch (error) {
-                setLoader(false);
-                toastr.error(error.response.data.message);
-                if (error.response) {
-                  setError({
-                    name:
-                      "Please Fix These Errors:  " +
-                      error.response.data.message,
-                  });
-                  setLoader(false);
-                  // console.log(error.response.data.message);
-                }
-              }
+              setError({
+                name: "Please Select Branch",
+              });
+              toastr.error("Please Select Branch");
+              setLoader(false);
+              // try {
+              //   if (userType === "HOTEL") {
+              //     const response = await api.createTouristByManagerInBranch(
+              //       data
+              //     );
+              //     setLoader(false);
+              //     history.replace(`/tourist/${branch}`);
+              //   } else {
+              //     setError({
+              //       name: "Please Select Branch",
+              //     });
+              //     toastr.error("Please Select Branch");
+              //     setLoader(false);
+              //   }
+              //   //setToken(data.token)
+              //   // console.log("response", response);
+              // } catch (error) {
+              //   setLoader(false);
+              //   toastr.error(error.response.data.message);
+              //   if (error.response) {
+              //     setError({
+              //       name:
+              //         "Please Fix These Errors:  " +
+              //         error.response.data.message,
+              //     });
+              //     setLoader(false);
+              //     // console.log(error.response.data.message);
+              //   }
+              // }
             }
           } else {
             data["hotelId"] = params.id;
@@ -563,13 +571,13 @@ const TouristDetail = () => {
                           setBranch(e.target.value);
                         }}
                         className={`${
-                          userType !== "HOTEL" &&
-                          submitBtnStatus &&
-                          branch === "" &&
-                          "input-error"
+                          submitBtnStatus && branch === "" && "input-error"
                         }`}
                       >
                         <Options value="">Select Branch</Options>
+                        {userType === "HOTEL" && (
+                          <Options value="main">Main Branch</Options>
+                        )}
                         {branches.map(
                           (item) =>
                             item.approved && (
@@ -580,10 +588,7 @@ const TouristDetail = () => {
                         )}
                       </Select>
                       <div className="text-danger">
-                        {userType !== "HOTEL" &&
-                          submitBtnStatus &&
-                          branch === "" &&
-                          "Select Branch"}
+                        {submitBtnStatus && branch === "" && "Select Branch"}
                       </div>
                     </FormInput>
                   </FormGroup>
